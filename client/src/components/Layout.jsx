@@ -20,12 +20,11 @@ import {
 } from 'lucide-react';
 
 const Layout = ({ children }) => {
-  const { user, logout, switchRole } = useAuth();
+  const { user, logout } = useAuth();
   const { workspaces, currentWorkspace, setCurrentWorkspace, notifications, tasks, projects, members, documents } = useApp();
   const navigate = useNavigate();
   const location = useLocation();
   const [showWorkspaceMenu, setShowWorkspaceMenu] = useState(false);
-  const [showRoleMenu, setShowRoleMenu] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState(null);
 
@@ -192,44 +191,6 @@ const Layout = ({ children }) => {
         {/* User profile & Role switcher */}
         <div style={{ padding: '1rem', borderTop: '1px solid var(--border)', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
           
-          {/* Quick Evaluator Role Switcher */}
-          <div style={{ position: 'relative' }}>
-            <button 
-              onClick={() => setShowRoleMenu(!showRoleMenu)}
-              className="bauhaus-btn"
-              style={{ width: '100%', padding: '0.25rem 0.5rem', fontSize: '12px', borderColor: 'var(--warning)', color: 'var(--warning)', justifyContent: 'space-between' }}
-            >
-              <span>Test Role: {user?.role}</span>
-              <ChevronDown size={10} />
-            </button>
-            {showRoleMenu && (
-              <div style={{
-                position: 'absolute',
-                bottom: '100%',
-                left: 0,
-                right: 0,
-                backgroundColor: 'var(--card)',
-                border: '2px solid var(--border)',
-                zIndex: 10,
-                marginBottom: '2px'
-              }}>
-                {['Owner', 'Admin', 'Manager', 'Member'].map(r => (
-                  <div
-                    key={r}
-                    onClick={() => {
-                      switchRole(r);
-                      setShowRoleMenu(false);
-                    }}
-                    style={{ padding: '0.5rem 0.75rem', cursor: 'pointer', fontSize: '12px', borderBottom: '1px solid var(--border)' }}
-                    onMouseEnter={(e) => e.target.style.backgroundColor = 'var(--hover)'}
-                    onMouseLeave={(e) => e.target.style.backgroundColor = 'transparent'}
-                  >
-                    Switch to {r}
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '0.5rem 0' }}>
             <img 

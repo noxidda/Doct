@@ -32,19 +32,6 @@ const Login = () => {
     }
   };
 
-  const handleQuickLogin = async (emailAddr) => {
-    setLoading(true);
-    try {
-      const res = await login(emailAddr, 'password');
-      if (res.success) {
-        navigate('/dashboard');
-      }
-    } catch (err) {
-      setError('Quick login failed');
-    } finally {
-      setLoading(false);
-    }
-  };
 
   return (
     <div style={{
@@ -108,47 +95,6 @@ const Login = () => {
 
         <div style={{ textAlign: 'center', marginTop: '1.5rem', fontSize: '13px' }}>
           Don't have an account? <Link to="/signup" style={{ fontWeight: 'bold' }}>Sign Up</Link>
-        </div>
-
-        {/* Quick Demo Accounts widget */}
-        <div style={{
-          marginTop: '2rem',
-          borderTop: '1px solid var(--border)',
-          paddingTop: '1.5rem'
-        }}>
-          <span style={{ fontSize: '12px', fontWeight: 'bold', color: 'var(--warning)', letterSpacing: '0.1em', textTransform: 'uppercase', display: 'block', marginBottom: '1rem' }}>
-            EVALUATOR QUICK ACCESS (DEMO ACCOUNTS)
-          </span>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem' }}>
-            <button 
-              onClick={() => handleQuickLogin('owner@doct.com')}
-              className="bauhaus-btn" 
-              style={{ fontSize: '12px', padding: '0.5rem', justifyContent: 'flex-start' }}
-            >
-              <span>Arthur (Owner)</span>
-            </button>
-            <button 
-              onClick={() => handleQuickLogin('admin@doct.com')}
-              className="bauhaus-btn" 
-              style={{ fontSize: '12px', padding: '0.5rem', justifyContent: 'flex-start' }}
-            >
-              <span>Gropius (Admin)</span>
-            </button>
-            <button 
-              onClick={() => handleQuickLogin('manager@doct.com')}
-              className="bauhaus-btn" 
-              style={{ fontSize: '12px', padding: '0.5rem', justifyContent: 'flex-start' }}
-            >
-              <span>Mies (Manager)</span>
-            </button>
-            <button 
-              onClick={() => handleQuickLogin('member@doct.com')}
-              className="bauhaus-btn" 
-              style={{ fontSize: '12px', padding: '0.5rem', justifyContent: 'flex-start' }}
-            >
-              <span>Anni (Member)</span>
-            </button>
-          </div>
         </div>
       </div>
     </div>

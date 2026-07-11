@@ -7,51 +7,7 @@ export const useAuth = () => useContext(AuthContext);
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [isDemoMode, setIsDemoMode] = useState(true);
-
-  // Simulated Mock Users for demonstration
-  const mockUsers = {
-    owner: {
-      id: 'usr_owner',
-      name: 'Arthur Bauhaus',
-      email: 'owner@doct.com',
-      role: 'Owner',
-      avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&h=150&q=80',
-      bio: 'Principal designer & system architect. Clean lines, clean code.',
-      timezone: 'Europe/Berlin',
-      preferences: { notifications: 'all', theme: 'dark' }
-    },
-    admin: {
-      id: 'usr_admin',
-      name: 'Gropius Admin',
-      email: 'admin@doct.com',
-      role: 'Admin',
-      avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&h=150&q=80',
-      bio: 'Doct workspace supervisor and developer.',
-      timezone: 'America/New_York',
-      preferences: { notifications: 'mentions', theme: 'dark' }
-    },
-    manager: {
-      id: 'usr_manager',
-      name: 'Mies Manager',
-      email: 'manager@doct.com',
-      role: 'Manager',
-      avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=150&h=150&q=80',
-      bio: 'Project and sprint coordinator.',
-      timezone: 'Asia/Kolkata',
-      preferences: { notifications: 'mentions', theme: 'dark' }
-    },
-    member: {
-      id: 'usr_member',
-      name: 'Anni Albers',
-      email: 'member@doct.com',
-      role: 'Member',
-      avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&h=150&q=80',
-      bio: 'Frontend developer and content writer.',
-      timezone: 'UTC',
-      preferences: { notifications: 'none', theme: 'dark' }
-    }
-  };
+  const [isDemoMode, setIsDemoMode] = useState(false);
 
   useEffect(() => {
     // Check local storage for session
@@ -61,13 +17,13 @@ export const AuthProvider = ({ children }) => {
     if (storedUser) {
       setUser(JSON.parse(storedUser));
     } else {
-      // Default to owner for easy evaluation out of the box
-      setUser(mockUsers.owner);
-      localStorage.setItem('doct_user', JSON.stringify(mockUsers.owner));
+      setUser(null);
     }
     
     if (storedMode !== null) {
       setIsDemoMode(storedMode === 'true');
+    } else {
+      setIsDemoMode(false);
     }
     
     setLoading(false);
@@ -75,27 +31,15 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     setLoading(true);
-    // Find matching mock user
-    const matchedKey = Object.keys(mockUsers).find(
-      key => mockUsers[key].email.toLowerCase() === email.toLowerCase()
-    );
     
-    if (matchedKey) {
-      const loggedUser = mockUsers[matchedKey];
-      setUser(loggedUser);
-      localStorage.setItem('doct_user', JSON.stringify(loggedUser));
-      setLoading(false);
-      return { success: true, user: loggedUser };
-    }
-    
-    // Create simple mock account if doesn't exist
+    // Create session profile on the fly
     const newUser = {
       id: `usr_${Math.random().toString(36).substr(2, 9)}`,
       name: email.split('@')[0],
       email: email,
-      role: 'Member',
+      role: 'Owner', // Default to owner so they have full access to workspace settings on fresh logins
       avatar: `https://api.dicebear.com/7.x/pixel-art/svg?seed=${email}`,
-      bio: 'New Doct Member',
+      bio: 'Workspace Owner',
       timezone: 'UTC',
       preferences: { notifications: 'all', theme: 'dark' }
     };
@@ -111,9 +55,9 @@ export const AuthProvider = ({ children }) => {
       id: `usr_${Math.random().toString(36).substr(2, 9)}`,
       name: name,
       email: email,
-      role: 'Member',
+      role: 'Owner', // Default to owner for fresh signups
       avatar: `https://api.dicebear.com/7.x/pixel-art/svg?seed=${email}`,
-      bio: 'New Doct Member',
+      bio: 'Workspace Owner',
       timezone: 'UTC',
       preferences: { notifications: 'all', theme: 'dark' }
     };
@@ -138,15 +82,6 @@ export const AuthProvider = ({ children }) => {
     localStorage.setItem('doct_user', JSON.stringify(newUser));
   };
 
-  // Helper to switch roles easily during evaluation
-  const switchRole = (roleName) => {
-    const key = roleName.toLowerCase();
-    if (mockUsers[key]) {
-      setUser(mockUsers[key]);
-      localStorage.setItem('doct_user', JSON.stringify(mockUsers[key]));
-    }
-  };
-
   return (
     <AuthContext.Provider value={{
       user,
@@ -156,8 +91,7 @@ export const AuthProvider = ({ children }) => {
       signup,
       logout,
       resetPassword,
-      updateProfile,
-      switchRole
+      updateProfile
     }}>
       {children}
     </AuthContext.Provider>

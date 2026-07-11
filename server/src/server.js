@@ -50,10 +50,7 @@ let isMongoConnected = false;
 
 // Memory DB Fallback (for instant runnability)
 const memoryDb = {
-  users: [
-    { _id: 'usr_owner', name: 'Arthur Bauhaus', email: 'owner@doct.com', role: 'Owner', avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&h=150&q=80', bio: 'Principal designer & system architect.' },
-    { _id: 'usr_admin', name: 'Gropius Admin', email: 'admin@doct.com', role: 'Admin', avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&h=150&q=80', bio: 'Doct workspace supervisor.' }
-  ],
+  users: [],
   workspaces: [],
   projects: [],
   tasks: [],
