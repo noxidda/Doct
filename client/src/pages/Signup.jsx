@@ -58,7 +58,7 @@ const Signup = () => {
       padding: 0
     }}>
       {/* Left Column is empty to reveal the background image */}
-      <div className="signup-bg-side" style={{ display: 'none' }} />
+      <div className="signup-bg-side" />
       
       {/* Right Column contains the centered signup card */}
       <div className="login-split-card-side" style={{

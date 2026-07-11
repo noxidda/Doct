@@ -46,7 +46,7 @@ const Login = () => {
       padding: 0
     }}>
       {/* Left Column is empty to reveal the background image */}
-      <div className="login-bg-side" style={{ display: 'none' }} /> {/* for future responsive overrides */}
+      <div className="login-bg-side" />
       
       {/* Right Column contains the centered login card */}
       <div className="login-split-card-side" style={{
