@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useApp } from '../context/AppContext';
-import logoImg from '../assets/logo.png';
+import logoBlack from '../assets/logo-black.png';
+import logoWhite from '../assets/logo-white.png';
 import {
   LayoutDashboard,
   FolderKanban,
@@ -86,7 +87,7 @@ const Layout = ({ children }) => {
             display: 'flex',
             alignItems: 'center'
           }}>
-            <img src={logoImg} alt="Doct Logo" style={{ height: '36px', width: 'auto', display: 'block' }} />
+            <img src={logoBlack} alt="Doct Logo" style={{ height: '36px', width: 'auto', display: 'block' }} />
           </div>
           
           {/* Workspace Switcher */}

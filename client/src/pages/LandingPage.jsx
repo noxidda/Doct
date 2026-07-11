@@ -1,4 +1,5 @@
-import logoImg from '../assets/logo.png';
+import logoBlack from '../assets/logo-black.png';
+import logoWhite from '../assets/logo-white.png';
 import { Link } from 'react-router-dom';
 
 const LandingPage = () => {
@@ -12,7 +13,7 @@ const LandingPage = () => {
           display: 'flex',
           alignItems: 'center'
         }}>
-          <img src={logoImg} alt="Doct Logo" style={{ height: '36px', width: 'auto', display: 'block' }} />
+          <img src={logoBlack} alt="Doct Logo" style={{ height: '36px', width: 'auto', display: 'block' }} />
         </div>
         
         <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
