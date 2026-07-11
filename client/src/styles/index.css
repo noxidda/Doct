@@ -1,0 +1,533 @@
+:root {
+  /* Material You (Material Design 3) Color System - Purple/Violet Seed (#6750A4) */
+  --bg-primary: #FFFBFE;             /* Warm off-white surface */
+  --foreground: #1C1B1F;             /* Near-black text */
+  --text-primary: #1C1B1F;
+  --text-secondary: #49454F;         /* On Surface Variant for secondary text */
+  --text-muted: #79747E;             /* Muted text / borders */
+  
+  --primary: #6750A4;                 /* Vivid Violet (Seed Color) */
+  --on-primary: #FFFFFF;
+  --secondary-container: #E8DEF8;    /* Lavender container tint */
+  --on-secondary-container: #1D192B;
+  --tertiary: #7D5260;               /* Dusty Rose Accent */
+  
+  --surface-container: #F3EDF7;      /* Subtle tinted surface container */
+  --surface-container-low: #E7E0EC;  /* Recessed input background */
+  
+  --border: rgba(121, 116, 126, 0.2); /* Thin translucent borders */
+  --outline: #79747E;                /* Outline border color */
+  --card: var(--surface-container);
+  --hover: rgba(103, 80, 164, 0.08); /* 8% Primary color for hover state layer */
+  
+  --success: #2e7d32;
+  --warning: #ef6c00;
+  --error: #b3261e;                  /* Material 3 error crimson */
+  
+  --font-family: 'Roboto', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-heading: 'Roboto', sans-serif;
+  
+  --radius-xs: 8px;
+  --radius-sm: 12px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-xl: 28px;
+  --radius-xxl: 48px;
+  --radius-full: 9999px;
+}
+
+/* Custom CSS Resets */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-family);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--foreground);
+  font-size: 16px;
+  line-height: 1.5;
+  font-weight: 400;
+  overflow-x: hidden;
+  height: 100vh;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: 500; /* MD3 uses Medium weight headers */
+  color: var(--foreground);
+  letter-spacing: -0.01em;
+}
+
+h1 {
+  font-size: 3.5rem;
+  line-height: 1.15;
+  margin-bottom: 2rem;
+}
+@media (max-width: 1024px) {
+  h1 {
+    font-size: 2.75rem;
+    margin-bottom: 1.5rem;
+  }
+}
+
+h2 {
+  font-size: 2rem;
+  line-height: 1.2;
+  margin-bottom: 1.5rem;
+}
+@media (max-width: 1024px) {
+  h2 {
+    font-size: 1.6rem;
+  }
+}
+
+h3 {
+  font-size: 1.5rem;
+  line-height: 1.3;
+  margin-bottom: 1.25rem;
+}
+
+p {
+  max-width: 65ch;
+  color: var(--text-secondary);
+}
+
+a {
+  color: var(--primary);
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 200ms ease;
+}
+
+a:hover {
+  color: var(--tertiary);
+}
+
+/* Material You Easing & Timing */
+.transition-md3 {
+  transition: all 300ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+/* Atmospheric Blur Decoration */
+.ambient-glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  z-index: 0;
+  opacity: 0.15;
+  pointer-events: none;
+  transition: all 600ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+/* App Container Layout */
+.app-container {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  background-color: var(--bg-primary);
+}
+
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow-y: auto;
+}
+
+/* Standardized Appbar Headers (Bug Fix: padding collapse & height shifts resolved) */
+header.appbar {
+  height: 72px !important;
+  min-height: 72px !important;
+  max-height: 72px !important;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2rem !important;
+  background-color: rgba(255, 251, 254, 0.8) !important;
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border) !important;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  box-shadow: none;
+  box-sizing: border-box !important;
+}
+
+/* Sidebar Navigation (styled as Material You Navigation Drawer) */
+.sidebar {
+  width: 260px;
+  background-color: var(--surface-container);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  border-right: 1px solid var(--border);
+  z-index: 10;
+}
+
+.sidebar nav a {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1.5rem;
+  margin: 0.25rem 0.75rem !important;
+  border-radius: var(--radius-full) !important;
+  color: var(--text-secondary) !important;
+  font-weight: 500;
+  text-transform: none; /* No Neobrutalist uppercase */
+  font-size: 14px;
+  letter-spacing: 0.01em;
+  background-color: transparent;
+  border: none !important;
+  box-shadow: none !important;
+  transition: all 250ms cubic-bezier(0.2, 0, 0, 1) !important;
+}
+
+.sidebar nav a:hover {
+  background-color: rgba(103, 80, 164, 0.08) !important; /* State layer */
+  color: var(--primary) !important;
+  transform: none !important; /* No rotations */
+}
+
+.sidebar nav a.active {
+  background-color: var(--secondary-container) !important;
+  color: var(--on-secondary-container) !important;
+  font-weight: 700;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+/* Buttons: Pill-shaped, state layer system */
+.bauhaus-btn {
+  background-color: transparent;
+  color: var(--primary);
+  border: 1px solid var(--outline);
+  border-radius: var(--radius-full) !important;
+  padding: 0.6rem 1.5rem;
+  font-weight: 500;
+  text-transform: none;
+  font-size: 14px;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  box-shadow: none;
+  transition: all 250ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+/* Tactile press feedback on all buttons */
+.bauhaus-btn:active {
+  transform: scale(0.95);
+}
+
+.bauhaus-btn:hover {
+  background-color: rgba(103, 80, 164, 0.08); /* Hover state layer */
+  border-color: var(--primary);
+  transform: none;
+  box-shadow: none;
+}
+
+.bauhaus-btn:disabled {
+  opacity: 0.38;
+  cursor: not-allowed;
+  transform: none !important;
+  background-color: transparent !important;
+  color: var(--text-muted) !important;
+}
+
+/* Primary Filled button variant */
+.bauhaus-btn-primary {
+  background-color: var(--primary);
+  color: var(--on-primary);
+  border: none;
+}
+
+.bauhaus-btn-primary:hover {
+  background-color: #5c4794; /* 90% Primary color equivalent */
+  color: var(--on-primary);
+}
+
+.bauhaus-btn-secondary {
+  background-color: var(--secondary-container);
+  color: var(--on-secondary-container);
+  border: none;
+}
+
+.bauhaus-btn-secondary:hover {
+  background-color: #dcd2eb;
+  color: var(--on-secondary-container);
+}
+
+.bauhaus-btn-success {
+  background-color: var(--success);
+  color: #FFFFFF;
+  border: none;
+}
+.bauhaus-btn-success:hover {
+  background-color: #27692b;
+}
+
+.bauhaus-btn-danger {
+  background-color: var(--error);
+  color: #FFFFFF;
+  border: none;
+}
+.bauhaus-btn-danger:hover {
+  background-color: #a1221b;
+}
+
+.bauhaus-btn-warning {
+  background-color: var(--warning);
+  color: #FFFFFF;
+  border: none;
+}
+.bauhaus-btn-warning:hover {
+  background-color: #d86200;
+}
+
+/* Inputs & Forms: Material 3 Filled Text Field (Rounded Top, bottom border) */
+.bauhaus-input {
+  background-color: var(--surface-container-low);
+  color: var(--foreground);
+  border: none;
+  border-bottom: 2px solid var(--text-muted);
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0 !important; /* Rounded top, square bottom */
+  padding: 0.85rem 1rem;
+  font-size: 15px;
+  width: 100%;
+  outline: none;
+  transition: border-color 200ms ease, background-color 200ms ease;
+}
+
+.bauhaus-input:focus {
+  border-bottom-color: var(--primary);
+  background-color: #E2D9EA; /* Slightly darker recessed color on focus */
+  box-shadow: none;
+}
+
+.bauhaus-label {
+  display: block;
+  font-weight: 500;
+  text-transform: none;
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  margin-bottom: 0.4rem;
+  color: var(--text-secondary);
+}
+
+.bauhaus-select {
+  background-color: var(--surface-container-low);
+  color: var(--foreground);
+  border: none;
+  border-bottom: 2px solid var(--text-muted);
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0 !important;
+  padding: 0.85rem 1rem;
+  font-size: 15px;
+  width: 100%;
+  outline: none;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg fill='%2349454F' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  transition: border-color 200ms ease;
+}
+
+.bauhaus-select:focus {
+  border-bottom-color: var(--primary);
+  box-shadow: none;
+}
+
+/* Cards: Material 3 Tonal Cards (Soft container surfaces, no borders) */
+.bauhaus-card {
+  background-color: var(--surface-container);
+  border: none !important; /* Preferred tonal separations over borders */
+  border-radius: var(--radius-lg) !important;
+  padding: 1.75rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.05), 0px 1px 2px 0px rgba(0, 0, 0, 0.1); /* Elevation 1 */
+  transition: transform 300ms cubic-bezier(0.2, 0, 0, 1), 
+              box-shadow 300ms cubic-bezier(0.2, 0, 0, 1),
+              background-color 300ms ease;
+}
+
+/* Interactive card lifts */
+.bauhaus-card:hover {
+  transform: translateY(-2px) scale(1.01);
+  box-shadow: 0px 2px 6px 2px rgba(0, 0, 0, 0.08), 0px 1px 2px 0px rgba(0, 0, 0, 0.15); /* Elevation 2 */
+}
+
+.bauhaus-card:active {
+  transform: scale(0.99);
+}
+
+.bauhaus-card-header {
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Grid Layouts */
+.bauhaus-grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+.bauhaus-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.bauhaus-grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+}
+
+@media (max-width: 1024px) {
+  .bauhaus-grid-3, .bauhaus-grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .bauhaus-grid-2, .bauhaus-grid-3, .bauhaus-grid-4 {
+    grid-template-columns: 1fr;
+  }
+  .app-container {
+    flex-direction: column;
+  }
+  .sidebar {
+    width: 100%;
+    height: auto;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+  }
+  .sidebar nav a {
+    margin: 0.25rem !important;
+  }
+}
+
+/* Tables: Material Tonal design */
+.bauhaus-table-container {
+  overflow-x: auto;
+  border: none;
+  border-radius: var(--radius-lg) !important;
+  box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.05);
+  background-color: var(--surface-container);
+}
+
+.bauhaus-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.bauhaus-table th {
+  background-color: rgba(103, 80, 164, 0.08); /* primary container overlay */
+  color: var(--primary);
+  font-weight: 500;
+  text-transform: none;
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  padding: 1.25rem 1rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.bauhaus-table td {
+  padding: 1.25rem 1rem;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-secondary);
+  font-weight: 400;
+  transition: background-color 200ms ease;
+}
+
+.bauhaus-table tr:last-child td {
+  border-bottom: none;
+}
+
+.bauhaus-table tr:hover td {
+  background-color: rgba(103, 80, 164, 0.04);
+  color: var(--foreground);
+}
+
+/* Tabs: Material Design 3 Pill Tabs */
+.bauhaus-tabs {
+  display: flex;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 1.5rem;
+  gap: 0.5rem;
+  padding-bottom: 4px;
+}
+
+.bauhaus-tab {
+  padding: 0.6rem 1.5rem;
+  border-radius: var(--radius-full) !important;
+  cursor: pointer;
+  text-transform: none;
+  font-weight: 500;
+  font-size: 13px;
+  color: var(--text-secondary);
+  background: transparent;
+  border: none;
+  transition: all 250ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+.bauhaus-tab.active {
+  color: var(--on-secondary-container);
+  background-color: var(--secondary-container);
+}
+
+.bauhaus-tab:hover:not(.active) {
+  background-color: rgba(103, 80, 164, 0.08);
+}
+
+/* Badges & Pills */
+.bauhaus-badge {
+  display: inline-block;
+  padding: 0.2rem 0.75rem;
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: none;
+  border: none !important;
+  border-radius: var(--radius-full) !important;
+  background-color: var(--secondary-container);
+  color: var(--on-secondary-container);
+  box-shadow: none;
+}
+
+.badge-low, .badge-backlog { background-color: var(--surface-container-low); color: var(--text-secondary); }
+.badge-medium, .badge-todo { background-color: #FFE0B2; color: #E65100; } /* Soft Amber warning tone */
+.badge-high, .badge-in_progress { background-color: #F8BBD0; color: #C2185B; } /* Soft Pink high tone */
+.badge-critical, .badge-completed { background-color: #C8E6C9; color: #2E7D32; } /* Soft Green success tone */
+.badge-review { background-color: var(--secondary-container); color: var(--on-secondary-container); }
+
+/* Scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(121, 116, 126, 0.3);
+  border-radius: var(--radius-full);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
