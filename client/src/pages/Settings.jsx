@@ -152,7 +152,7 @@ const Settings = () => {
                     <input 
                       type="text" 
                       className="bauhaus-input"
-                      placeholder="e.g. Wattker Marketing"
+                      placeholder="e.g. Doct Marketing"
                       value={newWsName}
                       onChange={(e) => setNewWsName(e.target.value)}
                       required

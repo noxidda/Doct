@@ -8,12 +8,9 @@ const LandingPage = () => {
       {/* Header Navigation */}
       <header className="appbar">
         <div style={{
-          backgroundColor: 'var(--primary)',
-          padding: '0.4rem 1.25rem',
-          borderRadius: 'var(--radius-full)',
-          boxShadow: '0px 1px 3px rgba(0, 0, 0, 0.1)'
+          padding: '0.2rem 0'
         }}>
-          <h1 style={{ fontSize: '1.3rem', margin: 0, letterSpacing: '0.02em', color: '#FFFFFF', fontWeight: 700, fontFamily: 'var(--font-heading)' }}>WATTKER</h1>
+          <h1 style={{ fontSize: '1.6rem', margin: 0, letterSpacing: '0.02em', color: '#1C1B1F', fontWeight: 800, fontFamily: 'var(--font-heading)' }}>Doct.</h1>
         </div>
         
         <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
@@ -81,7 +78,7 @@ const LandingPage = () => {
             marginBottom: '1.5rem',
             boxShadow: '0px 1px 2px rgba(0, 0, 0, 0.05)'
           }}>
-            Wattker Collaborative Engine
+            Doct. Collaborative Engine
           </span>
           
           <h1 style={{ 
@@ -98,7 +95,7 @@ const LandingPage = () => {
           </h1>
           
           <p style={{ color: 'var(--text-secondary)', fontSize: '18px', maxWidth: '650px', marginBottom: '2.5rem', lineHeight: '1.6', fontWeight: 400 }}>
-            Wattker is a premium collaborative SaaS workspace for fast-moving teams. Create project dashboards, coordinate Kanban tasks, and edit markdown documents in real time.
+            Doct. is a premium collaborative SaaS workspace for fast-moving teams. Create project dashboards, coordinate Kanban tasks, and edit markdown documents in real time.
           </p>
           
           <div style={{ display: 'flex', gap: '1.5rem' }}>
@@ -197,7 +194,7 @@ const LandingPage = () => {
         zIndex: 5,
         fontWeight: 500
       }}>
-        <div>WATTKER CO. ALL RIGHTS RESERVED.</div>
+        <div>DOCT. CO. ALL RIGHTS RESERVED.</div>
         <div style={{ display: 'flex', gap: '2rem' }}>
           <a href="#" style={{ color: 'var(--text-muted)' }}>MANIFESTO</a>
           <a href="#" style={{ color: 'var(--text-muted)' }}>SECURITY</a>

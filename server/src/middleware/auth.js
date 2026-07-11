@@ -34,7 +34,7 @@ export const authMiddleware = async (req, res, next) => {
     // We expect a mock user header like 'X-Mock-User-Id' and 'X-Mock-User-Role'
     const mockUserId = req.headers['x-mock-user-id'] || 'usr_owner';
     const mockUserRole = req.headers['x-mock-user-role'] || 'Owner';
-    const mockUserEmail = req.headers['x-mock-user-email'] || 'owner@wattker.com';
+    const mockUserEmail = req.headers['x-mock-user-email'] || 'owner@doct.com';
     const mockUserName = req.headers['x-mock-user-name'] || 'Arthur Bauhaus';
 
     req.user = {

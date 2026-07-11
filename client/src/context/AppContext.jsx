@@ -13,23 +13,23 @@ export const AppProvider = ({ children }) => {
   
   // Workspaces
   const [workspaces, setWorkspaces] = useState([
-    { id: 'ws_1', name: 'Wattker Core Team', description: 'Main workspace for Wattker platform development', avatar: 'W' },
-    { id: 'ws_2', name: 'Wattker Creative Studio', description: 'Branding and design exploration space', avatar: 'C' }
+    { id: 'ws_1', name: 'Doct Core Team', description: 'Main workspace for Doct platform development', avatar: 'D' },
+    { id: 'ws_2', name: 'Doct Creative Studio', description: 'Branding and design exploration space', avatar: 'C' }
   ]);
   const [currentWorkspace, setCurrentWorkspace] = useState(null);
 
   // Members
   const [members, setMembers] = useState([
-    { id: 'usr_owner', name: 'Arthur Bauhaus', email: 'owner@wattker.com', role: 'Owner', avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&h=150&q=80', online: true },
-    { id: 'usr_admin', name: 'Gropius Admin', email: 'admin@wattker.com', role: 'Admin', avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&h=150&q=80', online: true },
-    { id: 'usr_manager', name: 'Mies Manager', email: 'manager@wattker.com', role: 'Manager', avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=150&h=150&q=80', online: false },
-    { id: 'usr_member', name: 'Anni Albers', email: 'member@wattker.com', role: 'Member', avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&h=150&q=80', online: true }
+    { id: 'usr_owner', name: 'Arthur Bauhaus', email: 'owner@doct.com', role: 'Owner', avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&h=150&q=80', online: true },
+    { id: 'usr_admin', name: 'Gropius Admin', email: 'admin@doct.com', role: 'Admin', avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&h=150&q=80', online: true },
+    { id: 'usr_manager', name: 'Mies Manager', email: 'manager@doct.com', role: 'Manager', avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=150&h=150&q=80', online: false },
+    { id: 'usr_member', name: 'Anni Albers', email: 'member@doct.com', role: 'Member', avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&h=150&q=80', online: true }
   ]);
 
   // Projects
   const [projects, setProjects] = useState([
-    { id: 'proj_1', workspaceId: 'ws_1', name: 'Wattker Platform v1', description: 'Core product implementation phase 1', deadline: '2026-08-30', status: 'Active' },
-    { id: 'proj_2', workspaceId: 'ws_1', name: 'Design System Guidelines', description: 'Creating the Wattker css rules and guidelines', deadline: '2026-07-25', status: 'Active' },
+    { id: 'proj_1', workspaceId: 'ws_1', name: 'Doct Platform v1', description: 'Core product implementation phase 1', deadline: '2026-08-30', status: 'Active' },
+    { id: 'proj_2', workspaceId: 'ws_1', name: 'Design System Guidelines', description: 'Creating the Doct css rules and guidelines', deadline: '2026-07-25', status: 'Active' },
     { id: 'proj_3', workspaceId: 'ws_1', name: 'Legacy Workspace Migrator', description: 'Data extraction scripts from old servers', deadline: '2026-05-15', status: 'Archived' }
   ]);
 
@@ -76,7 +76,7 @@ export const AppProvider = ({ children }) => {
       id: 'doc_1',
       workspaceId: 'ws_1',
       title: 'Project Manifesto',
-      content: '# Wattker Project Manifesto\n\nWelcome to Wattker.\n\n## Core Principles\n- **Simple Card Layouts:** Clean rounded borders.\n- **Velvety Wine Backdrop:** Organic wheat accents.',
+      content: '# Doct Project Manifesto\n\nWelcome to Doct.\n\n## Core Principles\n- **Simple Card Layouts:** Clean rounded borders.\n- **Velvety Wine Backdrop:** Organic wheat accents.',
       parentId: null,
       authorId: 'usr_owner',
       createdAt: '2026-07-01'
@@ -90,7 +90,7 @@ export const AppProvider = ({ children }) => {
 
   // Activity Logs
   const [activityLogs, setActivityLogs] = useState([
-    { id: 'log_1', workspaceId: 'ws_1', user: 'Arthur Bauhaus', action: 'Created Project', target: 'Wattker Platform v1', timestamp: '2026-07-01T10:00:00Z' }
+    { id: 'log_1', workspaceId: 'ws_1', user: 'Arthur Bauhaus', action: 'Created Project', target: 'Doct Platform v1', timestamp: '2026-07-01T10:00:00Z' }
   ]);
 
   // Default workspace

@@ -37,7 +37,7 @@ const Dashboard = () => {
         <div>
           <h2 style={{ margin: 0, fontSize: '2rem' }}>WORKSPACE OVERVIEW</h2>
           <p style={{ color: 'var(--text-secondary)', fontSize: '14px', marginTop: '0.25rem' }}>
-            Current Area: <strong>{currentWorkspace?.name || 'Wattker Workspace'}</strong>
+            Current Area: <strong>{currentWorkspace?.name || 'Doct Workspace'}</strong>
           </p>
         </div>
         <button 

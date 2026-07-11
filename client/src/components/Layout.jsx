@@ -80,22 +80,19 @@ const Layout = ({ children }) => {
       <aside className="sidebar">
         <div style={{ padding: '1.5rem', borderBottom: '1px solid var(--border)', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
           <div style={{
-            backgroundColor: 'var(--primary)',
-            padding: '0.5rem 1.25rem',
-            textAlign: 'center',
-            borderRadius: 'var(--radius-full)',
-            boxShadow: '0px 1px 3px rgba(0, 0, 0, 0.1)',
-            marginBottom: '0.5rem'
+            textAlign: 'left',
+            marginBottom: '0.5rem',
+            padding: '0 0.5rem'
           }}>
             <h1 style={{ 
-              fontSize: '1.4rem', 
+              fontSize: '1.8rem', 
               margin: 0, 
               letterSpacing: '0.02em', 
-              color: '#FFFFFF',
-              fontWeight: 700,
+              color: '#1C1B1F',
+              fontWeight: 800,
               fontFamily: 'var(--font-heading)'
             }}>
-              WATTKER
+              Doct.
             </h1>
           </div>
           

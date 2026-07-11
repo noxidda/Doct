@@ -59,7 +59,7 @@ const Signup = () => {
         
         {step === 1 ? (
           <>
-            <p style={{ color: 'var(--text-secondary)', fontSize: '13px', marginBottom: '1.5rem' }}>Create your Wattker credentials below.</p>
+            <p style={{ color: 'var(--text-secondary)', fontSize: '13px', marginBottom: '1.5rem' }}>Create your Doct credentials below.</p>
             {error && <div style={{ border: '2px solid var(--error)', color: 'var(--error)', padding: '0.75rem', marginBottom: '1.5rem', fontSize: '12px' }}>{error}</div>}
             
             <form onSubmit={handleRegister} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>

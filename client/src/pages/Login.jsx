@@ -56,7 +56,7 @@ const Login = () => {
       padding: '2rem'
     }}>
       <div className="bauhaus-card" style={{ width: '100%', maxWidth: '440px' }}>
-        <h2 style={{ fontSize: '1.75rem', marginBottom: '0.5rem', letterSpacing: '-0.02em' }}>LOGIN TO WATTKER</h2>
+        <h2 style={{ fontSize: '1.75rem', marginBottom: '0.5rem', letterSpacing: '-0.02em' }}>LOGIN TO DOCT</h2>
         <p style={{ color: 'var(--text-secondary)', fontSize: '13px', marginBottom: '1.5rem' }}>Enter credentials to access your workspaces.</p>
 
         {error && (

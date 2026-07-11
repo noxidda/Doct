@@ -9,18 +9,18 @@ const api = axios.create({
 
 // Request interceptor to automatically attach authorization and mock context headers
 api.interceptors.request.use((config) => {
-  const userStr = localStorage.getItem('wattker_user');
+  const userStr = localStorage.getItem('doct_user');
   if (userStr) {
     try {
       const user = JSON.parse(userStr);
       // Pass headers representing the active mock user profile
       config.headers['X-Mock-User-Id'] = user.id || 'usr_owner';
       config.headers['X-Mock-User-Role'] = user.role || 'Owner';
-      config.headers['X-Mock-User-Email'] = user.email || 'owner@wattker.com';
+      config.headers['X-Mock-User-Email'] = user.email || 'owner@doct.com';
       config.headers['X-Mock-User-Name'] = user.name || 'Arthur Bauhaus';
       
       // Clerk authorization header (if configured)
-      const token = localStorage.getItem('wattker_clerk_token');
+      const token = localStorage.getItem('doct_clerk_token');
       if (token) {
         config.headers['Authorization'] = `Bearer ${token}`;
       }

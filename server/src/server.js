@@ -51,21 +51,21 @@ let isMongoConnected = false;
 // Memory DB Fallback (for instant runnability)
 const memoryDb = {
   users: [
-    { _id: 'usr_owner', name: 'Arthur Bauhaus', email: 'owner@wattker.com', role: 'Owner', avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&h=150&q=80', bio: 'Principal designer & system architect.' },
-    { _id: 'usr_admin', name: 'Gropius Admin', email: 'admin@wattker.com', role: 'Admin', avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&h=150&q=80', bio: 'Wattker workspace supervisor.' }
+    { _id: 'usr_owner', name: 'Arthur Bauhaus', email: 'owner@doct.com', role: 'Owner', avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&h=150&q=80', bio: 'Principal designer & system architect.' },
+    { _id: 'usr_admin', name: 'Gropius Admin', email: 'admin@doct.com', role: 'Admin', avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&h=150&q=80', bio: 'Doct workspace supervisor.' }
   ],
   workspaces: [
-    { _id: 'ws_1', name: 'Wattker Core Team', description: 'Main workspace for Wattker platform development', owner: 'usr_owner' }
+    { _id: 'ws_1', name: 'Doct Core Team', description: 'Main workspace for Doct platform development', owner: 'usr_owner' }
   ],
   projects: [
-    { _id: 'proj_1', workspaceId: 'ws_1', name: 'Wattker Platform v1', description: 'Core product implementation phase 1', deadline: '2026-08-30', status: 'Active' },
-    { _id: 'proj_2', workspaceId: 'ws_1', name: 'Design System Guidelines', description: 'Creating the Wattker css rules', deadline: '2026-07-25', status: 'Active' }
+    { _id: 'proj_1', workspaceId: 'ws_1', name: 'Doct Platform v1', description: 'Core product implementation phase 1', deadline: '2026-08-30', status: 'Active' },
+    { _id: 'proj_2', workspaceId: 'ws_1', name: 'Design System Guidelines', description: 'Creating the Doct css rules', deadline: '2026-07-25', status: 'Active' }
   ],
   tasks: [
     { _id: 'task_1', projectId: 'proj_1', workspaceId: 'ws_1', title: 'Setup Clerk Authentication Integration', description: 'Configure Clerk provider.', priority: 'Critical', status: 'Todo', dueDate: '2026-07-15', assigneeId: 'usr_admin', subtasks: [], comments: [], attachments: [] }
   ],
   documents: [
-    { _id: 'doc_1', workspaceId: 'ws_1', title: 'Project Manifesto', content: '# Wattker Manifesto\n\nSimple layout over decoration.', parentId: null, authorId: 'usr_owner', createdAt: '2026-07-01' }
+    { _id: 'doc_1', workspaceId: 'ws_1', title: 'Project Manifesto', content: '# Doct Manifesto\n\nSimple layout over decoration.', parentId: null, authorId: 'usr_owner', createdAt: '2026-07-01' }
   ],
   notifications: [],
   logs: []
@@ -334,5 +334,5 @@ app.use((err, req, res, next) => {
 // Startup Server
 const PORT = process.env.PORT || 5000;
 server.listen(PORT, () => {
-  console.log(`🚀 Wattker SaaS server runtime operating on port ${PORT}`);
+  console.log(`🚀 Doct SaaS server runtime operating on port ${PORT}`);
 });
