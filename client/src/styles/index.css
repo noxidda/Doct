@@ -533,3 +533,133 @@ header.appbar {
   }
 }
 
+/* Dashboard Black Theme overrides */
+.app-container {
+  background-color: #000000 !important;
+  color: #F5F5F5 !important;
+}
+
+.app-container .sidebar {
+  background-color: #000000 !important;
+  border-right: 1px solid #222222 !important;
+}
+
+.app-container .main-content {
+  background-color: #000000 !important;
+  color: #F5F5F5 !important;
+}
+
+.app-container .appbar {
+  background-color: #000000 !important;
+  border-bottom: 1px solid #222222 !important;
+  color: #FFFFFF !important;
+}
+
+.app-container .sidebar nav a {
+  color: #B0B0B0 !important;
+}
+
+.app-container .sidebar nav a:hover {
+  background-color: #222222 !important;
+  color: #FFFFFF !important;
+}
+
+.app-container .sidebar nav a.active {
+  background-color: #FFFFFF !important;
+  color: #000000 !important;
+  font-weight: bold;
+}
+
+/* Make inputs, cards, borders, badges look amazing in black theme */
+.app-container .bauhaus-card {
+  background-color: #000000 !important;
+  border: 1px solid #222222 !important;
+  color: #FFFFFF !important;
+  box-shadow: none !important;
+}
+
+.app-container .bauhaus-input, 
+.app-container .bauhaus-select, 
+.app-container .bauhaus-textarea {
+  background-color: #111111 !important;
+  color: #FFFFFF !important;
+  border: 1px solid #333333 !important;
+}
+
+.app-container .bauhaus-input:focus, 
+.app-container .bauhaus-select:focus, 
+.app-container .bauhaus-textarea:focus {
+  border-color: #FFFFFF !important;
+}
+
+.app-container .bauhaus-btn {
+  border-color: #333333 !important;
+  color: #FFFFFF !important;
+}
+
+.app-container .bauhaus-btn:hover {
+  background-color: #FFFFFF !important;
+  color: #000000 !important;
+  border-color: #FFFFFF !important;
+}
+
+.app-container .bauhaus-btn-primary {
+  background-color: #FFFFFF !important;
+  color: #000000 !important;
+  border-color: #FFFFFF !important;
+}
+
+.app-container .bauhaus-btn-primary:hover {
+  background-color: #E0E0E0 !important;
+  color: #000000 !important;
+}
+
+.app-container .bauhaus-badge {
+  background-color: #111111 !important;
+  color: #B0B0B0 !important;
+  border: 1px solid #333333 !important;
+}
+
+.app-container h1, 
+.app-container h2, 
+.app-container h3, 
+.app-container h4, 
+.app-container h5, 
+.app-container h6 {
+  color: #FFFFFF !important;
+}
+
+.app-container p, 
+.app-container span, 
+.app-container label {
+  color: #E0E0E0 !important;
+}
+
+.app-container a {
+  color: #FFFFFF !important;
+}
+
+.app-container td, 
+.app-container th {
+  border-color: #222222 !important;
+  color: #E0E0E0 !important;
+}
+
+/* Kanban column and card overrides */
+.app-container .kanban-column {
+  background-color: #000000 !important;
+  border: 1px solid #222222 !important;
+}
+
+.app-container .kanban-card {
+  background-color: #111111 !important;
+  border: 1px solid #222222 !important;
+  color: #FFFFFF !important;
+  box-shadow: none !important;
+}
+
+.app-container .kanban-card:hover {
+  border-color: #444444 !important;
+}
+
+

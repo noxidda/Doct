@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useApp } from '../context/AppContext';
+import logoImg from '../assets/logo.png';
 import {
   LayoutDashboard,
   FolderKanban,
@@ -81,18 +82,11 @@ const Layout = ({ children }) => {
           <div style={{
             textAlign: 'left',
             marginBottom: '0.5rem',
-            padding: '0 0.5rem'
+            padding: '0 0.5rem',
+            display: 'flex',
+            alignItems: 'center'
           }}>
-            <h1 style={{ 
-              fontSize: '1.8rem', 
-              margin: 0, 
-              letterSpacing: '0.02em', 
-              color: '#1C1B1F',
-              fontWeight: 800,
-              fontFamily: 'var(--font-heading)'
-            }}>
-              Doct.
-            </h1>
+            <img src={logoImg} alt="Doct Logo" style={{ height: '36px', width: 'auto', display: 'block' }} />
           </div>
           
           {/* Workspace Switcher */}

@@ -1,4 +1,4 @@
-import React from 'react';
+import logoImg from '../assets/logo.png';
 import { Link } from 'react-router-dom';
 
 const LandingPage = () => {
@@ -8,9 +8,11 @@ const LandingPage = () => {
       {/* Header Navigation */}
       <header className="appbar">
         <div style={{
-          padding: '0.2rem 0'
+          padding: '0.2rem 0',
+          display: 'flex',
+          alignItems: 'center'
         }}>
-          <h1 style={{ fontSize: '1.6rem', margin: 0, letterSpacing: '0.02em', color: '#1C1B1F', fontWeight: 800, fontFamily: 'var(--font-heading)' }}>Doct.</h1>
+          <img src={logoImg} alt="Doct Logo" style={{ height: '36px', width: 'auto', display: 'block' }} />
         </div>
         
         <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
