@@ -12,86 +12,26 @@ export const AppProvider = ({ children }) => {
   const [socket, setSocket] = useState(null);
   
   // Workspaces
-  const [workspaces, setWorkspaces] = useState([
-    { id: 'ws_1', name: 'Doct Core Team', description: 'Main workspace for Doct platform development', avatar: 'D' },
-    { id: 'ws_2', name: 'Doct Creative Studio', description: 'Branding and design exploration space', avatar: 'C' }
-  ]);
+  const [workspaces, setWorkspaces] = useState([]);
   const [currentWorkspace, setCurrentWorkspace] = useState(null);
 
   // Members
-  const [members, setMembers] = useState([
-    { id: 'usr_owner', name: 'Arthur Bauhaus', email: 'owner@doct.com', role: 'Owner', avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&h=150&q=80', online: true },
-    { id: 'usr_admin', name: 'Gropius Admin', email: 'admin@doct.com', role: 'Admin', avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&h=150&q=80', online: true },
-    { id: 'usr_manager', name: 'Mies Manager', email: 'manager@doct.com', role: 'Manager', avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=150&h=150&q=80', online: false },
-    { id: 'usr_member', name: 'Anni Albers', email: 'member@doct.com', role: 'Member', avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&h=150&q=80', online: true }
-  ]);
+  const [members, setMembers] = useState([]);
 
   // Projects
-  const [projects, setProjects] = useState([
-    { id: 'proj_1', workspaceId: 'ws_1', name: 'Doct Platform v1', description: 'Core product implementation phase 1', deadline: '2026-08-30', status: 'Active' },
-    { id: 'proj_2', workspaceId: 'ws_1', name: 'Design System Guidelines', description: 'Creating the Doct css rules and guidelines', deadline: '2026-07-25', status: 'Active' },
-    { id: 'proj_3', workspaceId: 'ws_1', name: 'Legacy Workspace Migrator', description: 'Data extraction scripts from old servers', deadline: '2026-05-15', status: 'Archived' }
-  ]);
+  const [projects, setProjects] = useState([]);
 
   // Tasks
-  const [tasks, setTasks] = useState([
-    {
-      id: 'task_1',
-      projectId: 'proj_1',
-      workspaceId: 'ws_1',
-      title: 'Setup Clerk Authentication Integration',
-      description: 'Configure Clerk provider and construct JWT verification middlewares on backend.',
-      priority: 'Critical',
-      status: 'Todo',
-      dueDate: '2026-07-15',
-      assigneeId: 'usr_admin',
-      subtasks: [
-        { id: 'sub_1_1', title: 'Register Clerk application console', completed: true },
-        { id: 'sub_1_2', title: 'Code Express verification route middleware', completed: false }
-      ],
-      comments: [
-        { id: 'comm_1_1', userId: 'usr_owner', content: 'Make sure the session stores the fallback local credentials.', timestamp: '2026-07-10T12:00:00Z', replies: [] }
-      ],
-      attachments: []
-    },
-    {
-      id: 'task_2',
-      projectId: 'proj_1',
-      workspaceId: 'ws_1',
-      title: 'Design CSS Tokens & Grids',
-      description: 'Implement typography variables and card components matching dark brown theme (#1C140D).',
-      priority: 'High',
-      status: 'In Progress',
-      dueDate: '2026-07-12',
-      assigneeId: 'usr_member',
-      subtasks: [],
-      comments: [],
-      attachments: []
-    }
-  ]);
+  const [tasks, setTasks] = useState([]);
 
   // Documents
-  const [documents, setDocuments] = useState([
-    {
-      id: 'doc_1',
-      workspaceId: 'ws_1',
-      title: 'Project Manifesto',
-      content: '# Doct Project Manifesto\n\nWelcome to Doct.\n\n## Core Principles\n- **Simple Card Layouts:** Clean rounded borders.\n- **Velvety Wine Backdrop:** Organic wheat accents.',
-      parentId: null,
-      authorId: 'usr_owner',
-      createdAt: '2026-07-01'
-    }
-  ]);
+  const [documents, setDocuments] = useState([]);
 
   // Notifications
-  const [notifications, setNotifications] = useState([
-    { id: 'not_1', userId: 'usr_member', title: 'Task Assigned', content: 'You have been assigned to "Design CSS Tokens & Grids"', isRead: false, type: 'assignment', timestamp: '2026-07-10T14:30:00Z' }
-  ]);
+  const [notifications, setNotifications] = useState([]);
 
   // Activity Logs
-  const [activityLogs, setActivityLogs] = useState([
-    { id: 'log_1', workspaceId: 'ws_1', user: 'Arthur Bauhaus', action: 'Created Project', target: 'Doct Platform v1', timestamp: '2026-07-01T10:00:00Z' }
-  ]);
+  const [activityLogs, setActivityLogs] = useState([]);
 
   // Default workspace
   useEffect(() => {
