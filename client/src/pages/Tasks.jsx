@@ -287,31 +287,26 @@ const Tasks = () => {
                     <div style={{ flex: 1, padding: '0.5rem', display: 'flex', flexDirection: 'column', gap: '0.5rem', overflowY: 'auto', backgroundColor: 'transparent' }}>
                       {columnTasks.map(task => {
                         const proj = projects.find(p => p.id === task.projectId);
-                        const isCritical = task.priority === 'Critical';
                         return (
                           <div 
                             key={task.id} 
                             onClick={() => handleTaskClick(task)}
-                            className={isCritical ? 'wiggle-hover' : ''}
                             style={{
                               padding: '1rem',
                               borderRadius: 'var(--radius-md)',
                               backgroundColor: '#FFFFFF',
                               cursor: 'pointer',
                               transition: 'all 300ms cubic-bezier(0.2, 0, 0, 1)',
-                              transform: activeTask?.id === task.id ? 'scale(0.98)' : 'none',
                               boxShadow: activeTask?.id === task.id ? 'none' : '0px 1px 3px rgba(0, 0, 0, 0.05), 0px 1px 2px rgba(0, 0, 0, 0.1)',
                               border: activeTask?.id === task.id ? '2px solid var(--primary)' : '1px solid var(--border)'
                             }}
                             onMouseEnter={(e) => {
                               if (activeTask?.id !== task.id) {
-                                e.currentTarget.style.transform = 'translateY(-2px)';
                                 e.currentTarget.style.boxShadow = '0px 4px 8px rgba(0, 0, 0, 0.08), 0px 2px 4px rgba(0, 0, 0, 0.05)';
                               }
                             }}
                             onMouseLeave={(e) => {
                               if (activeTask?.id !== task.id) {
-                                e.currentTarget.style.transform = 'none';
                                 e.currentTarget.style.boxShadow = '0px 1px 3px rgba(0, 0, 0, 0.05), 0px 1px 2px rgba(0, 0, 0, 0.1)';
                               }
                             }}
