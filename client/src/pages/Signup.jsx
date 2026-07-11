@@ -65,12 +65,19 @@ const Signup = () => {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: 'rgba(255, 255, 255, 0.9)', // Clean light overlay
-        backdropFilter: 'blur(10px)',
-        padding: '3rem',
-        boxShadow: '-4px 0 24px rgba(0, 0, 0, 0.05)'
+        backgroundColor: 'transparent', // Transparent, so bg image is clear and fully visible
+        backdropFilter: 'none', // No blur effect
+        padding: '2rem'
       }}>
-        <div style={{ width: '100%', maxWidth: '380px' }}>
+        <div style={{ 
+          width: '100%', 
+          maxWidth: '380px',
+          backgroundColor: '#FFFFFF', // Solid white background
+          border: '1px solid #000000', // Black border
+          padding: '2.5rem',
+          borderRadius: '4px',
+          boxShadow: '0 8px 24px rgba(0, 0, 0, 0.15)'
+        }}>
           <h2 style={{ fontSize: '2rem', marginBottom: '0.5rem', letterSpacing: '-0.02em', color: '#000000', fontWeight: 'bold' }}>CREATE ACCOUNT</h2>
           
           {step === 1 ? (
