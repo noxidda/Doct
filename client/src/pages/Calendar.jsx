@@ -138,7 +138,7 @@ const Calendar = () => {
                   color: 'var(--text-primary)',
                   cursor: 'pointer',
                   fontWeight: 'bold',
-                  fontSize: '11px',
+                  fontSize: '12px',
                   textTransform: 'uppercase',
                   borderLeft: mode !== 'month' ? '1px solid var(--border)' : 'none'
                 }}
@@ -161,7 +161,7 @@ const Calendar = () => {
             {/* Week headers */}
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', borderBottom: '2px solid var(--border)', backgroundColor: 'var(--bg-primary)' }}>
               {['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'].map(d => (
-                <div key={d} style={{ padding: '0.75rem', fontSize: '11px', fontWeight: 'bold', textAlign: 'center', letterSpacing: '0.05em' }}>
+                <div key={d} style={{ padding: '0.75rem', fontSize: '12px', fontWeight: 'bold', textAlign: 'center', letterSpacing: '0.05em' }}>
                   {d}
                 </div>
               ))}
@@ -205,7 +205,7 @@ const Calendar = () => {
                           onClick={() => navigate('/tasks')}
                           style={{
                             padding: '2px 4px',
-                            fontSize: '9px',
+                            fontSize: '12px',
                             fontWeight: 'bold',
                             border: '1px solid var(--border)',
                             backgroundColor: t.status === 'Completed' ? 'var(--success)' : 'var(--bg-primary)',
@@ -238,7 +238,7 @@ const Calendar = () => {
                 const cellDate = weekDays[index];
                 return (
                   <div key={d} style={{ padding: '0.75rem', textAlign: 'center' }}>
-                    <div style={{ fontSize: '11px', fontWeight: 'bold' }}>{d}</div>
+                    <div style={{ fontSize: '12px', fontWeight: 'bold' }}>{d}</div>
                     <div style={{ fontSize: '14px', fontWeight: 'bold', marginTop: '0.25rem' }}>{cellDate ? cellDate.getDate() : ''}</div>
                   </div>
                 );
@@ -258,12 +258,12 @@ const Calendar = () => {
                           padding: '0.5rem',
                           border: '2px solid var(--border)',
                           backgroundColor: 'var(--bg-primary)',
-                          fontSize: '11px',
+                          fontSize: '12px',
                           cursor: 'pointer'
                         }}
                       >
                         <div style={{ fontWeight: 'bold' }}>{t.title}</div>
-                        <div className={`bauhaus-badge badge-${t.priority.toLowerCase()}`} style={{ fontSize: '8px', marginTop: '0.5rem' }}>
+                        <div className={`bauhaus-badge badge-${t.priority.toLowerCase()}`} style={{ fontSize: '12px', marginTop: '0.5rem' }}>
                           {t.priority}
                         </div>
                       </div>

@@ -138,7 +138,7 @@ const Layout = ({ children }) => {
                     onMouseLeave={(e) => e.target.style.backgroundColor = currentWorkspace?.id === ws.id ? 'var(--hover)' : 'transparent'}
                   >
                     <div style={{ fontWeight: 'bold', fontSize: '12px' }}>{ws.name}</div>
-                    <div style={{ fontSize: '10px', color: 'var(--text-secondary)' }}>{ws.description}</div>
+                    <div style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>{ws.description}</div>
                   </div>
                 ))}
                 <div 
@@ -146,7 +146,7 @@ const Layout = ({ children }) => {
                     navigate('/settings');
                     setShowWorkspaceMenu(false);
                   }}
-                  style={{ padding: '0.75rem 1rem', cursor: 'pointer', fontSize: '11px', textTransform: 'uppercase', fontWeight: 'bold', textAlign: 'center', backgroundColor: 'var(--border)' }}
+                  style={{ padding: '0.75rem 1rem', cursor: 'pointer', fontSize: '12px', textTransform: 'uppercase', fontWeight: 'bold', textAlign: 'center', backgroundColor: 'var(--border)' }}
                 >
                   Manage Workspaces
                 </div>
@@ -197,7 +197,7 @@ const Layout = ({ children }) => {
             <button 
               onClick={() => setShowRoleMenu(!showRoleMenu)}
               className="bauhaus-btn"
-              style={{ width: '100%', padding: '0.25rem 0.5rem', fontSize: '10px', borderColor: 'var(--warning)', color: 'var(--warning)', justifyContent: 'space-between' }}
+              style={{ width: '100%', padding: '0.25rem 0.5rem', fontSize: '12px', borderColor: 'var(--warning)', color: 'var(--warning)', justifyContent: 'space-between' }}
             >
               <span>Test Role: {user?.role}</span>
               <ChevronDown size={10} />
@@ -220,7 +220,7 @@ const Layout = ({ children }) => {
                       switchRole(r);
                       setShowRoleMenu(false);
                     }}
-                    style={{ padding: '0.5rem 0.75rem', cursor: 'pointer', fontSize: '11px', borderBottom: '1px solid var(--border)' }}
+                    style={{ padding: '0.5rem 0.75rem', cursor: 'pointer', fontSize: '12px', borderBottom: '1px solid var(--border)' }}
                     onMouseEnter={(e) => e.target.style.backgroundColor = 'var(--hover)'}
                     onMouseLeave={(e) => e.target.style.backgroundColor = 'transparent'}
                   >
@@ -239,7 +239,7 @@ const Layout = ({ children }) => {
             />
             <div style={{ flex: 1, minWidth: 0 }}>
               <div style={{ fontWeight: 'bold', fontSize: '13px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', fontFamily: 'var(--font-heading)' }}>{user?.name}</div>
-              <div className="bauhaus-badge" style={{ fontSize: '9px', padding: '1px 8px', border: '2px solid var(--border)', borderRadius: '9999px' }}>{user?.role}</div>
+              <div className="bauhaus-badge" style={{ fontSize: '12px', padding: '1px 8px', border: '2px solid var(--border)', borderRadius: '9999px' }}>{user?.role}</div>
             </div>
             <button 
               onClick={logout}
@@ -287,7 +287,7 @@ const Layout = ({ children }) => {
                 {/* Tasks */}
                 {searchResults.tasks.length > 0 && (
                   <div>
-                    <div style={{ padding: '0.25rem 0.75rem', backgroundColor: 'var(--border)', fontSize: '10px', textTransform: 'uppercase', fontWeight: 'bold' }}>Tasks</div>
+                    <div style={{ padding: '0.25rem 0.75rem', backgroundColor: 'var(--border)', fontSize: '12px', textTransform: 'uppercase', fontWeight: 'bold' }}>Tasks</div>
                     {searchResults.tasks.map(t => (
                       <div 
                         key={t.id} 
@@ -304,7 +304,7 @@ const Layout = ({ children }) => {
                 {/* Projects */}
                 {searchResults.projects.length > 0 && (
                   <div>
-                    <div style={{ padding: '0.25rem 0.75rem', backgroundColor: 'var(--border)', fontSize: '10px', textTransform: 'uppercase', fontWeight: 'bold' }}>Projects</div>
+                    <div style={{ padding: '0.25rem 0.75rem', backgroundColor: 'var(--border)', fontSize: '12px', textTransform: 'uppercase', fontWeight: 'bold' }}>Projects</div>
                     {searchResults.projects.map(p => (
                       <div 
                         key={p.id} 
@@ -321,7 +321,7 @@ const Layout = ({ children }) => {
                 {/* Documents */}
                 {searchResults.documents.length > 0 && (
                   <div>
-                    <div style={{ padding: '0.25rem 0.75rem', backgroundColor: 'var(--border)', fontSize: '10px', textTransform: 'uppercase', fontWeight: 'bold' }}>Documents</div>
+                    <div style={{ padding: '0.25rem 0.75rem', backgroundColor: 'var(--border)', fontSize: '12px', textTransform: 'uppercase', fontWeight: 'bold' }}>Documents</div>
                     {searchResults.documents.map(d => (
                       <div 
                         key={d.id} 
@@ -353,7 +353,7 @@ const Layout = ({ children }) => {
                   right: '-4px',
                   backgroundColor: 'var(--error)',
                   color: 'var(--bg-primary)',
-                  fontSize: '9px',
+                  fontSize: '12px',
                   fontWeight: 'bold',
                   padding: '2px 5px',
                   lineHeight: 1

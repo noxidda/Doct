@@ -62,7 +62,7 @@ const AdminPanel = () => {
         <div className="bauhaus-card" style={{ margin: 0 }}>
           <div className="bauhaus-card-header">
             <h3>USER DIRECTORY REGISTER</h3>
-            <span style={{ fontSize: '11px', color: 'var(--text-secondary)' }}>ACTIVE USERS: {members.length}</span>
+            <span style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>ACTIVE USERS: {members.length}</span>
           </div>
 
           <div className="bauhaus-table-container">
@@ -88,7 +88,7 @@ const AdminPanel = () => {
                         value={member.role} 
                         onChange={(e) => changeMemberRole(member.id, e.target.value)}
                         disabled={member.role === 'Owner'}
-                        style={{ height: '28px', padding: '0 1.5rem 0 0.5rem', fontSize: '11px', width: '120px' }}
+                        style={{ height: '28px', padding: '0 1.5rem 0 0.5rem', fontSize: '12px', width: '120px' }}
                       >
                         <option value="Admin">Admin</option>
                         <option value="Manager">Manager</option>
@@ -104,7 +104,7 @@ const AdminPanel = () => {
                             }
                           }}
                           className="bauhaus-btn bauhaus-btn-danger" 
-                          style={{ padding: '0.2rem 0.5rem', fontSize: '10px' }}
+                          style={{ padding: '0.2rem 0.5rem', fontSize: '12px' }}
                         >
                           Revoke
                         </button>
@@ -123,7 +123,7 @@ const AdminPanel = () => {
         <div className="bauhaus-card" style={{ margin: 0 }}>
           <div className="bauhaus-card-header">
             <h3>WORKSPACE DATABASE ARCHIVE</h3>
-            <span style={{ fontSize: '11px', color: 'var(--text-secondary)' }}>ACTIVE CLUSTERS: {workspaces.length}</span>
+            <span style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>ACTIVE CLUSTERS: {workspaces.length}</span>
           </div>
 
           <div className="bauhaus-table-container">
@@ -154,7 +154,7 @@ const AdminPanel = () => {
                           }
                         }}
                         className="bauhaus-btn bauhaus-btn-danger" 
-                        style={{ padding: '0.2rem 0.5rem', fontSize: '10px' }}
+                        style={{ padding: '0.2rem 0.5rem', fontSize: '12px' }}
                       >
                         Delete Purge
                       </button>
@@ -175,7 +175,7 @@ const AdminPanel = () => {
           <div className="bauhaus-grid-3">
             <div className="bauhaus-card" style={{ margin: 0 }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
-                <span style={{ fontSize: '11px', fontWeight: 'bold' }}>SERVER CPU LOAD</span>
+                <span style={{ fontSize: '12px', fontWeight: 'bold' }}>SERVER CPU LOAD</span>
                 <Cpu size={16} />
               </div>
               <div style={{ fontSize: '2rem', fontWeight: 'bold', marginBottom: '0.5rem' }}>14.2%</div>
@@ -186,7 +186,7 @@ const AdminPanel = () => {
 
             <div className="bauhaus-card" style={{ margin: 0 }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
-                <span style={{ fontSize: '11px', fontWeight: 'bold' }}>DATABASE STORAGE</span>
+                <span style={{ fontSize: '12px', fontWeight: 'bold' }}>DATABASE STORAGE</span>
                 <Database size={16} />
               </div>
               <div style={{ fontSize: '2rem', fontWeight: 'bold', marginBottom: '0.5rem' }}>4.8 MB / 512 MB</div>
@@ -197,7 +197,7 @@ const AdminPanel = () => {
 
             <div className="bauhaus-card" style={{ margin: 0 }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
-                <span style={{ fontSize: '11px', fontWeight: 'bold' }}>CLOUDINARY STORAGE</span>
+                <span style={{ fontSize: '12px', fontWeight: 'bold' }}>CLOUDINARY STORAGE</span>
                 <HardDrive size={16} />
               </div>
               <div style={{ fontSize: '2rem', fontWeight: 'bold', marginBottom: '0.5rem' }}>14.5%</div>

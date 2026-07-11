@@ -112,7 +112,7 @@ const Signup = () => {
             <p style={{ color: 'var(--warning)', fontSize: '13px', marginBottom: '1.5rem', textTransform: 'uppercase', fontWeight: 'bold' }}>
               Verification required: We sent a 6-digit OTP code to {email}.
             </p>
-            <div style={{ fontSize: '11px', color: 'var(--text-secondary)', marginBottom: '1.5rem', padding: '0.5rem', backgroundColor: 'var(--border)' }}>
+            <div style={{ fontSize: '12px', color: 'var(--text-secondary)', marginBottom: '1.5rem', padding: '0.5rem', backgroundColor: 'var(--border)' }}>
               Evaluation Hint: Enter <strong>123456</strong> or leave empty to verify.
             </div>
 

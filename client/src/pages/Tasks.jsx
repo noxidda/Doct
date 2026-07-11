@@ -164,7 +164,7 @@ const Tasks = () => {
                   backgroundColor: activeView === 'kanban' ? 'var(--accent)' : 'transparent',
                   color: activeView === 'kanban' ? '#FFFFFF' : 'var(--foreground)',
                   cursor: 'pointer',
-                  fontSize: '11px',
+                  fontSize: '12px',
                   fontWeight: '800',
                   fontFamily: 'var(--font-heading)'
                 }}
@@ -179,7 +179,7 @@ const Tasks = () => {
                   backgroundColor: activeView === 'list' ? 'var(--accent)' : 'transparent',
                   color: activeView === 'list' ? '#FFFFFF' : 'var(--foreground)',
                   cursor: 'pointer',
-                  fontSize: '11px',
+                  fontSize: '12px',
                   fontWeight: '800',
                   borderLeft: '2px solid var(--border)',
                   fontFamily: 'var(--font-heading)'
@@ -195,7 +195,7 @@ const Tasks = () => {
                   backgroundColor: activeView === 'table' ? 'var(--accent)' : 'transparent',
                   color: activeView === 'table' ? '#FFFFFF' : 'var(--foreground)',
                   cursor: 'pointer',
-                  fontSize: '11px',
+                  fontSize: '12px',
                   fontWeight: '800',
                   borderLeft: '2px solid var(--border)',
                   fontFamily: 'var(--font-heading)'
@@ -281,7 +281,7 @@ const Tasks = () => {
                       backgroundColor: 'rgba(103, 80, 164, 0.05)'
                     }}>
                       <span style={{ fontSize: '13px', fontWeight: '700', letterSpacing: '0.01em', fontFamily: 'var(--font-heading)', color: 'var(--primary)' }}>{status}</span>
-                      <span className="bauhaus-badge" style={{ fontSize: '10px', padding: '2px 8px' }}>{columnTasks.length}</span>
+                      <span className="bauhaus-badge" style={{ fontSize: '12px', padding: '2px 8px' }}>{columnTasks.length}</span>
                     </div>
                     
                     <div style={{ flex: 1, padding: '0.5rem', display: 'flex', flexDirection: 'column', gap: '0.5rem', overflowY: 'auto', backgroundColor: 'transparent' }}>
@@ -311,16 +311,16 @@ const Tasks = () => {
                               }
                             }}
                           >
-                            <div style={{ fontSize: '10px', fontWeight: 'bold', color: 'var(--warning)', textTransform: 'uppercase', marginBottom: '0.25rem' }}>
+                            <div style={{ fontSize: '12px', fontWeight: 'bold', color: 'var(--warning)', textTransform: 'uppercase', marginBottom: '0.25rem' }}>
                               {proj ? proj.name : 'Unassigned Project'}
                             </div>
                             <div style={{ fontWeight: 'bold', fontSize: '13px', marginBottom: '0.5rem', lineHeight: 1.3 }}>{task.title}</div>
                             
                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '0.5rem' }}>
-                              <span className={`bauhaus-badge badge-${task.priority.toLowerCase()}`} style={{ fontSize: '9px' }}>
+                              <span className={`bauhaus-badge badge-${task.priority.toLowerCase()}`} style={{ fontSize: '12px' }}>
                                 {task.priority}
                               </span>
-                              <span style={{ fontSize: '10px', color: 'var(--text-secondary)' }}>{task.dueDate}</span>
+                              <span style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>{task.dueDate}</span>
                             </div>
                           </div>
                         );
@@ -361,7 +361,7 @@ const Tasks = () => {
                           <span style={{ fontWeight: 'bold' }}>{task.title}</span>
                           <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
                             <span className={`bauhaus-badge badge-${task.priority.toLowerCase()}`}>{task.priority}</span>
-                            <span style={{ fontSize: '11px', color: 'var(--text-secondary)' }}>{task.dueDate}</span>
+                            <span style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>{task.dueDate}</span>
                           </div>
                         </div>
                       ))}
@@ -428,7 +428,7 @@ const Tasks = () => {
           
           {/* Header */}
           <div style={{ padding: '1rem', borderBottom: '2px solid var(--border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <span style={{ fontSize: '10px', fontWeight: 'bold', color: 'var(--warning)', letterSpacing: '0.1em' }}>TASK PARAMETERS</span>
+            <span style={{ fontSize: '12px', fontWeight: 'bold', color: 'var(--warning)', letterSpacing: '0.1em' }}>TASK PARAMETERS</span>
             <button onClick={() => setSelectedTask(null)} style={{ background: 'none', border: 'none', color: 'var(--text-primary)', cursor: 'pointer' }}>
               <X size={16} />
             </button>
@@ -539,7 +539,7 @@ const Tasks = () => {
                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                       <Paperclip size={12} />
                       <span style={{ fontWeight: 'bold' }}>{att.name}</span>
-                      <span style={{ color: 'var(--text-secondary)', fontSize: '10px' }}>({att.size})</span>
+                      <span style={{ color: 'var(--text-secondary)', fontSize: '12px' }}>({att.size})</span>
                     </div>
                     <button 
                       onClick={() => deleteAttachment(activeTask.id, att.id)}
@@ -565,7 +565,7 @@ const Tasks = () => {
                     cursor: 'pointer'
                   }}
                 />
-                <button className="bauhaus-btn" style={{ width: '100%', padding: '0.4rem', fontSize: '11px', display: 'flex', gap: '0.25rem' }}>
+                <button className="bauhaus-btn" style={{ width: '100%', padding: '0.4rem', fontSize: '12px', display: 'flex', gap: '0.25rem' }}>
                   <PlusSquare size={12} />
                   <span>Upload Document / Image</span>
                 </button>
@@ -581,14 +581,14 @@ const Tasks = () => {
                   const commMember = members.find(m => m.id === comm.userId);
                   return (
                     <div key={comm.id} style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem', borderBottom: '1px solid var(--border)', paddingBottom: '0.5rem' }}>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '11px' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '12px' }}>
                         <span style={{ fontWeight: 'bold' }}>{commMember ? commMember.name : 'Unknown User'}</span>
                         <span style={{ color: 'var(--text-secondary)' }}>{new Date(comm.timestamp).toLocaleTimeString()}</span>
                       </div>
                       <p style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>{comm.content}</p>
                       <button 
                         onClick={() => deleteComment(activeTask.id, comm.id)}
-                        style={{ alignSelf: 'flex-end', background: 'none', border: 'none', color: 'var(--error)', fontSize: '10px', cursor: 'pointer' }}
+                        style={{ alignSelf: 'flex-end', background: 'none', border: 'none', color: 'var(--error)', fontSize: '12px', cursor: 'pointer' }}
                       >
                         Delete
                       </button>
@@ -613,7 +613,7 @@ const Tasks = () => {
                     setNewCommentText('');
                   }}
                   className="bauhaus-btn" 
-                  style={{ alignSelf: 'flex-end', padding: '0.4rem 1rem', fontSize: '11px' }}
+                  style={{ alignSelf: 'flex-end', padding: '0.4rem 1rem', fontSize: '12px' }}
                 >
                   Send Comment
                 </button>
@@ -625,7 +625,7 @@ const Tasks = () => {
               <button 
                 onClick={() => duplicateTask(activeTask.id)} 
                 className="bauhaus-btn" 
-                style={{ flex: 1, padding: '0.4rem', fontSize: '11px' }}
+                style={{ flex: 1, padding: '0.4rem', fontSize: '12px' }}
               >
                 <Copy size={12} />
                 <span>Duplicate</span>
@@ -638,7 +638,7 @@ const Tasks = () => {
                   }
                 }} 
                 className="bauhaus-btn bauhaus-btn-danger" 
-                style={{ flex: 1, padding: '0.4rem', fontSize: '11px' }}
+                style={{ flex: 1, padding: '0.4rem', fontSize: '12px' }}
               >
                 <Trash2 size={12} />
                 <span>Delete</span>

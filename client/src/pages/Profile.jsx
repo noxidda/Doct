@@ -47,7 +47,7 @@ const Profile = () => {
               placeholder="Paste Image URL"
               style={{ width: '320px', height: '36px' }}
             />
-            <span style={{ fontSize: '11px', color: 'var(--text-secondary)' }}>Enter an absolute URL to change your profile image avatar.</span>
+            <span style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>Enter an absolute URL to change your profile image avatar.</span>
           </div>
         </div>
 

@@ -89,7 +89,7 @@ const Login = () => {
           <div>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <label className="bauhaus-label">Password</label>
-              <Link to="/forgot-password" style={{ fontSize: '11px', textTransform: 'uppercase', color: 'var(--warning)', marginBottom: '0.5rem' }}>Forgot password?</Link>
+              <Link to="/forgot-password" style={{ fontSize: '12px', textTransform: 'uppercase', color: 'var(--warning)', marginBottom: '0.5rem' }}>Forgot password?</Link>
             </div>
             <input 
               type="password" 
@@ -116,35 +116,35 @@ const Login = () => {
           borderTop: '1px solid var(--border)',
           paddingTop: '1.5rem'
         }}>
-          <span style={{ fontSize: '10px', fontWeight: 'bold', color: 'var(--warning)', letterSpacing: '0.1em', textTransform: 'uppercase', display: 'block', marginBottom: '1rem' }}>
+          <span style={{ fontSize: '12px', fontWeight: 'bold', color: 'var(--warning)', letterSpacing: '0.1em', textTransform: 'uppercase', display: 'block', marginBottom: '1rem' }}>
             EVALUATOR QUICK ACCESS (DEMO ACCOUNTS)
           </span>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem' }}>
             <button 
               onClick={() => handleQuickLogin('owner@doct.com')}
               className="bauhaus-btn" 
-              style={{ fontSize: '11px', padding: '0.5rem', justifyContent: 'flex-start' }}
+              style={{ fontSize: '12px', padding: '0.5rem', justifyContent: 'flex-start' }}
             >
               <span>Arthur (Owner)</span>
             </button>
             <button 
               onClick={() => handleQuickLogin('admin@doct.com')}
               className="bauhaus-btn" 
-              style={{ fontSize: '11px', padding: '0.5rem', justifyContent: 'flex-start' }}
+              style={{ fontSize: '12px', padding: '0.5rem', justifyContent: 'flex-start' }}
             >
               <span>Gropius (Admin)</span>
             </button>
             <button 
               onClick={() => handleQuickLogin('manager@doct.com')}
               className="bauhaus-btn" 
-              style={{ fontSize: '11px', padding: '0.5rem', justifyContent: 'flex-start' }}
+              style={{ fontSize: '12px', padding: '0.5rem', justifyContent: 'flex-start' }}
             >
               <span>Mies (Manager)</span>
             </button>
             <button 
               onClick={() => handleQuickLogin('member@doct.com')}
               className="bauhaus-btn" 
-              style={{ fontSize: '11px', padding: '0.5rem', justifyContent: 'flex-start' }}
+              style={{ fontSize: '12px', padding: '0.5rem', justifyContent: 'flex-start' }}
             >
               <span>Anni (Member)</span>
             </button>

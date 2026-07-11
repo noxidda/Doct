@@ -201,8 +201,8 @@ const Documents = () => {
         flexShrink: 0
       }}>
         <div style={{ padding: '1rem', borderBottom: '2px solid var(--border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <span style={{ fontSize: '11px', fontWeight: 'bold', letterSpacing: '0.05em' }}>DOC OUTLINES</span>
-          <button onClick={() => handleCreateNew(null)} className="bauhaus-btn" style={{ padding: '0.25rem 0.5rem', fontSize: '10px' }}>
+          <span style={{ fontSize: '12px', fontWeight: 'bold', letterSpacing: '0.05em' }}>DOC OUTLINES</span>
+          <button onClick={() => handleCreateNew(null)} className="bauhaus-btn" style={{ padding: '0.25rem 0.5rem', fontSize: '12px' }}>
             <Plus size={12} />
             <span>Root</span>
           </button>
@@ -248,7 +248,7 @@ const Documents = () => {
             </div>
           ) : (
             <>
-              <div style={{ fontSize: '11px', color: 'var(--text-secondary)' }}>
+              <div style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>
                 Author: <strong>{activeDoc ? workspaceDocs.find(d => d.id === activeDoc.id)?.authorId || 'Arthur' : '-'}</strong> | Created: {activeDoc?.createdAt}
               </div>
               {activeDoc && (

@@ -58,7 +58,7 @@ const Dashboard = () => {
             <FolderKanban size={24} />
           </div>
           <div>
-            <div style={{ fontSize: '11px', textTransform: 'uppercase', color: 'var(--text-secondary)', fontWeight: 'bold' }}>Active Projects</div>
+            <div style={{ fontSize: '12px', textTransform: 'uppercase', color: 'var(--text-secondary)', fontWeight: 'bold' }}>Active Projects</div>
             <div style={{ fontSize: '2rem', fontWeight: 'bold', lineHeight: 1.1, marginTop: '0.25rem' }}>{activeProjects.length}</div>
           </div>
         </div>
@@ -69,7 +69,7 @@ const Dashboard = () => {
             <CheckSquare size={24} />
           </div>
           <div>
-            <div style={{ fontSize: '11px', textTransform: 'uppercase', color: 'var(--text-secondary)', fontWeight: 'bold' }}>Completion Rate</div>
+            <div style={{ fontSize: '12px', textTransform: 'uppercase', color: 'var(--text-secondary)', fontWeight: 'bold' }}>Completion Rate</div>
             <div style={{ fontSize: '2rem', fontWeight: 'bold', lineHeight: 1.1, marginTop: '0.25rem' }}>{completionRate}%</div>
           </div>
         </div>
@@ -80,7 +80,7 @@ const Dashboard = () => {
             <Users size={24} />
           </div>
           <div>
-            <div style={{ fontSize: '11px', textTransform: 'uppercase', color: 'var(--text-secondary)', fontWeight: 'bold' }}>Workspace Members</div>
+            <div style={{ fontSize: '12px', textTransform: 'uppercase', color: 'var(--text-secondary)', fontWeight: 'bold' }}>Workspace Members</div>
             <div style={{ fontSize: '2rem', fontWeight: 'bold', lineHeight: 1.1, marginTop: '0.25rem' }}>{totalMembers}</div>
           </div>
         </div>
@@ -91,7 +91,7 @@ const Dashboard = () => {
             <AlertTriangle size={24} />
           </div>
           <div>
-            <div style={{ fontSize: '11px', textTransform: 'uppercase', color: overdueTasks > 0 ? 'var(--error)' : 'var(--text-secondary)', fontWeight: 'bold' }}>Overdue Tasks</div>
+            <div style={{ fontSize: '12px', textTransform: 'uppercase', color: overdueTasks > 0 ? 'var(--error)' : 'var(--text-secondary)', fontWeight: 'bold' }}>Overdue Tasks</div>
             <div style={{ fontSize: '2rem', fontWeight: 'bold', lineHeight: 1.1, marginTop: '0.25rem', color: overdueTasks > 0 ? 'var(--error)' : 'var(--text-primary)' }}>{overdueTasks}</div>
           </div>
         </div>
@@ -105,7 +105,7 @@ const Dashboard = () => {
         <div className="bauhaus-card" style={{ margin: 0 }}>
           <div className="bauhaus-card-header">
             <h3>PROJECT RUNTIME</h3>
-            <span style={{ fontSize: '11px', color: 'var(--text-secondary)' }}>PROGRESS %</span>
+            <span style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>PROGRESS %</span>
           </div>
           
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
@@ -145,7 +145,7 @@ const Dashboard = () => {
         <div className="bauhaus-card" style={{ margin: 0 }}>
           <div className="bauhaus-card-header">
             <h3>PRIORITY DISTRIBUTION</h3>
-            <span style={{ fontSize: '11px', color: 'var(--text-secondary)' }}>TASK count</span>
+            <span style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>TASK count</span>
           </div>
 
           {/* SVG Custom Column Chart */}
@@ -168,7 +168,7 @@ const Dashboard = () => {
                     boxShadow: '3px 3px 0px var(--border)',
                     borderRadius: '6px'
                   }} />
-                  <span style={{ fontSize: '9px', fontWeight: '800', marginTop: '0.75rem', letterSpacing: '0.05em', color: 'var(--text-muted)' }}>{col.label}</span>
+                  <span style={{ fontSize: '12px', fontWeight: '800', marginTop: '0.75rem', letterSpacing: '0.05em', color: 'var(--text-muted)' }}>{col.label}</span>
                 </div>
               );
             })}
@@ -181,7 +181,7 @@ const Dashboard = () => {
       <div className="bauhaus-card" style={{ margin: 0 }}>
         <div className="bauhaus-card-header">
           <h3>RECENT RUNTIME ACTIONS</h3>
-          <button onClick={() => navigate('/notifications')} className="bauhaus-btn" style={{ padding: '0.25rem 0.75rem', fontSize: '10px' }}>
+          <button onClick={() => navigate('/notifications')} className="bauhaus-btn" style={{ padding: '0.25rem 0.75rem', fontSize: '12px' }}>
             Open Audits
           </button>
         </div>

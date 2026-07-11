@@ -134,7 +134,7 @@ const Projects = () => {
                     toggleArchive(proj.id, proj.status);
                   }}
                   className="bauhaus-btn"
-                  style={{ padding: '0.25rem 0.5rem', fontSize: '10px' }}
+                  style={{ padding: '0.25rem 0.5rem', fontSize: '12px' }}
                 >
                   {proj.status === 'Active' ? 'Archive' : 'Restore'}
                 </button>

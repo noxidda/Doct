@@ -28,7 +28,7 @@ const Notifications = () => {
             <button 
               onClick={markAllNotificationsRead} 
               className="bauhaus-btn bauhaus-btn-success"
-              style={{ padding: '0.4rem 1rem', fontSize: '11px' }}
+              style={{ padding: '0.4rem 1rem', fontSize: '12px' }}
             >
               <Check size={14} />
               <span>Mark All Read</span>
@@ -62,7 +62,7 @@ const Notifications = () => {
                 <div>
                   <h4 style={{ margin: 0, fontSize: '14px', textTransform: 'none' }}>{notif.title}</h4>
                   <p style={{ color: 'var(--text-secondary)', fontSize: '12px', marginTop: '0.25rem' }}>{notif.content}</p>
-                  <span style={{ fontSize: '10px', color: 'var(--text-secondary)' }}>{new Date(notif.timestamp).toLocaleString()}</span>
+                  <span style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>{new Date(notif.timestamp).toLocaleString()}</span>
                 </div>
               </div>
 
@@ -100,7 +100,7 @@ const Notifications = () => {
       <div className="bauhaus-card" style={{ margin: 0 }}>
         <div className="bauhaus-card-header">
           <h3>GLOBAL AUDIT LOGS</h3>
-          <span style={{ fontSize: '11px', color: 'var(--text-secondary)' }}>RUNTIME HISTORY</span>
+          <span style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>RUNTIME HISTORY</span>
         </div>
 
         <div className="bauhaus-table-container">

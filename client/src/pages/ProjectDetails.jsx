@@ -70,7 +70,7 @@ const ProjectDetails = () => {
       <div className="bauhaus-grid-3" style={{ marginBottom: '2rem' }}>
         <div className="bauhaus-card" style={{ margin: 0 }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <span style={{ fontSize: '11px', fontWeight: 'bold', color: 'var(--text-secondary)' }}>PROGRESS RATE</span>
+            <span style={{ fontSize: '12px', fontWeight: 'bold', color: 'var(--text-secondary)' }}>PROGRESS RATE</span>
             <Layers size={16} style={{ color: 'var(--warning)' }} />
           </div>
           <div style={{ fontSize: '2rem', fontWeight: 'bold', margin: '0.5rem 0' }}>{progress}%</div>
@@ -81,7 +81,7 @@ const ProjectDetails = () => {
 
         <div className="bauhaus-card" style={{ margin: 0 }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <span style={{ fontSize: '11px', fontWeight: 'bold', color: 'var(--text-secondary)' }}>COMPLETED TASKS</span>
+            <span style={{ fontSize: '12px', fontWeight: 'bold', color: 'var(--text-secondary)' }}>COMPLETED TASKS</span>
             <CheckSquare size={16} style={{ color: 'var(--success)' }} />
           </div>
           <div style={{ fontSize: '2rem', fontWeight: 'bold', margin: '0.5rem 0' }}>{completedCount}</div>
@@ -90,7 +90,7 @@ const ProjectDetails = () => {
 
         <div className="bauhaus-card" style={{ margin: 0 }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <span style={{ fontSize: '11px', fontWeight: 'bold', color: 'var(--text-secondary)' }}>TARGET MILESTONE</span>
+            <span style={{ fontSize: '12px', fontWeight: 'bold', color: 'var(--text-secondary)' }}>TARGET MILESTONE</span>
             <Calendar size={16} style={{ color: 'var(--warning)' }} />
           </div>
           <div style={{ fontSize: '1.5rem', fontWeight: 'bold', margin: '0.75rem 0 0.5rem 0' }}>{project.deadline}</div>
@@ -102,7 +102,7 @@ const ProjectDetails = () => {
       <div className="bauhaus-card">
         <div className="bauhaus-card-header">
           <h3>PROJECT RUNTIME TASKS ({projectTasks.length})</h3>
-          <Link to="/tasks" className="bauhaus-btn" style={{ padding: '0.25rem 0.75rem', fontSize: '10px' }}>
+          <Link to="/tasks" className="bauhaus-btn" style={{ padding: '0.25rem 0.75rem', fontSize: '12px' }}>
             Open Task Board
           </Link>
         </div>

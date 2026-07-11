@@ -124,7 +124,7 @@ const Members = () => {
 
                 <div style={{ flex: 1, minWidth: 0 }}>
                   <div style={{ fontWeight: 'bold', fontSize: '15px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                    {member.name} {isSelf && <span style={{ color: 'var(--warning)', fontSize: '11px' }}>(YOU)</span>}
+                    {member.name} {isSelf && <span style={{ color: 'var(--warning)', fontSize: '12px' }}>(YOU)</span>}
                   </div>
                   <div style={{ color: 'var(--text-secondary)', fontSize: '12px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{member.email}</div>
                 </div>
@@ -134,20 +134,20 @@ const Members = () => {
                 
                 {/* Role Switcher */}
                 <div>
-                  <label className="bauhaus-label" style={{ fontSize: '9px', marginBottom: '0.25rem' }}>Access Role</label>
+                  <label className="bauhaus-label" style={{ fontSize: '12px', marginBottom: '0.25rem' }}>Access Role</label>
                   {canManageRoles && !isSelf && member.role !== 'Owner' ? (
                     <select
                       className="bauhaus-select"
                       value={member.role}
                       onChange={(e) => changeMemberRole(member.id, e.target.value)}
-                      style={{ height: '28px', padding: '0 1.5rem 0 0.5rem', fontSize: '11px', width: '120px' }}
+                      style={{ height: '28px', padding: '0 1.5rem 0 0.5rem', fontSize: '12px', width: '120px' }}
                     >
                       <option value="Admin">Admin</option>
                       <option value="Manager">Manager</option>
                       <option value="Member">Member</option>
                     </select>
                   ) : (
-                    <span className="bauhaus-badge" style={{ fontSize: '10px' }}>{member.role}</span>
+                    <span className="bauhaus-badge" style={{ fontSize: '12px' }}>{member.role}</span>
                   )}
                 </div>
 
