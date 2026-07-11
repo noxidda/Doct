@@ -521,3 +521,15 @@ header.appbar {
 ::-webkit-scrollbar-thumb:hover {
   background: var(--text-muted);
 }
+
+/* Responsive login/signup split screen adjustments */
+@media (max-width: 900px) {
+  .login-split-container {
+    grid-template-columns: 1fr !important;
+  }
+  .login-split-card-side {
+    background-color: rgba(255, 255, 255, 0.95) !important;
+    padding: 2rem !important;
+  }
+}
+
