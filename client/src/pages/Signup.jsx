@@ -53,7 +53,7 @@ const Signup = () => {
       backgroundPosition: 'center',
       minHeight: '100vh',
       display: 'grid',
-      gridTemplateColumns: '1.2fr 0.8fr', // Split screen layout
+      gridTemplateColumns: '1fr 1fr', // Split screen layout
       alignItems: 'stretch',
       padding: 0
     }}>
