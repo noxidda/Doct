@@ -85,9 +85,19 @@ const Layout = ({ children }) => {
             marginBottom: '0.5rem',
             padding: '0 0.5rem',
             display: 'flex',
-            alignItems: 'center'
+            alignItems: 'center',
+            gap: '0.5rem'
           }}>
-            <img src={logoBlack} alt="Doct Logo" style={{ height: '36px', width: 'auto', display: 'block' }} />
+            <img src={logoBlack} alt="Doct Logo" style={{ height: '32px', width: 'auto', display: 'block' }} />
+            <span style={{ 
+              fontSize: '1.6rem', 
+              fontWeight: 800, 
+              color: '#1C1B1F', 
+              letterSpacing: '0.02em',
+              fontFamily: 'var(--font-heading)'
+            }}>
+              doct.
+            </span>
           </div>
           
           {/* Workspace Switcher */}

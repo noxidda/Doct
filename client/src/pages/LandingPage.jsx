@@ -11,9 +11,19 @@ const LandingPage = () => {
         <div style={{
           padding: '0.2rem 0',
           display: 'flex',
-          alignItems: 'center'
+          alignItems: 'center',
+          gap: '0.5rem'
         }}>
-          <img src={logoBlack} alt="Doct Logo" style={{ height: '36px', width: 'auto', display: 'block' }} />
+          <img src={logoBlack} alt="Doct Logo" style={{ height: '32px', width: 'auto', display: 'block' }} />
+          <span style={{ 
+            fontSize: '1.5rem', 
+            fontWeight: 800, 
+            color: '#1C1B1F', 
+            letterSpacing: '0.02em',
+            fontFamily: 'var(--font-heading)'
+          }}>
+            doct.
+          </span>
         </div>
         
         <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
