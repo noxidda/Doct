@@ -271,16 +271,6 @@ export const AppProvider = ({ children }) => {
   // Project CRUD
   const createProject = async (name, description, deadline) => {
     if (!currentWorkspace) return null;
-    const localProj = {
-      id: `proj_${Date.now()}`,
-      workspaceId: currentWorkspace.id,
-      name,
-      description,
-      deadline,
-      status: 'Active'
-    };
-
-    setProjects(prev => [...prev, localProj]);
     logActivity('Created Project', name);
 
     try {
@@ -292,13 +282,16 @@ export const AppProvider = ({ children }) => {
       });
       if (res.data) {
         const serverProj = { ...res.data, id: res.data._id || res.data.id };
-        setProjects(prev => prev.map(p => p.id === localProj.id ? serverProj : p));
+        setProjects(prev => {
+          if (prev.some(p => p.id === serverProj.id)) return prev;
+          return [...prev, serverProj];
+        });
         return serverProj;
       }
     } catch (e) {
       console.warn('Project api create failed');
     }
-    return localProj;
+    return null;
   };
 
   const editProject = async (id, updatedData) => {
@@ -325,18 +318,8 @@ export const AppProvider = ({ children }) => {
   // Task CRUD
   const createTask = async (taskData) => {
     if (!currentWorkspace) return null;
-    const localTask = {
-      id: `task_${Date.now()}`,
-      workspaceId: currentWorkspace.id,
-      subtasks: [],
-      comments: [],
-      attachments: [],
-      ...taskData
-    };
-
-    setTasks(prev => [...prev, localTask]);
-    logActivity('Created Task', localTask.title);
-    sendNotification('Task Created', `New task "${localTask.title}" has been created.`, 'task_created');
+    logActivity('Created Task', taskData.title);
+    sendNotification('Task Created', `New task "${taskData.title}" has been created.`, 'task_created');
 
     try {
       const res = await api.post('/tasks', {
@@ -345,13 +328,16 @@ export const AppProvider = ({ children }) => {
       });
       if (res.data) {
         const serverTask = { ...res.data, id: res.data._id || res.data.id };
-        setTasks(prev => prev.map(t => t.id === localTask.id ? serverTask : t));
+        setTasks(prev => {
+          if (prev.some(t => t.id === serverTask.id)) return prev;
+          return [...prev, serverTask];
+        });
         return serverTask;
       }
     } catch (e) {
       console.warn('Task api create failed');
     }
-    return localTask;
+    return null;
   };
 
   const updateTask = async (id, updatedData) => {
