@@ -1,28 +1,28 @@
 :root {
-  /* Material You (Material Design 3) Color System - Purple/Violet Seed (#6750A4) */
-  --bg-primary: #FFFBFE;             /* Warm off-white surface */
+  /* Material You (Material Design 3) Color System - Black & White with Lavender */
+  --bg-primary: #FFFFFF;             /* Pure white surface */
   --foreground: #1C1B1F;             /* Near-black text */
   --text-primary: #1C1B1F;
   --text-secondary: #49454F;         /* On Surface Variant for secondary text */
   --text-muted: #79747E;             /* Muted text / borders */
   
-  --primary: #6750A4;                 /* Vivid Violet (Seed Color) */
+  --primary: #1C1B1F;                 /* Near-Black Primary */
   --on-primary: #FFFFFF;
-  --secondary-container: #E8DEF8;    /* Lavender container tint */
+  --secondary-container: #E8DEF8;    /* Lavender container tint (KEPT) */
   --on-secondary-container: #1D192B;
-  --tertiary: #7D5260;               /* Dusty Rose Accent */
+  --tertiary: #49454F;               /* Dark grey / black accent */
   
-  --surface-container: #F3EDF7;      /* Subtle tinted surface container */
-  --surface-container-low: #E7E0EC;  /* Recessed input background */
+  --surface-container: #F3EDF7;      /* Subtle tinted surface container (KEPT) */
+  --surface-container-low: #E7E0EC;  /* Recessed input background (KEPT) */
   
-  --border: rgba(121, 116, 126, 0.2); /* Thin translucent borders */
+  --border: rgba(28, 27, 31, 0.15);  /* Clean near-black borders */
   --outline: #79747E;                /* Outline border color */
   --card: var(--surface-container);
-  --hover: rgba(103, 80, 164, 0.08); /* 8% Primary color for hover state layer */
+  --hover: rgba(28, 27, 31, 0.08);   /* 8% Black hover state layer */
   
-  --success: #2e7d32;
-  --warning: #ef6c00;
-  --error: #b3261e;                  /* Material 3 error crimson */
+  --success: #1C1B1F;                /* Black for success */
+  --warning: #49454F;                /* Dark grey for warning */
+  --error: #000000;                  /* Pure black for error */
   
   --font-family: 'Roboto', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-heading: 'Roboto', sans-serif;
@@ -150,9 +150,9 @@ header.appbar {
   align-items: center;
   justify-content: space-between;
   padding: 0 2rem !important;
-  background-color: rgba(255, 251, 254, 0.8) !important;
+  background-color: rgba(255, 255, 255, 0.9) !important;
   backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--border) !important;
+  border-bottom: 1px solid #1C1B1F !important;
   position: sticky;
   top: 0;
   z-index: 50;
@@ -163,11 +163,11 @@ header.appbar {
 /* Sidebar Navigation (styled as Material You Navigation Drawer) */
 .sidebar {
   width: 260px;
-  background-color: var(--surface-container);
+  background-color: #FFFFFF !important;
   display: flex;
   flex-direction: column;
   height: 100%;
-  border-right: 1px solid var(--border);
+  border-right: 1px solid #1C1B1F !important;
   z-index: 10;
 }
 
@@ -178,7 +178,7 @@ header.appbar {
   padding: 0.75rem 1.5rem;
   margin: 0.25rem 0.75rem !important;
   border-radius: var(--radius-full) !important;
-  color: var(--text-secondary) !important;
+  color: #49454F !important;
   font-weight: 500;
   text-transform: none; /* No Neobrutalist uppercase */
   font-size: 14px;
@@ -190,14 +190,14 @@ header.appbar {
 }
 
 .sidebar nav a:hover {
-  background-color: rgba(103, 80, 164, 0.08) !important; /* State layer */
-  color: var(--primary) !important;
+  background-color: rgba(28, 27, 31, 0.08) !important; /* State layer */
+  color: #1C1B1F !important;
   transform: none !important; /* No rotations */
 }
 
 .sidebar nav a.active {
-  background-color: var(--secondary-container) !important;
-  color: var(--on-secondary-container) !important;
+  background-color: #1C1B1F !important;
+  color: #FFFFFF !important;
   font-weight: 700;
   box-shadow: none !important;
   transform: none !important;
@@ -225,7 +225,7 @@ header.appbar {
 
 
 .bauhaus-btn:hover {
-  background-color: rgba(103, 80, 164, 0.08); /* Hover state layer */
+  background-color: rgba(28, 27, 31, 0.08); /* Hover state layer */
   border-color: var(--primary);
   transform: none;
   box-shadow: none;
@@ -247,7 +247,7 @@ header.appbar {
 }
 
 .bauhaus-btn-primary:hover {
-  background-color: #5c4794; /* 90% Primary color equivalent */
+  background-color: #333333; /* Dark grey hover */
   color: var(--on-primary);
 }
 
@@ -428,7 +428,7 @@ header.appbar {
 }
 
 .bauhaus-table th {
-  background-color: rgba(103, 80, 164, 0.08); /* primary container overlay */
+  background-color: rgba(0, 0, 0, 0.05); /* neutral container overlay */
   color: var(--primary);
   font-weight: 500;
   text-transform: none;
@@ -451,7 +451,7 @@ header.appbar {
 }
 
 .bauhaus-table tr:hover td {
-  background-color: rgba(103, 80, 164, 0.04);
+  background-color: rgba(0, 0, 0, 0.02);
   color: var(--foreground);
 }
 
@@ -483,7 +483,7 @@ header.appbar {
 }
 
 .bauhaus-tab:hover:not(.active) {
-  background-color: rgba(103, 80, 164, 0.08);
+  background-color: rgba(0, 0, 0, 0.05);
 }
 
 /* Badges & Pills */
@@ -501,9 +501,9 @@ header.appbar {
 }
 
 .badge-low, .badge-backlog { background-color: var(--surface-container-low); color: var(--text-secondary); }
-.badge-medium, .badge-todo { background-color: #FFE0B2; color: #E65100; } /* Soft Amber warning tone */
-.badge-high, .badge-in_progress { background-color: #F8BBD0; color: #C2185B; } /* Soft Pink high tone */
-.badge-critical, .badge-completed { background-color: #C8E6C9; color: #2E7D32; } /* Soft Green success tone */
+.badge-medium, .badge-todo { background-color: #F3F4F6; color: #1F2937; } /* Soft grey warning tone */
+.badge-high, .badge-in_progress { background-color: #E5E7EB; color: #111827; } /* Medium grey high tone */
+.badge-critical, .badge-completed { background-color: #111827; color: #FFFFFF; } /* Near-black success tone */
 .badge-review { background-color: var(--secondary-container); color: var(--on-secondary-container); }
 
 /* Scrollbars */
@@ -532,6 +532,7 @@ header.appbar {
     padding: 2rem !important;
   }
 }
-
-
-
+/* Hide Clerk powered-by branding if it leaks */
+.cl-poweredByClerk {
+  display: none !important;
+}

@@ -6,7 +6,6 @@ import { useAuth } from './context/AuthContext';
 import LandingPage from './pages/LandingPage';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
-import ForgotPassword from './pages/ForgotPassword';
 import Dashboard from './pages/Dashboard';
 import Projects from './pages/Projects';
 import ProjectDetails from './pages/ProjectDetails';
@@ -98,11 +97,6 @@ function App() {
         <Route path="/signup" element={
           <PublicRoute>
             <Signup />
-          </PublicRoute>
-        } />
-        <Route path="/forgot-password" element={
-          <PublicRoute>
-            <ForgotPassword />
           </PublicRoute>
         } />
 

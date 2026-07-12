@@ -53,47 +53,27 @@ const Dashboard = () => {
       <div className="bauhaus-grid-4" style={{ marginBottom: '2rem' }}>
         
         {/* Metric 1 */}
-        <div className="bauhaus-card" style={{ display: 'flex', gap: '1.25rem', alignItems: 'center', margin: 0 }}>
-          <div style={{ padding: '0.75rem', backgroundColor: 'var(--secondary-container)', color: 'var(--on-secondary-container)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <FolderKanban size={24} />
-          </div>
-          <div>
-            <div style={{ fontSize: '12px', textTransform: 'uppercase', color: 'var(--text-secondary)', fontWeight: 'bold' }}>Active Projects</div>
-            <div style={{ fontSize: '2rem', fontWeight: 'bold', lineHeight: 1.1, marginTop: '0.25rem' }}>{activeProjects.length}</div>
-          </div>
+        <div className="bauhaus-card" style={{ margin: 0, padding: '1.5rem' }}>
+          <div style={{ fontSize: '12px', textTransform: 'uppercase', color: 'var(--text-secondary)', fontWeight: 'bold' }}>Active Projects</div>
+          <div style={{ fontSize: '2.5rem', fontWeight: 'bold', lineHeight: 1.1, marginTop: '0.5rem' }}>{activeProjects.length}</div>
         </div>
 
         {/* Metric 2 */}
-        <div className="bauhaus-card" style={{ display: 'flex', gap: '1.25rem', alignItems: 'center', margin: 0 }}>
-          <div style={{ padding: '0.75rem', backgroundColor: 'var(--secondary-container)', color: 'var(--on-secondary-container)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <CheckSquare size={24} />
-          </div>
-          <div>
-            <div style={{ fontSize: '12px', textTransform: 'uppercase', color: 'var(--text-secondary)', fontWeight: 'bold' }}>Completion Rate</div>
-            <div style={{ fontSize: '2rem', fontWeight: 'bold', lineHeight: 1.1, marginTop: '0.25rem' }}>{completionRate}%</div>
-          </div>
+        <div className="bauhaus-card" style={{ margin: 0, padding: '1.5rem' }}>
+          <div style={{ fontSize: '12px', textTransform: 'uppercase', color: 'var(--text-secondary)', fontWeight: 'bold' }}>Completion Rate</div>
+          <div style={{ fontSize: '2.5rem', fontWeight: 'bold', lineHeight: 1.1, marginTop: '0.5rem' }}>{completionRate}%</div>
         </div>
 
         {/* Metric 3 */}
-        <div className="bauhaus-card" style={{ display: 'flex', gap: '1.25rem', alignItems: 'center', margin: 0 }}>
-          <div style={{ padding: '0.75rem', backgroundColor: 'var(--secondary-container)', color: 'var(--on-secondary-container)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <Users size={24} />
-          </div>
-          <div>
-            <div style={{ fontSize: '12px', textTransform: 'uppercase', color: 'var(--text-secondary)', fontWeight: 'bold' }}>Workspace Members</div>
-            <div style={{ fontSize: '2rem', fontWeight: 'bold', lineHeight: 1.1, marginTop: '0.25rem' }}>{totalMembers}</div>
-          </div>
+        <div className="bauhaus-card" style={{ margin: 0, padding: '1.5rem' }}>
+          <div style={{ fontSize: '12px', textTransform: 'uppercase', color: 'var(--text-secondary)', fontWeight: 'bold' }}>Workspace Members</div>
+          <div style={{ fontSize: '2.5rem', fontWeight: 'bold', lineHeight: 1.1, marginTop: '0.5rem' }}>{totalMembers}</div>
         </div>
 
         {/* Metric 4 */}
-        <div className="bauhaus-card" style={{ display: 'flex', gap: '1.25rem', alignItems: 'center', margin: 0, border: overdueTasks > 0 ? '1px solid var(--error)' : 'none' }}>
-          <div style={{ padding: '0.75rem', backgroundColor: overdueTasks > 0 ? '#F9DEDC' : 'var(--secondary-container)', color: overdueTasks > 0 ? '#410E0B' : 'var(--on-secondary-container)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <AlertTriangle size={24} />
-          </div>
-          <div>
-            <div style={{ fontSize: '12px', textTransform: 'uppercase', color: overdueTasks > 0 ? 'var(--error)' : 'var(--text-secondary)', fontWeight: 'bold' }}>Overdue Tasks</div>
-            <div style={{ fontSize: '2rem', fontWeight: 'bold', lineHeight: 1.1, marginTop: '0.25rem', color: overdueTasks > 0 ? 'var(--error)' : 'var(--text-primary)' }}>{overdueTasks}</div>
-          </div>
+        <div className="bauhaus-card" style={{ margin: 0, padding: '1.5rem', border: overdueTasks > 0 ? '1px solid var(--error)' : 'none' }}>
+          <div style={{ fontSize: '12px', textTransform: 'uppercase', color: overdueTasks > 0 ? 'var(--error)' : 'var(--text-secondary)', fontWeight: 'bold' }}>Overdue Tasks</div>
+          <div style={{ fontSize: '2.5rem', fontWeight: 'bold', lineHeight: 1.1, marginTop: '0.5rem', color: overdueTasks > 0 ? 'var(--error)' : 'var(--text-primary)' }}>{overdueTasks}</div>
         </div>
 
       </div>
@@ -165,7 +145,7 @@ const Dashboard = () => {
                     height: `${barHeight}px`,
                     backgroundColor: col.color,
                     border: '2px solid var(--border)',
-                    boxShadow: '3px 3px 0px var(--border)',
+                    boxShadow: 'none',
                     borderRadius: '6px'
                   }} />
                   <span style={{ fontSize: '12px', fontWeight: '800', marginTop: '0.75rem', letterSpacing: '0.05em', color: 'var(--text-muted)' }}>{col.label}</span>

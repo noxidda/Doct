@@ -48,7 +48,6 @@ const Settings = () => {
     <div>
       <div style={{ marginBottom: '2rem' }}>
         <h2 style={{ margin: 0, fontSize: '2rem' }}>WORKSPACE SETTINGS</h2>
-        <p style={{ color: 'var(--text-secondary)', fontSize: '14px' }}>Configure access parameters, storage registers, and security credentials.</p>
       </div>
 
       <div style={{ display: 'flex', gap: '2rem' }}>

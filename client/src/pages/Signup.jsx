@@ -1,46 +1,76 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
+import { useSignUp } from '@clerk/clerk-react';
+import { Eye, EyeOff } from 'lucide-react';
 import doctBg from '../assets/doct.jpg';
 
 const Signup = () => {
-  const { signup } = useAuth();
+  const { isLoaded, signUp, setActive } = useSignUp();
   const navigate = useNavigate();
-  const [name, setName] = useState('');
+  
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-  const [step, setStep] = useState(1); // Step 1: Info, Step 2: OTP
+  const [step, setStep] = useState(1); // 1: Info, 2: Verification
   const [otp, setOtp] = useState('');
+  const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
-  const handleRegister = (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
-    if (!name || !email || !password) {
+    if (!isLoaded) return;
+    if (!email || !password) {
       setError('Please fill in all fields');
       return;
     }
+
+    setLoading(true);
     setError('');
-    setStep(2); // Go to OTP verification step
+
+    try {
+      // Start registration attempt with Clerk
+      await signUp.create({
+        emailAddress: email,
+        password: password,
+      });
+
+      // Send verification code email
+      await signUp.prepareEmailAddressVerification({ strategy: "email_code" });
+      setStep(2);
+    } catch (err) {
+      console.error(err);
+      setError(err.errors?.[0]?.message || 'Registration failed.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleVerifyOtp = async (e) => {
     e.preventDefault();
-    if (otp !== '123456' && otp.trim() !== '') {
-      // Allow '123456' or any code for evaluation purposes, but notify that '123456' is default
-      setError('Invalid OTP code. Try "123456".');
+    if (!isLoaded) return;
+    if (!otp) {
+      setError('Please enter verification code');
       return;
     }
-    
+
     setLoading(true);
     setError('');
+
     try {
-      const res = await signup(name, email, password);
-      if (res.success) {
+      // Verify email verification code
+      const result = await signUp.attemptEmailAddressVerification({
+        code: otp,
+      });
+
+      if (result.status === "complete") {
+        await setActive({ session: result.createdSessionId });
         navigate('/dashboard');
+      } else {
+        setError(`Unexpected registration state: ${result.status}`);
       }
     } catch (err) {
-      setError('Verification failed.');
+      console.error(err);
+      setError(err.errors?.[0]?.message || 'Verification failed. Please check the code sent to your email.');
     } finally {
       setLoading(false);
     }
@@ -65,8 +95,7 @@ const Signup = () => {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: 'transparent', // Transparent, so bg image is clear and fully visible
-        backdropFilter: 'none', // No blur effect
+        backgroundColor: 'transparent',
         padding: '2rem'
       }}>
         <div style={{ 
@@ -78,54 +107,30 @@ const Signup = () => {
           borderRadius: '4px',
           boxShadow: '0 8px 24px rgba(0, 0, 0, 0.15)'
         }}>
-          <h2 style={{ fontSize: '2rem', marginBottom: '0.5rem', letterSpacing: '-0.02em', color: '#000000', fontWeight: 'bold' }}>CREATE ACCOUNT</h2>
-          
+          <h2 style={{ fontSize: '2.00rem', marginBottom: '0.5rem', letterSpacing: '-0.02em', color: '#000000', fontWeight: 'bold' }}>SIGN UP FOR DOCT</h2>
+          <p style={{ color: '#666666', fontSize: '13px', marginBottom: '2rem', lineHeight: '1.5' }}>
+            {step === 1 ? 'Start your collaborative modern workspace account.' : 'Verify your email code to finalize setup.'}
+          </p>
+
+          {error && (
+            <div style={{
+              border: '2px solid #000000',
+              color: '#000000',
+              backgroundColor: '#FFFFFF',
+              padding: '0.75rem',
+              marginBottom: '1.5rem',
+              fontSize: '12px',
+              textTransform: 'uppercase',
+              fontWeight: 'bold',
+              letterSpacing: '0.05em'
+            }}>
+              {error}
+            </div>
+          )}
+
           {step === 1 ? (
             <>
-              <p style={{ color: '#666666', fontSize: '13px', marginBottom: '2rem', lineHeight: '1.5' }}>Create your Doct credentials below.</p>
-              {error && (
-                <div style={{
-                  border: '2px solid #000000',
-                  color: '#000000',
-                  backgroundColor: '#FFFFFF',
-                  padding: '0.75rem',
-                  marginBottom: '1.5rem',
-                  fontSize: '12px',
-                  textTransform: 'uppercase',
-                  fontWeight: 'bold',
-                  letterSpacing: '0.05em'
-                }}>
-                  {error}
-                </div>
-              )}
-              
               <form onSubmit={handleRegister} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-                <div>
-                  <label className="bauhaus-label" style={{ color: '#000000', fontWeight: 'bold', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Full Name</label>
-                  <input 
-                    type="text" 
-                    className="bauhaus-input" 
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    placeholder="Anni Albers"
-                    style={{
-                      backgroundColor: 'transparent',
-                      color: '#000000',
-                      border: 'none',
-                      borderBottom: '2px solid #E5E5E5',
-                      padding: '0.75rem 0',
-                      fontSize: '14px',
-                      width: '100%',
-                      outline: 'none',
-                      borderRadius: 0,
-                      transition: 'border-color 200ms ease'
-                    }}
-                    onFocus={(e) => e.target.style.borderBottomColor = '#000000'}
-                    onBlur={(e) => e.target.style.borderBottomColor = '#E5E5E5'}
-                    required
-                  />
-                </div>
-
                 <div>
                   <label className="bauhaus-label" style={{ color: '#000000', fontWeight: 'bold', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Email Address</label>
                   <input 
@@ -154,32 +159,52 @@ const Signup = () => {
 
                 <div>
                   <label className="bauhaus-label" style={{ color: '#000000', fontWeight: 'bold', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Password</label>
-                  <input 
-                    type="password" 
-                    className="bauhaus-input" 
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    placeholder="••••••••"
-                    style={{
-                      backgroundColor: 'transparent',
-                      color: '#000000',
-                      border: 'none',
-                      borderBottom: '2px solid #E5E5E5',
-                      padding: '0.75rem 0',
-                      fontSize: '14px',
-                      width: '100%',
-                      outline: 'none',
-                      borderRadius: 0,
-                      transition: 'border-color 200ms ease'
-                    }}
-                    onFocus={(e) => e.target.style.borderBottomColor = '#000000'}
-                    onBlur={(e) => e.target.style.borderBottomColor = '#E5E5E5'}
-                    required
-                  />
+                  <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
+                    <input 
+                      type={showPassword ? "text" : "password"} 
+                      className="bauhaus-input" 
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      placeholder="••••••••"
+                      style={{
+                        backgroundColor: 'transparent',
+                        color: '#000000',
+                        border: 'none',
+                        borderBottom: '2px solid #E5E5E5',
+                        padding: '0.75rem 2rem 0.75rem 0',
+                        fontSize: '14px',
+                        width: '100%',
+                        outline: 'none',
+                        borderRadius: 0,
+                        transition: 'border-color 200ms ease'
+                      }}
+                      onFocus={(e) => e.target.style.borderBottomColor = '#000000'}
+                      onBlur={(e) => e.target.style.borderBottomColor = '#E5E5E5'}
+                      required
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      style={{
+                        position: 'absolute',
+                        right: 0,
+                        background: 'none',
+                        border: 'none',
+                        color: '#666666',
+                        cursor: 'pointer',
+                        padding: '0.5rem',
+                        display: 'flex',
+                        alignItems: 'center'
+                      }}
+                    >
+                      {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                    </button>
+                  </div>
                 </div>
 
                 <button 
                   type="submit" 
+                  disabled={loading}
                   style={{ 
                     width: '100%', 
                     marginTop: '1rem',
@@ -204,7 +229,7 @@ const Signup = () => {
                     e.currentTarget.style.color = '#FFFFFF';
                   }}
                 >
-                  Generate OTP Code
+                  {loading ? 'Creating...' : 'Sign Up'}
                 </button>
               </form>
               <div style={{ textAlign: 'center', marginTop: '2rem', fontSize: '13px', color: '#666666' }}>
@@ -213,35 +238,11 @@ const Signup = () => {
             </>
           ) : (
             <>
-              <p style={{ color: '#000000', fontSize: '13px', marginBottom: '1.5rem', textTransform: 'uppercase', fontWeight: 'bold', letterSpacing: '0.05em' }}>
-                Verification required: We sent a 6-digit OTP code to {email}.
-              </p>
-              <div style={{ fontSize: '12px', color: '#666666', marginBottom: '1.5rem', padding: '0.75rem', border: '1px dashed #000000', backgroundColor: '#FFFFFF' }}>
-                Evaluation Hint: Enter <strong>123456</strong> or leave empty to verify.
-              </div>
-
-              {error && (
-                <div style={{
-                  border: '2px solid #000000',
-                  color: '#000000',
-                  backgroundColor: '#FFFFFF',
-                  padding: '0.75rem',
-                  marginBottom: '1.5rem',
-                  fontSize: '12px',
-                  textTransform: 'uppercase',
-                  fontWeight: 'bold',
-                  letterSpacing: '0.05em'
-                }}>
-                  {error}
-                </div>
-              )}
-
               <form onSubmit={handleVerifyOtp} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
                 <div>
-                  <label className="bauhaus-label" style={{ color: '#000000', fontWeight: 'bold', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Verification OTP</label>
+                  <label className="bauhaus-label" style={{ color: '#000000', fontWeight: 'bold', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.05em', display: 'block', marginBottom: '0.5rem' }}>Verification Code</label>
                   <input 
                     type="text" 
-                    maxLength="6"
                     className="bauhaus-input" 
                     value={otp}
                     onChange={(e) => setOtp(e.target.value)}
@@ -262,14 +263,16 @@ const Signup = () => {
                     }}
                     onFocus={(e) => e.target.style.borderBottomColor = '#000000'}
                     onBlur={(e) => e.target.style.borderBottomColor = '#E5E5E5'}
+                    required
                   />
                 </div>
 
                 <button 
                   type="submit" 
-                  disabled={loading} 
+                  disabled={loading}
                   style={{ 
                     width: '100%', 
+                    marginTop: '1rem',
                     backgroundColor: '#000000',
                     color: '#FFFFFF',
                     border: '1px solid #000000',
@@ -291,9 +294,9 @@ const Signup = () => {
                     e.currentTarget.style.color = '#FFFFFF';
                   }}
                 >
-                  {loading ? 'Verifying...' : 'Verify & Setup'}
+                  {loading ? 'Verifying...' : 'Verify & Sign Up'}
                 </button>
-                
+
                 <button 
                   type="button" 
                   onClick={() => setStep(1)} 
@@ -318,7 +321,7 @@ const Signup = () => {
                     e.currentTarget.style.borderColor = '#E5E5E5';
                   }}
                 >
-                  Back to registration
+                  Back to Registration
                 </button>
               </form>
             </>

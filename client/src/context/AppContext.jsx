@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useRef } from 'react';
 import { useAuth } from './AuthContext';
 import api from '../services/api';
 import { io } from 'socket.io-client';
@@ -33,12 +33,60 @@ export const AppProvider = ({ children }) => {
   // Activity Logs
   const [activityLogs, setActivityLogs] = useState([]);
 
-  // Default workspace
+  const currentWorkspaceRef = useRef(currentWorkspace);
   useEffect(() => {
-    if (workspaces.length > 0 && !currentWorkspace) {
-      setCurrentWorkspace(workspaces[0]);
-    }
-  }, [workspaces]);
+    currentWorkspaceRef.current = currentWorkspace;
+  }, [currentWorkspace]);
+
+  // Default workspace loading & creation
+  useEffect(() => {
+    const fetchWorkspaces = async () => {
+      if (!user) return;
+      try {
+        const wsRes = await api.get('/workspaces');
+        if (wsRes.data && wsRes.data.length > 0) {
+          const formatted = wsRes.data.map(w => ({ ...w, id: w._id || w.id }));
+          setWorkspaces(formatted);
+          setCurrentWorkspace(formatted[0]);
+        } else {
+          // If no workspaces exist, create a default one for this new user!
+          try {
+            const createRes = await api.post('/workspaces', {
+              name: 'My Workspace',
+              description: 'Default personal workspace area.'
+            });
+            if (createRes.data) {
+              const newWS = { ...createRes.data, id: createRes.data._id || createRes.data.id };
+              setWorkspaces([newWS]);
+              setCurrentWorkspace(newWS);
+            }
+          } catch (createErr) {
+            console.error('Failed to create default workspace:', createErr);
+            // Fallback locally
+            const localWS = {
+              id: 'ws_default',
+              name: 'My Workspace',
+              description: 'Default personal workspace area.'
+            };
+            setWorkspaces([localWS]);
+            setCurrentWorkspace(localWS);
+          }
+        }
+      } catch (err) {
+        console.warn('⚠️ Server offline or workspaces fetch failed. Operating in local mode.', err.message);
+        // Fallback local workspace
+        const localWS = {
+          id: 'ws_default',
+          name: 'My Workspace',
+          description: 'Default personal workspace area.'
+        };
+        setWorkspaces([localWS]);
+        setCurrentWorkspace(localWS);
+      }
+    };
+
+    fetchWorkspaces();
+  }, [user]);
 
   // Initialize Socket.io connection
   useEffect(() => {
@@ -50,8 +98,8 @@ export const AppProvider = ({ children }) => {
 
     s.on('connect', () => {
       console.log('📡 Connected to Socket server.');
-      if (currentWorkspace) {
-        s.emit('join_workspace', currentWorkspace.id);
+      if (currentWorkspaceRef.current) {
+        s.emit('join_workspace', currentWorkspaceRef.current.id);
       }
     });
 
@@ -99,11 +147,7 @@ export const AppProvider = ({ children }) => {
     const fetchData = async () => {
       if (!currentWorkspace) return;
       try {
-        // Fetch workspaces
-        const wsRes = await api.get('/workspaces');
-        if (wsRes.data && wsRes.data.length > 0) {
-          setWorkspaces(wsRes.data.map(w => ({ ...w, id: w._id || w.id })));
-        }
+
 
         // Fetch projects
         const projRes = await api.get(`/workspaces/${currentWorkspace.id}/projects`);
@@ -202,6 +246,7 @@ export const AppProvider = ({ children }) => {
 
   // Project CRUD
   const createProject = async (name, description, deadline) => {
+    if (!currentWorkspace) return null;
     const localProj = {
       id: `proj_${Date.now()}`,
       workspaceId: currentWorkspace.id,
@@ -245,6 +290,7 @@ export const AppProvider = ({ children }) => {
 
   // Task CRUD
   const createTask = async (taskData) => {
+    if (!currentWorkspace) return null;
     const localTask = {
       id: `task_${Date.now()}`,
       workspaceId: currentWorkspace.id,
@@ -435,6 +481,7 @@ export const AppProvider = ({ children }) => {
 
   // Documents CRUD
   const createDocument = async (title, content, parentId = null) => {
+    if (!currentWorkspace) return null;
     const localDoc = {
       id: `doc_${Date.now()}`,
       workspaceId: currentWorkspace.id,
@@ -484,7 +531,7 @@ export const AppProvider = ({ children }) => {
       name: name.charAt(0).toUpperCase() + name.slice(1),
       email,
       role,
-      avatar: `https://api.dicebear.com/7.x/pixel-art/svg?seed=${email}`,
+      avatar: '',
       online: false
     };
     setMembers(prev => [...prev, newMember]);

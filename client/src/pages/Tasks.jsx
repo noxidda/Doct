@@ -155,13 +155,13 @@ const Tasks = () => {
             </select>
 
             {/* View switcher buttons */}
-            <div style={{ display: 'flex', border: '2px solid var(--border)', borderRadius: '9999px', overflow: 'hidden', marginLeft: 'auto', backgroundColor: '#FFFFFF', boxShadow: '2px 2px 0px var(--border)' }}>
+            <div style={{ display: 'flex', border: '2px solid var(--border)', borderRadius: '9999px', overflow: 'hidden', marginLeft: 'auto', backgroundColor: '#FFFFFF', boxShadow: 'none' }}>
               <button 
                 onClick={() => setActiveView('kanban')} 
                 style={{ 
                   padding: '0.4rem 1.25rem', 
                   border: 'none', 
-                  backgroundColor: activeView === 'kanban' ? 'var(--accent)' : 'transparent',
+                  backgroundColor: activeView === 'kanban' ? 'var(--primary)' : 'transparent',
                   color: activeView === 'kanban' ? '#FFFFFF' : 'var(--foreground)',
                   cursor: 'pointer',
                   fontSize: '12px',
@@ -176,7 +176,7 @@ const Tasks = () => {
                 style={{ 
                   padding: '0.4rem 1.25rem', 
                   border: 'none', 
-                  backgroundColor: activeView === 'list' ? 'var(--accent)' : 'transparent',
+                  backgroundColor: activeView === 'list' ? 'var(--primary)' : 'transparent',
                   color: activeView === 'list' ? '#FFFFFF' : 'var(--foreground)',
                   cursor: 'pointer',
                   fontSize: '12px',
@@ -192,7 +192,7 @@ const Tasks = () => {
                 style={{ 
                   padding: '0.4rem 1.25rem', 
                   border: 'none', 
-                  backgroundColor: activeView === 'table' ? 'var(--accent)' : 'transparent',
+                  backgroundColor: activeView === 'table' ? 'var(--primary)' : 'transparent',
                   color: activeView === 'table' ? '#FFFFFF' : 'var(--foreground)',
                   cursor: 'pointer',
                   fontSize: '12px',
@@ -278,7 +278,7 @@ const Tasks = () => {
                       display: 'flex', 
                       justifyContent: 'space-between', 
                       alignItems: 'center',
-                      backgroundColor: 'rgba(103, 80, 164, 0.05)'
+                      backgroundColor: 'rgba(0, 0, 0, 0.04)'
                     }}>
                       <span style={{ fontSize: '13px', fontWeight: '700', letterSpacing: '0.01em', fontFamily: 'var(--font-heading)', color: 'var(--primary)' }}>{status}</span>
                       <span className="bauhaus-badge" style={{ fontSize: '12px', padding: '2px 8px' }}>{columnTasks.length}</span>

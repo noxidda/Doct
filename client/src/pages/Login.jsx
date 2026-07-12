@@ -1,38 +1,50 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
+import { useSignIn } from '@clerk/clerk-react';
+import { Eye, EyeOff } from 'lucide-react';
 import doctBg from '../assets/doct.jpg';
 
 const Login = () => {
-  const { login } = useAuth();
+  const { isLoaded, signIn, setActive } = useSignIn();
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!isLoaded) return;
+    
     if (!email || !password) {
       setError('Please fill in all fields');
       return;
     }
+    
     setLoading(true);
     setError('');
+
     try {
-      const res = await login(email, password);
-      if (res.success) {
+      // Create a sign-in attempt with Clerk
+      const result = await signIn.create({
+        identifier: email,
+        password: password,
+      });
+
+      if (result.status === "complete") {
+        await setActive({ session: result.createdSessionId });
         navigate('/dashboard');
       } else {
-        setError('Invalid credentials');
+        setError(`Unexpected authentication state: ${result.status}`);
       }
     } catch (err) {
-      setError('Failed to sign in. Please check configurations.');
+      console.error(err);
+      setError(err.errors?.[0]?.message || 'Authentication failed. Please verify credentials.');
     } finally {
       setLoading(false);
     }
   };
-
 
   return (
     <div className="login-split-container" style={{
@@ -53,8 +65,7 @@ const Login = () => {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: 'transparent', // Transparent, so bg image is clear and fully visible
-        backdropFilter: 'none', // No blur effect
+        backgroundColor: 'transparent',
         padding: '2rem'
       }}>
         <div style={{ 
@@ -66,7 +77,7 @@ const Login = () => {
           borderRadius: '4px',
           boxShadow: '0 8px 24px rgba(0, 0, 0, 0.15)'
         }}>
-          <h2 style={{ fontSize: '2rem', marginBottom: '0.5rem', letterSpacing: '-0.02em', color: '#000000', fontWeight: 'bold' }}>LOGIN TO DOCT</h2>
+          <h2 style={{ fontSize: '2.00rem', marginBottom: '0.5rem', letterSpacing: '-0.02em', color: '#000000', fontWeight: 'bold' }}>LOGIN TO DOCT</h2>
           <p style={{ color: '#666666', fontSize: '13px', marginBottom: '2rem', lineHeight: '1.5' }}>Enter your email and password to access your workspace.</p>
 
           {error && (
@@ -115,30 +126,48 @@ const Login = () => {
             <div>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <label className="bauhaus-label" style={{ color: '#000000', fontWeight: 'bold', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Password</label>
-                <Link to="/forgot-password" style={{ fontSize: '11px', textTransform: 'uppercase', color: '#000000', fontWeight: 'bold', textDecoration: 'underline', marginBottom: '0.4rem' }}>Forgot password?</Link>
               </div>
-              <input 
-                type="password" 
-                className="bauhaus-input" 
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="••••••••"
-                style={{
-                  backgroundColor: 'transparent',
-                  color: '#000000',
-                  border: 'none',
-                  borderBottom: '2px solid #E5E5E5',
-                  padding: '0.75rem 0',
-                  fontSize: '14px',
-                  width: '100%',
-                  outline: 'none',
-                  borderRadius: 0,
-                  transition: 'border-color 200ms ease'
-                }}
-                onFocus={(e) => e.target.style.borderBottomColor = '#000000'}
-                onBlur={(e) => e.target.style.borderBottomColor = '#E5E5E5'}
-                required
-              />
+              <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
+                <input 
+                  type={showPassword ? "text" : "password"} 
+                  className="bauhaus-input" 
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="••••••••"
+                  style={{
+                    backgroundColor: 'transparent',
+                    color: '#000000',
+                    border: 'none',
+                    borderBottom: '2px solid #E5E5E5',
+                    padding: '0.75rem 2rem 0.75rem 0',
+                    fontSize: '14px',
+                    width: '100%',
+                    outline: 'none',
+                    borderRadius: 0,
+                    transition: 'border-color 200ms ease'
+                  }}
+                  onFocus={(e) => e.target.style.borderBottomColor = '#000000'}
+                  onBlur={(e) => e.target.style.borderBottomColor = '#E5E5E5'}
+                  required
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  style={{
+                    position: 'absolute',
+                    right: 0,
+                    background: 'none',
+                    border: 'none',
+                    color: '#666666',
+                    cursor: 'pointer',
+                    padding: '0.5rem',
+                    display: 'flex',
+                    alignItems: 'center'
+                  }}
+                >
+                  {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                </button>
+              </div>
             </div>
 
             <button 
@@ -168,12 +197,11 @@ const Login = () => {
                 e.currentTarget.style.color = '#FFFFFF';
               }}
             >
-              {loading ? 'Authenticating...' : 'Sign In'}
+              {loading ? 'Logging In...' : 'Log In'}
             </button>
           </form>
-
           <div style={{ textAlign: 'center', marginTop: '2rem', fontSize: '13px', color: '#666666' }}>
-            Don't have an account? <Link to="/signup" style={{ fontWeight: 'bold', color: '#000000', textDecoration: 'underline' }}>Sign Up</Link>
+            New to Doct? <Link to="/signup" style={{ fontWeight: 'bold', color: '#000000', textDecoration: 'underline' }}>Sign Up</Link>
           </div>
         </div>
       </div>

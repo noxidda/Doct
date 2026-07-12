@@ -1,4 +1,6 @@
 import jwt from 'jsonwebtoken';
+import User from '../models/User.js';
+import mongoose from 'mongoose';
 
 export const authMiddleware = async (req, res, next) => {
   try {
@@ -6,6 +8,10 @@ export const authMiddleware = async (req, res, next) => {
     
     // Check if clerk authentication is configured and requested
     const useClerk = process.env.USE_CLERK === 'true';
+    let userId = 'usr_owner';
+    let userEmail = 'owner@doct.com';
+    let userRole = 'Owner';
+    let userName = 'Arthur Bauhaus';
 
     if (useClerk) {
       if (!authHeader || !authHeader.startsWith('Bearer ')) {
@@ -13,36 +19,48 @@ export const authMiddleware = async (req, res, next) => {
       }
       
       const token = authHeader.split(' ')[1];
-      // Clerk JWT verification (in real production, clerk verifyToken is called)
-      // For immediate verification robustness, we can inspect payload
       try {
         const decoded = jwt.decode(token);
         if (decoded) {
-          req.user = {
-            id: decoded.sub,
-            email: decoded.email,
-            role: decoded.role || 'Member'
-          };
-          return next();
+          userId = decoded.sub;
+          userEmail = decoded.email;
+          userRole = decoded.role || 'Member';
+          userName = decoded.name || decoded.email?.split('@')[0] || 'User';
         }
       } catch (err) {
         return res.status(401).json({ message: 'Invalid Clerk token verification' });
       }
+    } else {
+      // Fallback Mock Headers
+      userId = req.headers['x-mock-user-id'] || 'usr_owner';
+      userRole = req.headers['x-mock-user-role'] || 'Owner';
+      userEmail = req.headers['x-mock-user-email'] || 'owner@doct.com';
+      userName = req.headers['x-mock-user-name'] || 'Arthur Bauhaus';
     }
 
-    // Fallback: Local Demo Mode
-    // We expect a mock user header like 'X-Mock-User-Id' and 'X-Mock-User-Role'
-    const mockUserId = req.headers['x-mock-user-id'] || 'usr_owner';
-    const mockUserRole = req.headers['x-mock-user-role'] || 'Owner';
-    const mockUserEmail = req.headers['x-mock-user-email'] || 'owner@doct.com';
-    const mockUserName = req.headers['x-mock-user-name'] || 'Arthur Bauhaus';
-
     req.user = {
-      id: mockUserId,
-      name: mockUserName,
-      email: mockUserEmail,
-      role: mockUserRole
+      clerkId: userId,
+      name: userName,
+      email: userEmail,
+      role: userRole
     };
+
+    // Map to MongoDB ObjectId if DB is connected
+    const isMongoConnected = mongoose.connection.readyState === 1;
+    if (isMongoConnected) {
+      let dbUser = await User.findOne({ clerkId: userId });
+      if (!dbUser) {
+        dbUser = await User.create({
+          clerkId: userId,
+          name: userName,
+          email: userEmail,
+          role: userRole
+        });
+      }
+      req.user.id = dbUser._id.toString();
+    } else {
+      req.user.id = userId;
+    }
 
     next();
   } catch (error) {

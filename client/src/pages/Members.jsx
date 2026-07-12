@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
-import { useAuth } from '../context/AuthContext';
+import { useAuth, DEFAULT_AVATAR } from '../context/AuthContext';
 import { UserPlus, Search, UserMinus, ShieldAlert, Activity } from 'lucide-react';
 
 const Members = () => {
@@ -106,7 +106,7 @@ const Members = () => {
               <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
                 <div style={{ position: 'relative' }}>
                   <img 
-                    src={member.avatar} 
+                    src={member.avatar || DEFAULT_AVATAR} 
                     alt={member.name}
                     style={{ width: '48px', height: '48px', objectFit: 'cover', border: '2px solid var(--border)' }}
                   />
@@ -174,8 +174,7 @@ const Members = () => {
       {/* Member Activity logs */}
       <div className="bauhaus-card">
         <div className="bauhaus-card-header">
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-            <Activity size={18} style={{ color: 'var(--warning)' }} />
+          <div>
             <h3>MEMBER ACTION STREAM</h3>
           </div>
         </div>

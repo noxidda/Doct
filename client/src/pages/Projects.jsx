@@ -124,26 +124,22 @@ const Projects = () => {
             onClick={() => navigate(`/projects/${proj.id}`)}
           >
             <div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.75rem' }}>
-                <div style={{ padding: '0.5rem', backgroundColor: 'var(--tertiary)', border: '2px solid var(--border)', borderRadius: '8px', color: 'var(--foreground)' }}>
-                  {proj.status === 'Active' ? <Folder size={20} /> : <FolderArchive size={20} />}
-                </div>
+              <h3 style={{ fontSize: '1.25rem', marginBottom: '0.5rem', marginTop: '0.25rem' }}>{proj.name}</h3>
+              <p style={{ color: 'var(--text-secondary)', fontSize: '13px', marginBottom: '1rem', minHeight: '40px', overflow: 'hidden', textDisplay: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' }}>
+                {proj.description || 'No description provided.'}
+              </p>
+              <div style={{ marginBottom: '1rem' }}>
                 <button 
                   onClick={(e) => {
                     e.stopPropagation();
                     toggleArchive(proj.id, proj.status);
                   }}
                   className="bauhaus-btn"
-                  style={{ padding: '0.25rem 0.5rem', fontSize: '12px' }}
+                  style={{ padding: '0.3rem 0.6rem', fontSize: '12px' }}
                 >
                   {proj.status === 'Active' ? 'Archive' : 'Restore'}
                 </button>
               </div>
-
-              <h3 style={{ fontSize: '1.25rem', marginBottom: '0.5rem' }}>{proj.name}</h3>
-              <p style={{ color: 'var(--text-secondary)', fontSize: '13px', marginBottom: '1.5rem', minHeight: '40px', overflow: 'hidden', textDisplay: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' }}>
-                {proj.description || 'No description provided.'}
-              </p>
             </div>
 
             <div style={{ borderTop: '1px solid var(--border)', paddingTop: '1rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>

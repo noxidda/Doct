@@ -113,9 +113,9 @@ io.on('connection', (socket) => {
 // 1. Auth & Users APIs (Module 1, 2)
 app.get('/api/users/me', authMiddleware, async (req, res) => {
   if (isMongoConnected) {
-    let user = await User.findOne({ clerkId: req.user.id });
+    let user = await User.findById(req.user.id);
     if (!user) {
-      user = await User.create({ clerkId: req.user.id, name: req.user.name, email: req.user.email });
+      user = await User.create({ clerkId: req.user.clerkId, name: req.user.name, email: req.user.email });
     }
     return res.json(user);
   }
@@ -131,8 +131,8 @@ app.get('/api/users/me', authMiddleware, async (req, res) => {
 app.put('/api/users/profile', authMiddleware, async (req, res) => {
   const { name, bio, timezone, avatar } = req.body;
   if (isMongoConnected) {
-    const user = await User.findOneAndUpdate(
-      { clerkId: req.user.id },
+    const user = await User.findByIdAndUpdate(
+      req.user.id,
       { name, bio, timezone, avatar },
       { new: true }
     );
