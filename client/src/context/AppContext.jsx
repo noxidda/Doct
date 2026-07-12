@@ -10,6 +10,7 @@ export const useApp = () => useContext(AppContext);
 export const AppProvider = ({ children }) => {
   const { user } = useAuth();
   const [socket, setSocket] = useState(null);
+  const pendingCreateKeysRef = useRef(new Set());
   
   // Workspaces
   const [workspaces, setWorkspaces] = useState([]);
@@ -38,6 +39,19 @@ export const AppProvider = ({ children }) => {
   useEffect(() => {
     currentWorkspaceRef.current = currentWorkspace;
   }, [currentWorkspace]);
+
+  const runWithCreateLock = async (key, action) => {
+    if (pendingCreateKeysRef.current.has(key)) {
+      return null;
+    }
+
+    pendingCreateKeysRef.current.add(key);
+    try {
+      return await action();
+    } finally {
+      pendingCreateKeysRef.current.delete(key);
+    }
+  };
 
   // Default workspace loading & creation
   useEffect(() => {
@@ -227,29 +241,35 @@ export const AppProvider = ({ children }) => {
 
   // Workspace CRUD
   const createWorkspace = async (name, description) => {
-    const localWS = {
-      id: `ws_${Date.now()}`,
-      name,
-      description,
-      avatar: name.charAt(0).toUpperCase()
-    };
-    
-    // Optimistic local state update
-    setWorkspaces(prev => [...prev, localWS]);
-    setCurrentWorkspace(localWS);
-    logActivity('Created Workspace', name);
+    const lockKey = `workspace:${(name || '').trim().toLowerCase()}`;
+    return runWithCreateLock(lockKey, async () => {
+      const localWS = {
+        id: `ws_${Date.now()}`,
+        name,
+        description,
+        avatar: name.charAt(0).toUpperCase()
+      };
+      
+      // Optimistic local state update
+      setWorkspaces(prev => [...prev, localWS]);
+      setCurrentWorkspace(localWS);
+      logActivity('Created Workspace', name);
 
-    try {
-      const res = await api.post('/workspaces', { name, description });
-      if (res.data) {
-        // Swap local id with server generated id
-        const serverWS = { ...res.data, id: res.data._id || res.data.id };
-        setWorkspaces(prev => prev.map(w => w.id === localWS.id ? serverWS : w));
-        setCurrentWorkspace(serverWS);
+      try {
+        const res = await api.post('/workspaces', { name, description });
+        if (res.data) {
+          // Swap local id with server generated id
+          const serverWS = { ...res.data, id: res.data._id || res.data.id };
+          setWorkspaces(prev => prev.map(w => w.id === localWS.id ? serverWS : w));
+          setCurrentWorkspace(serverWS);
+          return serverWS;
+        }
+      } catch (e) {
+        console.warn('Workspace api create failed, falling back locally');
       }
-    } catch (e) {
-      console.warn('Workspace api create failed, falling back locally');
-    }
+
+      return localWS;
+    });
   };
 
   const editWorkspace = (id, updatedData) => {
@@ -271,27 +291,30 @@ export const AppProvider = ({ children }) => {
   // Project CRUD
   const createProject = async (name, description, deadline) => {
     if (!currentWorkspace) return null;
-    logActivity('Created Project', name);
+    const lockKey = `project:${currentWorkspace.id}:${(name || '').trim().toLowerCase()}:${(deadline || '').trim()}`;
+    return runWithCreateLock(lockKey, async () => {
+      logActivity('Created Project', name);
 
-    try {
-      const res = await api.post('/projects', {
-        workspaceId: currentWorkspace.id,
-        name,
-        description,
-        deadline
-      });
-      if (res.data) {
-        const serverProj = { ...res.data, id: res.data._id || res.data.id };
-        setProjects(prev => {
-          if (prev.some(p => p.id === serverProj.id)) return prev;
-          return [...prev, serverProj];
+      try {
+        const res = await api.post('/projects', {
+          workspaceId: currentWorkspace.id,
+          name,
+          description,
+          deadline
         });
-        return serverProj;
+        if (res.data) {
+          const serverProj = { ...res.data, id: res.data._id || res.data.id };
+          setProjects(prev => {
+            if (prev.some(p => p.id === serverProj.id)) return prev;
+            return [...prev, serverProj];
+          });
+          return serverProj;
+        }
+      } catch (e) {
+        console.warn('Project api create failed');
       }
-    } catch (e) {
-      console.warn('Project api create failed');
-    }
-    return null;
+      return null;
+    });
   };
 
   const editProject = async (id, updatedData) => {
@@ -318,26 +341,29 @@ export const AppProvider = ({ children }) => {
   // Task CRUD
   const createTask = async (taskData) => {
     if (!currentWorkspace) return null;
-    logActivity('Created Task', taskData.title);
-    sendNotification('Task Created', `New task "${taskData.title}" has been created.`, 'task_created');
+    const lockKey = `task:${currentWorkspace.id}:${(taskData.title || '').trim().toLowerCase()}:${(taskData.projectId || '')}:${(taskData.dueDate || '')}`;
+    return runWithCreateLock(lockKey, async () => {
+      logActivity('Created Task', taskData.title);
+      sendNotification('Task Created', `New task "${taskData.title}" has been created.`, 'task_created');
 
-    try {
-      const res = await api.post('/tasks', {
-        workspaceId: currentWorkspace.id,
-        ...taskData
-      });
-      if (res.data) {
-        const serverTask = { ...res.data, id: res.data._id || res.data.id };
-        setTasks(prev => {
-          if (prev.some(t => t.id === serverTask.id)) return prev;
-          return [...prev, serverTask];
+      try {
+        const res = await api.post('/tasks', {
+          workspaceId: currentWorkspace.id,
+          ...taskData
         });
-        return serverTask;
+        if (res.data) {
+          const serverTask = { ...res.data, id: res.data._id || res.data.id };
+          setTasks(prev => {
+            if (prev.some(t => t.id === serverTask.id)) return prev;
+            return [...prev, serverTask];
+          });
+          return serverTask;
+        }
+      } catch (e) {
+        console.warn('Task api create failed');
       }
-    } catch (e) {
-      console.warn('Task api create failed');
-    }
-    return null;
+      return null;
+    });
   };
 
   const updateTask = async (id, updatedData) => {
@@ -502,35 +528,38 @@ export const AppProvider = ({ children }) => {
   // Documents CRUD
   const createDocument = async (title, content, parentId = null) => {
     if (!currentWorkspace) return null;
-    const localDoc = {
-      id: `doc_${Date.now()}`,
-      workspaceId: currentWorkspace.id,
-      title,
-      content,
-      parentId,
-      authorId: user?.id || 'usr_member',
-      createdAt: new Date().toISOString().split('T')[0]
-    };
-
-    setDocuments(prev => [...prev, localDoc]);
-    logActivity('Created Page', title);
-
-    try {
-      const res = await api.post('/documents', {
+    const lockKey = `document:${currentWorkspace.id}:${(title || '').trim().toLowerCase()}:${parentId || 'root'}`;
+    return runWithCreateLock(lockKey, async () => {
+      const localDoc = {
+        id: `doc_${Date.now()}`,
         workspaceId: currentWorkspace.id,
         title,
         content,
-        parentId
-      });
-      if (res.data) {
-        const serverDoc = { ...res.data, id: res.data._id || res.data.id };
-        setDocuments(prev => prev.map(d => d.id === localDoc.id ? serverDoc : d));
-        return serverDoc;
+        parentId,
+        authorId: user?.id || 'usr_member',
+        createdAt: new Date().toISOString().split('T')[0]
+      };
+
+      setDocuments(prev => [...prev, localDoc]);
+      logActivity('Created Page', title);
+
+      try {
+        const res = await api.post('/documents', {
+          workspaceId: currentWorkspace.id,
+          title,
+          content,
+          parentId
+        });
+        if (res.data) {
+          const serverDoc = { ...res.data, id: res.data._id || res.data.id };
+          setDocuments(prev => prev.map(d => d.id === localDoc.id ? serverDoc : d));
+          return serverDoc;
+        }
+      } catch (e) {
+        console.warn('Document api create failed');
       }
-    } catch (e) {
-      console.warn('Document api create failed');
-    }
-    return localDoc;
+      return localDoc;
+    });
   };
 
   const updateDocument = async (id, title, content) => {
@@ -555,28 +584,33 @@ export const AppProvider = ({ children }) => {
 
   // Member Management
   const inviteMember = async (email, role) => {
-    const name = email.split('@')[0];
-    const localMember = {
-      id: `usr_${Date.now()}`,
-      name: name.charAt(0).toUpperCase() + name.slice(1),
-      email,
-      role,
-      avatar: '',
-      online: false
-    };
-    setMembers(prev => [...prev, localMember]);
-    logActivity('Invited Member', email);
-    sendNotification('Member Invited', `${email} has been invited as ${role}`, 'member_joined');
+    const lockKey = `invite:${currentWorkspace?.id || 'none'}:${(email || '').trim().toLowerCase()}`;
+    return runWithCreateLock(lockKey, async () => {
+      const name = email.split('@')[0];
+      const localMember = {
+        id: `usr_${Date.now()}`,
+        name: name.charAt(0).toUpperCase() + name.slice(1),
+        email,
+        role,
+        avatar: '',
+        online: false
+      };
+      setMembers(prev => [...prev, localMember]);
+      logActivity('Invited Member', email);
+      sendNotification('Member Invited', `${email} has been invited as ${role}`, 'member_joined');
 
-    try {
-      const res = await api.post(`/workspaces/${currentWorkspace.id}/members`, { email, role });
-      if (res.data) {
-        const serverMember = { ...res.data, id: res.data.id || res.data._id };
-        setMembers(prev => prev.map(m => m.id === localMember.id ? serverMember : m));
+      try {
+        const res = await api.post(`/workspaces/${currentWorkspace.id}/members`, { email, role });
+        if (res.data) {
+          const serverMember = { ...res.data, id: res.data.id || res.data._id };
+          setMembers(prev => prev.map(m => m.id === localMember.id ? serverMember : m));
+          return serverMember;
+        }
+      } catch (e) {
+        console.warn('Invite member api failed');
       }
-    } catch (e) {
-      console.warn('Invite member api failed');
-    }
+      return localMember;
+    });
   };
 
   const removeMember = (id) => {

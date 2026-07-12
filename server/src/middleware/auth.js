@@ -49,6 +49,19 @@ export const authMiddleware = async (req, res, next) => {
     const isMongoConnected = mongoose.connection.readyState === 1;
     if (isMongoConnected) {
       let dbUser = await User.findOne({ clerkId: userId });
+
+      // Invitations are created against the invitee email first, so reuse that account
+      // when the same person later signs in with a different Clerk subject.
+      if (!dbUser && userEmail) {
+        dbUser = await User.findOne({ email: userEmail });
+        if (dbUser && dbUser.clerkId !== userId) {
+          dbUser.clerkId = userId;
+          dbUser.name = userName || dbUser.name;
+          dbUser.role = userRole || dbUser.role;
+          await dbUser.save();
+        }
+      }
+
       if (!dbUser) {
         dbUser = await User.create({
           clerkId: userId,
@@ -57,6 +70,7 @@ export const authMiddleware = async (req, res, next) => {
           role: userRole
         });
       }
+
       req.user.id = dbUser._id.toString();
     } else {
       req.user.id = userId;
