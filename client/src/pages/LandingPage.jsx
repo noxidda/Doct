@@ -8,7 +8,9 @@ import { FolderKanban, FileText, Activity } from 'lucide-react';
 const LandingPage = () => {
   const { user } = useAuth();
   const [isDark, setIsDark] = React.useState(() => {
-    return localStorage.getItem('doct_theme') === 'dark';
+    const saved = localStorage.getItem('doct_theme');
+    if (saved) return saved === 'dark';
+    return true;
   });
 
   React.useEffect(() => {

@@ -673,5 +673,51 @@ header.appbar {
 }
 
 .dark-theme .login-split-card-side {
-  background-color: var(--surface-container) !important;
+  background-color: transparent !important;
+}
+
+/* Force Light Mode styling inside Login, Signup, and Auth screens */
+.dark-theme .login-split-container {
+  --bg-primary: #FFFFFF !important;
+  --foreground: #1C1B1F !important;
+  --text-primary: #1C1B1F !important;
+  --text-secondary: #49454F !important;
+  --text-muted: #79747E !important;
+  --border: rgba(28, 27, 31, 0.15) !important;
+  --outline: #79747E !important;
+  --hover: rgba(28, 27, 31, 0.08) !important;
+  --surface-container: #F3EDF7 !important;
+  --surface-container-low: #E7E0EC !important;
+}
+
+.dark-theme .login-split-container .bauhaus-input {
+  background-color: #FFFFFF !important;
+  color: #1C1B1F !important;
+  border: 1px solid rgba(28, 27, 31, 0.15) !important;
+}
+
+.dark-theme .login-split-container .bauhaus-btn {
+  background-color: transparent !important;
+  color: #1C1B1F !important;
+  border: 1px solid #79747E !important;
+}
+
+.dark-theme .login-split-container .bauhaus-btn-primary {
+  background-color: #1C1B1F !important;
+  color: #FFFFFF !important;
+  border: 1px solid #1C1B1F !important;
+}
+
+.dark-theme .login-split-container .login-split-card-side div[style*="background-color: #FFFFFF"],
+.dark-theme .login-split-container .login-split-card-side div[style*="background-color: rgb(255, 255, 255)"] {
+  background-color: #FFFFFF !important;
+  color: #1C1B1F !important;
+  border: 1px solid #000000 !important;
+}
+
+.dark-theme .login-split-container h2,
+.dark-theme .login-split-container p,
+.dark-theme .login-split-container label,
+.dark-theme .login-split-container a {
+  color: initial !important;
 }

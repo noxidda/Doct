@@ -27,7 +27,7 @@ const Layout = ({ children }) => {
   const [theme, setTheme] = useState(() => {
     const saved = localStorage.getItem('doct_theme');
     if (saved) return saved;
-    return 'light';
+    return 'dark';
   });
 
   useEffect(() => {
