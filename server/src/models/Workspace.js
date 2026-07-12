@@ -10,6 +10,11 @@ const MemberSchema = new mongoose.Schema({
     type: String,
     enum: ['Owner', 'Admin', 'Manager', 'Member'],
     default: 'Member'
+  },
+  status: {
+    type: String,
+    enum: ['Pending', 'Joined'],
+    default: 'Joined'
   }
 }, { _id: false });
 

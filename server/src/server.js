@@ -150,10 +150,64 @@ app.put('/api/users/profile', authMiddleware, async (req, res) => {
 // 2. Workspace APIs (Module 3)
 app.get('/api/workspaces', authMiddleware, async (req, res) => {
   if (isMongoConnected) {
-    const wsList = await Workspace.find({ 'members.user': req.user.id });
+    const wsList = await Workspace.find({ 
+      members: { 
+        $elemMatch: { user: req.user.id, status: 'Joined' } 
+      } 
+    });
     return res.json(wsList);
   }
   res.json(memoryDb.workspaces);
+});
+
+app.get('/api/workspaces/invitations', authMiddleware, async (req, res) => {
+  if (isMongoConnected) {
+    try {
+      const invitations = await Workspace.find({ 
+        members: { 
+          $elemMatch: { user: req.user.id, status: 'Pending' } 
+        } 
+      }).populate('owner');
+      return res.json(invitations);
+    } catch (err) {
+      return res.status(500).json({ message: 'Error fetching invitations', error: err.message });
+    }
+  }
+  res.json([]);
+});
+
+app.post('/api/workspaces/:workspaceId/accept', authMiddleware, async (req, res) => {
+  const { workspaceId } = req.params;
+  if (isMongoConnected) {
+    try {
+      const workspace = await Workspace.findOneAndUpdate(
+        { _id: workspaceId, 'members.user': req.user.id },
+        { $set: { 'members.$.status': 'Joined' } },
+        { new: true }
+      );
+      return res.json(workspace);
+    } catch (err) {
+      return res.status(500).json({ message: 'Error accepting invitation', error: err.message });
+    }
+  }
+  res.json({ success: true });
+});
+
+app.post('/api/workspaces/:workspaceId/decline', authMiddleware, async (req, res) => {
+  const { workspaceId } = req.params;
+  if (isMongoConnected) {
+    try {
+      const workspace = await Workspace.findById(workspaceId);
+      if (workspace) {
+        workspace.members = workspace.members.filter(m => m.user.toString() !== req.user.id);
+        await workspace.save();
+      }
+      return res.json({ success: true });
+    } catch (err) {
+      return res.status(500).json({ message: 'Error declining invitation', error: err.message });
+    }
+  }
+  res.json({ success: true });
 });
 
 app.post('/api/workspaces', authMiddleware, async (req, res) => {
@@ -163,7 +217,7 @@ app.post('/api/workspaces', authMiddleware, async (req, res) => {
       name,
       description,
       owner: req.user.id,
-      members: [{ user: req.user.id, role: 'Owner' }]
+      members: [{ user: req.user.id, role: 'Owner', status: 'Joined' }]
     });
     await logBackendActivity(newWs._id, req.user.name, 'Created Workspace', name);
     return res.json(newWs);
@@ -224,7 +278,7 @@ app.post('/api/workspaces/:workspaceId/members', authMiddleware, async (req, res
 
       const isAlreadyMember = workspace.members.some(m => m.user && m.user.toString() === user._id.toString());
       if (!isAlreadyMember) {
-        workspace.members.push({ user: user._id, role });
+        workspace.members.push({ user: user._id, role, status: 'Pending' });
         await workspace.save();
       }
 

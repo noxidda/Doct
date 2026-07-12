@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { FolderKanban, CheckSquare, Users, AlertTriangle, Play } from 'lucide-react';
 
 const Dashboard = () => {
-  const { tasks, projects, members, activityLogs, currentWorkspace } = useApp();
+  const { tasks, projects, members, activityLogs, currentWorkspace, pendingInvitations, acceptInvitation, declineInvitation } = useApp();
   const navigate = useNavigate();
 
   // Metrics calculations
@@ -32,6 +32,75 @@ const Dashboard = () => {
 
   return (
     <div>
+      {/* Workspace invitations banner */}
+      {pendingInvitations && pendingInvitations.length > 0 && (
+        <div 
+          style={{
+            padding: '1.5rem',
+            border: '2px solid var(--border)',
+            backgroundColor: 'var(--surface-container)',
+            borderRadius: 'var(--radius-lg)',
+            marginBottom: '2rem',
+            boxShadow: 'none',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '1rem'
+          }}
+        >
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+            <span style={{ fontSize: '1.5rem' }}>✉️</span>
+            <div>
+              <h3 style={{ margin: 0, fontSize: '14px', fontWeight: 'bold' }}>PENDING WORKSPACE INVITATIONS</h3>
+              <p style={{ color: 'var(--text-secondary)', fontSize: '12px', marginTop: '0.15rem' }}>
+                You have been invited to participate in the following workspaces.
+              </p>
+            </div>
+          </div>
+
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+            {pendingInvitations.map(inv => (
+              <div 
+                key={inv.id} 
+                style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  padding: '1rem',
+                  backgroundColor: '#FFFFFF',
+                  border: '1px solid var(--border)',
+                  borderRadius: 'var(--radius-md)'
+                }}
+              >
+                <div>
+                  <strong style={{ fontSize: '14px' }}>{inv.name}</strong>
+                  {inv.description && <p style={{ fontSize: '12px', color: 'var(--text-secondary)', margin: '0.2rem 0 0 0' }}>{inv.description}</p>}
+                  <span style={{ fontSize: '11px', color: 'var(--text-secondary)', display: 'block', marginTop: '0.25rem' }}>
+                    Invited by: {inv.owner?.name || 'Workspace Administrator'} ({inv.owner?.email})
+                  </span>
+                </div>
+
+                <div style={{ display: 'flex', gap: '0.5rem' }}>
+                  <button 
+                    onClick={() => acceptInvitation(inv.id)} 
+                    className="bauhaus-btn bauhaus-btn-success"
+                    style={{ padding: '0.4rem 1rem', fontSize: '12px' }}
+                  >
+                    Accept
+                  </button>
+                  <button 
+                    onClick={() => declineInvitation(inv.id)} 
+                    className="bauhaus-btn bauhaus-btn-danger"
+                    style={{ padding: '0.4rem 1rem', fontSize: '12px' }}
+                  >
+                    Decline
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
       {/* Welcome header */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
         <div>

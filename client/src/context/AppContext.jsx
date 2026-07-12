@@ -14,6 +14,7 @@ export const AppProvider = ({ children }) => {
   // Workspaces
   const [workspaces, setWorkspaces] = useState([]);
   const [currentWorkspace, setCurrentWorkspace] = useState(null);
+  const [pendingInvitations, setPendingInvitations] = useState([]);
 
   // Members
   const [members, setMembers] = useState([]);
@@ -42,6 +43,16 @@ export const AppProvider = ({ children }) => {
   useEffect(() => {
     const fetchWorkspaces = async () => {
       if (!user) return;
+      try {
+        // Fetch invitations
+        const invRes = await api.get('/workspaces/invitations');
+        if (invRes.data) {
+          setPendingInvitations(invRes.data.map(w => ({ ...w, id: w._id || w.id })));
+        }
+      } catch (invErr) {
+        console.warn('Failed to fetch workspace invitations:', invErr.message);
+      }
+
       try {
         const wsRes = await api.get('/workspaces');
         if (wsRes.data && wsRes.data.length > 0) {
@@ -586,6 +597,32 @@ export const AppProvider = ({ children }) => {
     setNotifications(prev => prev.filter(n => n.id !== id));
   };
 
+  const acceptInvitation = async (workspaceId) => {
+    try {
+      const res = await api.post(`/workspaces/${workspaceId}/accept`);
+      if (res.data) {
+        setPendingInvitations(prev => prev.filter(w => w.id !== workspaceId));
+        const wsRes = await api.get('/workspaces');
+        if (wsRes.data && wsRes.data.length > 0) {
+          const formatted = wsRes.data.map(w => ({ ...w, id: w._id || w.id }));
+          setWorkspaces(formatted);
+          setCurrentWorkspace(formatted[formatted.length - 1]);
+        }
+      }
+    } catch (e) {
+      console.error('Failed to accept invitation:', e);
+    }
+  };
+
+  const declineInvitation = async (workspaceId) => {
+    try {
+      await api.post(`/workspaces/${workspaceId}/decline`);
+      setPendingInvitations(prev => prev.filter(w => w.id !== workspaceId));
+    } catch (e) {
+      console.error('Failed to decline invitation:', e);
+    }
+  };
+
   return (
     <AppContext.Provider value={{
       workspaces,
@@ -594,6 +631,9 @@ export const AppProvider = ({ children }) => {
       createWorkspace,
       editWorkspace,
       deleteWorkspace,
+      pendingInvitations,
+      acceptInvitation,
+      declineInvitation,
       
       members,
       inviteMember,
