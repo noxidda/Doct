@@ -7,6 +7,14 @@ import { FolderKanban, FileText, Activity } from 'lucide-react';
 
 const LandingPage = () => {
   const { user } = useAuth();
+  const [isDark, setIsDark] = React.useState(() => {
+    return localStorage.getItem('doct_theme') === 'dark';
+  });
+
+  React.useEffect(() => {
+    setIsDark(document.documentElement.classList.contains('dark-theme') || localStorage.getItem('doct_theme') === 'dark');
+  }, []);
+
   return (
     <div style={{ backgroundColor: 'var(--bg-primary)', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       
@@ -20,11 +28,11 @@ const LandingPage = () => {
           gap: '0.5rem',
           cursor: 'pointer'
         }}>
-          <img src={logoBlack} alt="Doct Logo" style={{ height: '32px', width: 'auto', display: 'block' }} />
+          <img src={isDark ? logoWhite : logoBlack} alt="Doct Logo" style={{ height: '32px', width: 'auto', display: 'block' }} />
           <span style={{ 
             fontSize: '1.5rem', 
             fontWeight: 800, 
-            color: '#1C1B1F', 
+            color: 'var(--text-primary)', 
             letterSpacing: '0.02em',
             fontFamily: 'var(--font-heading)'
           }}>
@@ -39,9 +47,9 @@ const LandingPage = () => {
             gap: '0.5rem', 
             fontSize: '13px', 
             padding: '0.4rem 1.25rem', 
-            backgroundColor: '#FFFFFF', 
-            color: '#1C1B1F', 
-            border: '1px solid #1C1B1F',
+            backgroundColor: 'var(--bg-primary)', 
+            color: 'var(--text-primary)', 
+            border: '1px solid var(--border)',
             textDecoration: 'none'
           }}>
             <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
@@ -51,11 +59,11 @@ const LandingPage = () => {
           </a>
 
           {user ? (
-            <Link to="/dashboard" className="bauhaus-btn" style={{ fontSize: '13px', padding: '0.4rem 1.25rem', backgroundColor: '#1C1B1F', color: '#FFFFFF', border: '1px solid #1C1B1F' }}>Dashboard</Link>
+            <Link to="/dashboard" className="bauhaus-btn" style={{ fontSize: '13px', padding: '0.4rem 1.25rem', backgroundColor: 'var(--text-primary)', color: 'var(--bg-primary)', border: '1px solid var(--border)' }}>Dashboard</Link>
           ) : (
             <>
-              <Link to="/login" className="bauhaus-btn" style={{ fontSize: '13px', padding: '0.4rem 1.25rem', backgroundColor: '#FFFFFF', color: '#1C1B1F', border: '1px solid #1C1B1F' }}>Login</Link>
-              <Link to="/signup" className="bauhaus-btn" style={{ fontSize: '13px', padding: '0.4rem 1.25rem', backgroundColor: '#1C1B1F', color: '#FFFFFF', border: '1px solid #1C1B1F' }}>Sign Up</Link>
+              <Link to="/login" className="bauhaus-btn" style={{ fontSize: '13px', padding: '0.4rem 1.25rem', backgroundColor: 'var(--bg-primary)', color: 'var(--text-primary)', border: '1px solid var(--border)' }}>Login</Link>
+              <Link to="/signup" className="bauhaus-btn" style={{ fontSize: '13px', padding: '0.4rem 1.25rem', backgroundColor: 'var(--text-primary)', color: 'var(--bg-primary)', border: '1px solid var(--border)' }}>Sign Up</Link>
             </>
           )}
         </div>
@@ -263,7 +271,7 @@ const LandingPage = () => {
         {/* Right Column: Large Black Logo and Branding */}
         <div className="hero-right" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '1.5rem', zIndex: 1 }}>
           <img 
-            src={logoBlack} 
+            src={isDark ? logoWhite : logoBlack} 
             alt="Doct Logo" 
             style={{ 
               height: '140px', 
@@ -274,7 +282,7 @@ const LandingPage = () => {
           <span style={{ 
             fontSize: '5rem', 
             fontWeight: 900, 
-            color: '#1C1B1F', 
+            color: 'var(--text-primary)', 
             letterSpacing: '-0.03em', 
             fontFamily: 'var(--font-heading)',
             lineHeight: 1
