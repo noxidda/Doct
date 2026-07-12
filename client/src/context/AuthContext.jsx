@@ -28,7 +28,7 @@ export const AuthProvider = ({ children }) => {
             localStorage.setItem('doct_clerk_token', token);
           }
           
-          const hasCustomImage = clerkUser.hasImage || (clerkUser.imageUrl && !clerkUser.imageUrl.includes('default-user-image') && !clerkUser.imageUrl.includes('placeholder'));
+          const hasCustomImage = clerkUser.hasImage === true;
           const mappedUser = {
             id: clerkUser.id,
             name: clerkUser.fullName || clerkUser.username || clerkUser.primaryEmailAddress?.emailAddress.split('@')[0] || 'User',

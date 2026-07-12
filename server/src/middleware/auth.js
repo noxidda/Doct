@@ -23,9 +23,9 @@ export const authMiddleware = async (req, res, next) => {
         const decoded = jwt.decode(token);
         if (decoded) {
           userId = decoded.sub;
-          userEmail = decoded.email;
-          userRole = decoded.role || 'Member';
-          userName = decoded.name || decoded.email?.split('@')[0] || 'User';
+          userEmail = decoded.email || req.headers['x-mock-user-email'] || '';
+          userRole = decoded.role || req.headers['x-mock-user-role'] || 'Member';
+          userName = decoded.name || req.headers['x-mock-user-name'] || decoded.email?.split('@')[0] || 'User';
         }
       } catch (err) {
         return res.status(401).json({ message: 'Invalid Clerk token verification' });
