@@ -20,8 +20,12 @@ const NotificationSchema = new mongoose.Schema({
   },
   type: {
     type: String,
-    enum: ['task_assigned', 'task_completed', 'comment_added', 'member_joined', 'project_updated', 'system'],
+    enum: ['task_assigned', 'task_completed', 'comment_added', 'member_joined', 'project_updated', 'system', 'invitation'],
     default: 'system'
+  },
+  workspaceId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Workspace'
   }
 }, { timestamps: true });
 

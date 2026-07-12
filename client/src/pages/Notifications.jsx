@@ -5,11 +5,23 @@ import { Bell, Check, Trash2, Eye, Calendar, User } from 'lucide-react';
 const Notifications = () => {
   const { 
     notifications, markNotificationRead, markAllNotificationsRead, deleteNotification,
-    activityLogs
+    activityLogs, pendingInvitations, acceptInvitation, declineInvitation
   } = useApp();
 
   const unreadNotifications = notifications.filter(n => !n.isRead);
-  const readNotifications = notifications.filter(n => n.isRead);
+  const totalUnreadCount = unreadNotifications.length + pendingInvitations.length;
+
+  const invitationNotifications = pendingInvitations.map(inv => ({
+    id: `inv_${inv.id}`,
+    title: `Workspace Invitation: ${inv.name.toUpperCase()}`,
+    content: `You have been invited to participate in the "${inv.name}" workspace by ${inv.owner?.name || 'Administrator'} (${inv.owner?.email || ''}).`,
+    timestamp: inv.createdAt || new Date().toISOString(),
+    isRead: false,
+    type: 'invitation',
+    workspaceId: inv.id
+  }));
+
+  const allNotifications = [...invitationNotifications, ...notifications];
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
@@ -20,7 +32,7 @@ const Notifications = () => {
           <div>
             <h2 style={{ margin: 0, fontSize: '1.75rem' }}>INBOX STREAMS</h2>
             <p style={{ color: 'var(--text-secondary)', fontSize: '13px', marginTop: '0.25rem' }}>
-              You have <strong>{unreadNotifications.length}</strong> unread transmissions.
+              You have <strong>{totalUnreadCount}</strong> unread transmissions.
             </p>
           </div>
           
@@ -38,7 +50,7 @@ const Notifications = () => {
 
         {/* Notifications list */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-          {notifications.map(notif => (
+          {allNotifications.map(notif => (
             <div 
               key={notif.id}
               style={{
@@ -51,23 +63,47 @@ const Notifications = () => {
                 opacity: notif.isRead ? 0.7 : 1
               }}
             >
-              <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+              <div style={{ display: 'flex', gap: '1rem', alignItems: 'center', flex: 1 }}>
                 <div style={{
                   padding: '0.5rem',
                   backgroundColor: notif.isRead ? 'var(--border)' : 'var(--text-primary)',
-                  color: notif.isRead ? 'var(--text-primary)' : 'var(--bg-primary)'
+                  color: notif.isRead ? 'var(--text-primary)' : 'var(--bg-primary)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  width: '32px',
+                  height: '32px'
                 }}>
-                  <Bell size={18} />
+                  {notif.type === 'invitation' ? '✉️' : <Bell size={18} />}
                 </div>
-                <div>
+                <div style={{ flex: 1 }}>
                   <h4 style={{ margin: 0, fontSize: '14px', textTransform: 'none' }}>{notif.title}</h4>
                   <p style={{ color: 'var(--text-secondary)', fontSize: '12px', marginTop: '0.25rem' }}>{notif.content}</p>
                   <span style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>{new Date(notif.timestamp).toLocaleString()}</span>
+                  
+                  {notif.type === 'invitation' && (
+                    <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.75rem' }}>
+                      <button 
+                        onClick={() => acceptInvitation(notif.workspaceId)} 
+                        className="bauhaus-btn bauhaus-btn-success"
+                        style={{ padding: '0.35rem 0.8rem', fontSize: '11px' }}
+                      >
+                        Accept
+                      </button>
+                      <button 
+                        onClick={() => declineInvitation(notif.workspaceId)} 
+                        className="bauhaus-btn bauhaus-btn-danger"
+                        style={{ padding: '0.35rem 0.8rem', fontSize: '11px' }}
+                      >
+                        Decline
+                      </button>
+                    </div>
+                  )}
                 </div>
               </div>
 
-              <div style={{ display: 'flex', gap: '0.5rem' }}>
-                {!notif.isRead && (
+              <div style={{ display: 'flex', gap: '0.5rem', marginLeft: '1rem' }}>
+                {notif.type !== 'invitation' && !notif.isRead && (
                   <button 
                     onClick={() => markNotificationRead(notif.id)}
                     className="bauhaus-btn" 
@@ -77,18 +113,20 @@ const Notifications = () => {
                     <Check size={14} />
                   </button>
                 )}
-                <button 
-                  onClick={() => deleteNotification(notif.id)}
-                  className="bauhaus-btn bauhaus-btn-danger" 
-                  style={{ padding: '0.4rem', border: '1px solid var(--error)' }}
-                  title="Delete transmission"
-                >
-                  <Trash2 size={14} />
-                </button>
+                {notif.type !== 'invitation' && (
+                  <button 
+                    onClick={() => deleteNotification(notif.id)}
+                    className="bauhaus-btn bauhaus-btn-danger" 
+                    style={{ padding: '0.4rem', border: '1px solid var(--error)' }}
+                    title="Delete transmission"
+                  >
+                    <Trash2 size={14} />
+                  </button>
+                )}
               </div>
             </div>
           ))}
-          {notifications.length === 0 && (
+          {allNotifications.length === 0 && (
             <div style={{ color: 'var(--text-secondary)', textAlign: 'center', padding: '3rem 0' }}>
               No incoming messages registered.
             </div>
