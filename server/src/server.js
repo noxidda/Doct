@@ -338,7 +338,48 @@ app.post('/api/projects', authMiddleware, async (req, res) => {
   io.to(workspaceId).emit('project_created', newProj);
   res.json(newProj);
 });
+app.put('/api/projects/:projectId', authMiddleware, async (req, res) => {
+  const { projectId } = req.params;
+  const updates = req.body;
+  if (isMongoConnected) {
+    try {
+      const updated = await Project.findByIdAndUpdate(projectId, updates, { new: true });
+      return res.json(updated);
+    } catch (err) {
+      return res.status(500).json({ message: 'Error updating project', error: err.message });
+    }
+  }
+  const idx = memoryDb.projects.findIndex(p => p._id === projectId);
+  if (idx !== -1) {
+    memoryDb.projects[idx] = { ...memoryDb.projects[idx], ...updates };
+    return res.json(memoryDb.projects[idx]);
+  }
+  res.status(404).json({ message: 'Project not found' });
+});
 
+app.delete('/api/projects/:projectId', authMiddleware, async (req, res) => {
+  const { projectId } = req.params;
+  if (isMongoConnected) {
+    try {
+      const proj = await Project.findById(projectId);
+      if (proj) {
+        await Project.findByIdAndDelete(projectId);
+        await logBackendActivity(proj.workspaceId.toString(), req.user.name, 'Deleted Project', proj.name);
+      }
+      return res.json({ success: true });
+    } catch (err) {
+      return res.status(500).json({ message: 'Error deleting project', error: err.message });
+    }
+  }
+  const idx = memoryDb.projects.findIndex(p => p._id === projectId);
+  if (idx !== -1) {
+    const proj = memoryDb.projects[idx];
+    memoryDb.projects.splice(idx, 1);
+    await logBackendActivity(proj.workspaceId, req.user.name, 'Deleted Project', proj.name);
+    return res.json({ success: true });
+  }
+  res.status(404).json({ message: 'Project not found' });
+});
 // 4. Task APIs (Module 6, 7, 8, 9)
 app.get('/api/workspaces/:workspaceId/tasks', authMiddleware, async (req, res) => {
   const { workspaceId } = req.params;
@@ -437,7 +478,48 @@ app.post('/api/documents', authMiddleware, async (req, res) => {
   await logBackendActivity(workspaceId, req.user.name, 'Created Doc Page', title);
   res.json(newDoc);
 });
+app.put('/api/documents/:documentId', authMiddleware, async (req, res) => {
+  const { documentId } = req.params;
+  const { title, content } = req.body;
+  if (isMongoConnected) {
+    try {
+      const updated = await Document.findByIdAndUpdate(documentId, { title, content }, { new: true });
+      return res.json(updated);
+    } catch (err) {
+      return res.status(500).json({ message: 'Error updating document', error: err.message });
+    }
+  }
+  const idx = memoryDb.documents.findIndex(d => d._id === documentId);
+  if (idx !== -1) {
+    memoryDb.documents[idx] = { ...memoryDb.documents[idx], title, content };
+    return res.json(memoryDb.documents[idx]);
+  }
+  res.status(404).json({ message: 'Document not found' });
+});
 
+app.delete('/api/documents/:documentId', authMiddleware, async (req, res) => {
+  const { documentId } = req.params;
+  if (isMongoConnected) {
+    try {
+      const doc = await Document.findById(documentId);
+      if (doc) {
+        await Document.deleteMany({ $or: [{ _id: documentId }, { parentId: documentId }] });
+        await logBackendActivity(doc.workspaceId.toString(), req.user.name, 'Deleted Doc Page', doc.title);
+      }
+      return res.json({ success: true });
+    } catch (err) {
+      return res.status(500).json({ message: 'Error deleting document', error: err.message });
+    }
+  }
+  const idx = memoryDb.documents.findIndex(d => d._id === documentId);
+  if (idx !== -1) {
+    const doc = memoryDb.documents[idx];
+    memoryDb.documents = memoryDb.documents.filter(d => d._id !== documentId && d.parentId !== documentId);
+    await logBackendActivity(doc.workspaceId, req.user.name, 'Deleted Doc Page', doc.title);
+    return res.json({ success: true });
+  }
+  res.status(404).json({ message: 'Document not found' });
+});
 // 6. Admin Panel Supervision (Module 19)
 app.get('/api/admin/stats', authMiddleware, checkRole(['Owner', 'Admin']), async (req, res) => {
   // Return CPU load, database metrics

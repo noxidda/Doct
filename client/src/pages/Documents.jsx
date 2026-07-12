@@ -19,28 +19,35 @@ const Documents = () => {
 
   const workspaceDocs = documents.filter(d => d.workspaceId === currentWorkspace?.id);
   const rootDocs = workspaceDocs.filter(d => d.parentId === null);
-  const activeDoc = workspaceDocs.find(d => d.id === activeDocId) || workspaceDocs[0] || null;
+  const activeDoc = workspaceDocs.find(d => d.id === activeDocId) || null;
+
+  // Auto-select first doc on load if none selected
+  React.useEffect(() => {
+    if (activeDocId === null && workspaceDocs.length > 0 && !isEditing) {
+      setActiveDocId(workspaceDocs[0].id);
+    }
+  }, [workspaceDocs]);
 
   // Sync editor with active doc
   React.useEffect(() => {
     if (activeDoc) {
-      setActiveDocId(activeDoc.id);
       setEditTitle(activeDoc.title);
       setEditContent(activeDoc.content);
-    } else {
-      setActiveDocId(null);
-      setEditTitle('');
-      setEditContent('');
+    } else if (activeDocId === null) {
+      setEditTitle('Untitled Document');
+      setEditContent('# Untitled Document\n\nWrite content in markdown here...');
     }
-  }, [activeDocId, documents]);
+  }, [activeDocId]);
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (!editTitle.trim()) return;
     if (activeDoc) {
-      updateDocument(activeDoc.id, editTitle, editContent);
+      await updateDocument(activeDoc.id, editTitle, editContent);
     } else {
-      const newDoc = createDocument(editTitle, editContent, newDocParentId);
-      setActiveDocId(newDoc.id);
+      const newDoc = await createDocument(editTitle, editContent, newDocParentId);
+      if (newDoc) {
+        setActiveDocId(newDoc.id || newDoc._id);
+      }
     }
     setIsEditing(false);
   };

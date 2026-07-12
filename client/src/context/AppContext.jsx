@@ -301,15 +301,25 @@ export const AppProvider = ({ children }) => {
     return localProj;
   };
 
-  const editProject = (id, updatedData) => {
+  const editProject = async (id, updatedData) => {
     setProjects(prev => prev.map(p => p.id === id ? { ...p, ...updatedData } : p));
     logActivity('Updated Project', updatedData.name || id);
+    try {
+      await api.put(`/projects/${id}`, updatedData);
+    } catch (e) {
+      console.warn('Project api update failed');
+    }
   };
 
-  const deleteProject = (id) => {
+  const deleteProject = async (id) => {
     const proj = projects.find(p => p.id === id);
     setProjects(prev => prev.filter(p => p.id !== id));
     logActivity('Deleted Project', proj?.name || id);
+    try {
+      await api.delete(`/projects/${id}`);
+    } catch (e) {
+      console.warn('Project api delete failed');
+    }
   };
 
   // Task CRUD
@@ -537,14 +547,24 @@ export const AppProvider = ({ children }) => {
     return localDoc;
   };
 
-  const updateDocument = (id, title, content) => {
+  const updateDocument = async (id, title, content) => {
     setDocuments(prev => prev.map(d => d.id === id ? { ...d, title, content } : d));
     logActivity('Edited Page', title);
+    try {
+      await api.put(`/documents/${id}`, { title, content });
+    } catch (e) {
+      console.warn('Document api update failed');
+    }
   };
 
-  const deleteDocument = (id) => {
+  const deleteDocument = async (id) => {
     setDocuments(prev => prev.filter(d => d.id !== id && d.parentId !== id));
     logActivity('Deleted Page', id);
+    try {
+      await api.delete(`/documents/${id}`);
+    } catch (e) {
+      console.warn('Document api delete failed');
+    }
   };
 
   // Member Management
