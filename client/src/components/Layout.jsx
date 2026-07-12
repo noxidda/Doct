@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth, DEFAULT_AVATAR } from '../context/AuthContext';
 import { useApp } from '../context/AppContext';
@@ -18,10 +18,31 @@ import {
   User,
   LogOut,
   Search,
-  ChevronDown
+  ChevronDown,
+  Sun,
+  Moon
 } from 'lucide-react';
 
 const Layout = ({ children }) => {
+  const [theme, setTheme] = useState(() => {
+    const saved = localStorage.getItem('doct_theme');
+    if (saved) return saved;
+    return 'light';
+  });
+
+  useEffect(() => {
+    localStorage.setItem('doct_theme', theme);
+    const root = document.documentElement;
+    if (theme === 'dark') {
+      root.classList.add('dark-theme');
+    } else {
+      root.classList.remove('dark-theme');
+    }
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme(prev => prev === 'light' ? 'dark' : 'light');
+  };
   const { user, logout } = useAuth();
   const { workspaces, currentWorkspace, setCurrentWorkspace, notifications, tasks, projects, members, documents } = useApp();
   const navigate = useNavigate();
@@ -90,11 +111,11 @@ const Layout = ({ children }) => {
             gap: '0.5rem',
             cursor: 'pointer'
           }}>
-            <img src={logoBlack} alt="Doct Logo" style={{ height: '32px', width: 'auto', display: 'block' }} />
+            <img src={theme === 'dark' ? logoWhite : logoBlack} alt="Doct Logo" style={{ height: '32px', width: 'auto', display: 'block' }} />
             <span style={{ 
               fontSize: '1.6rem', 
               fontWeight: 800, 
-              color: '#1C1B1F', 
+              color: 'var(--text-primary)', 
               letterSpacing: '0.02em',
               fontFamily: 'var(--font-heading)'
             }}>
@@ -119,8 +140,8 @@ const Layout = ({ children }) => {
                     top: '100%',
                     left: 0,
                     right: 0,
-                    backgroundColor: '#FFFFFF',
-                    border: '1px solid #1C1B1F',
+                    backgroundColor: 'var(--surface-container)',
+                    border: '2px solid var(--border)',
                     borderRadius: 'var(--radius-sm)',
                     boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)',
                     zIndex: 10,
@@ -137,14 +158,14 @@ const Layout = ({ children }) => {
                     style={{
                       padding: '0.75rem 1rem',
                       cursor: 'pointer',
-                      borderBottom: '1px solid #E5E7EB',
-                      backgroundColor: currentWorkspace?.id === ws.id ? 'rgba(0, 0, 0, 0.05)' : 'transparent'
+                      borderBottom: '1px solid var(--border)',
+                      backgroundColor: currentWorkspace?.id === ws.id ? 'var(--hover)' : 'transparent'
                     }}
-                    onMouseEnter={(e) => e.target.style.backgroundColor = 'rgba(0, 0, 0, 0.05)'}
-                    onMouseLeave={(e) => e.target.style.backgroundColor = currentWorkspace?.id === ws.id ? 'rgba(0, 0, 0, 0.05)' : 'transparent'}
+                    onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--hover)'}
+                    onMouseLeave={(e) => e.currentTarget.style.backgroundColor = currentWorkspace?.id === ws.id ? 'var(--hover)' : 'transparent'}
                   >
-                    <div style={{ fontWeight: 'bold', fontSize: '12px', color: '#1C1B1F' }}>{ws.name}</div>
-                    <div style={{ fontSize: '12px', color: '#666666' }}>{ws.description}</div>
+                    <div style={{ fontWeight: 'bold', fontSize: '12px', color: 'var(--text-primary)' }}>{ws.name}</div>
+                    <div style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>{ws.description}</div>
                   </div>
                 ))}
                 <div 
@@ -152,7 +173,7 @@ const Layout = ({ children }) => {
                     navigate('/settings');
                     setShowWorkspaceMenu(false);
                   }}
-                  style={{ padding: '0.75rem 1rem', cursor: 'pointer', fontSize: '12px', textTransform: 'uppercase', fontWeight: 'bold', textAlign: 'center', backgroundColor: '#E5E7EB', color: '#1C1B1F' }}
+                  style={{ padding: '0.75rem 1rem', cursor: 'pointer', fontSize: '12px', textTransform: 'uppercase', fontWeight: 'bold', textAlign: 'center', backgroundColor: 'var(--surface-container-low)', color: 'var(--text-primary)', borderTop: '2px solid var(--border)' }}
                 >
                   Manage Workspaces
                 </div>
@@ -196,22 +217,29 @@ const Layout = ({ children }) => {
         </nav>
 
         {/* User profile & Role switcher */}
-        <div style={{ padding: '1rem', borderTop: '1px solid #1C1B1F', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+        <div style={{ padding: '1rem', borderTop: '1px solid var(--border)', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
           
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '0.5rem 0' }}>
             <img 
               src={user?.avatar || DEFAULT_AVATAR} 
               alt={user?.name} 
-              style={{ width: '38px', height: '38px', objectFit: 'cover', border: '2px solid #1C1B1F', borderRadius: '50%' }}
+              style={{ width: '38px', height: '38px', objectFit: 'cover', border: '2px solid var(--border)', borderRadius: '50%' }}
             />
             <div style={{ flex: 1, minWidth: 0 }}>
-              <div style={{ fontWeight: 'bold', fontSize: '13px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', fontFamily: 'var(--font-heading)', color: '#1C1B1F' }}>{user?.name}</div>
-              <div style={{ display: 'inline-block', fontSize: '12px', padding: '2px 10px', backgroundColor: '#1C1B1F', color: '#FFFFFF', borderRadius: '9999px', fontWeight: 500 }}>{user?.role}</div>
+              <div style={{ fontWeight: 'bold', fontSize: '13px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', fontFamily: 'var(--font-heading)', color: 'var(--text-primary)' }}>{user?.name}</div>
+              <div style={{ display: 'inline-block', fontSize: '12px', padding: '2px 10px', backgroundColor: 'var(--text-primary)', color: 'var(--bg-primary)', borderRadius: '9999px', fontWeight: 500 }}>{user?.role}</div>
             </div>
             <button 
+              onClick={toggleTheme}
+              style={{ background: 'none', border: 'none', color: 'var(--text-primary)', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', marginRight: '0.25rem' }}
+              title={theme === 'dark' ? "Switch to Light Mode" : "Switch to Dark Mode"}
+            >
+              {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
+            </button>
+            <button 
               onClick={logout}
-              style={{ background: 'none', border: 'none', color: '#1C1B1F', cursor: 'pointer' }}
+              style={{ background: 'none', border: 'none', color: 'var(--text-primary)', cursor: 'pointer' }}
               title="Logout"
             >
               <LogOut size={16} />
@@ -245,8 +273,8 @@ const Layout = ({ children }) => {
                 top: '100%',
                 left: 0,
                 right: 0,
-                backgroundColor: '#FFFFFF',
-                border: '2px solid #1C1B1F',
+                backgroundColor: 'var(--surface-container)',
+                border: '2px solid var(--border)',
                 maxHeight: '300px',
                 overflowY: 'auto',
                 zIndex: 20,
@@ -255,14 +283,14 @@ const Layout = ({ children }) => {
                 {/* Tasks */}
                 {searchResults.tasks.length > 0 && (
                   <div>
-                    <div style={{ padding: '0.25rem 0.75rem', backgroundColor: '#E5E7EB', color: '#1C1B1F', fontSize: '12px', textTransform: 'uppercase', fontWeight: 'bold' }}>Tasks</div>
+                    <div style={{ padding: '0.25rem 0.75rem', backgroundColor: 'var(--surface-container-low)', color: 'var(--text-primary)', fontSize: '12px', textTransform: 'uppercase', fontWeight: 'bold', borderBottom: '1px solid var(--border)' }}>Tasks</div>
                     {searchResults.tasks.map(t => (
                       <div 
                         key={t.id} 
                         onClick={() => handleSearchResultClick('task', t.id)}
-                        style={{ padding: '0.5rem 0.75rem', cursor: 'pointer', borderBottom: '1px solid #E5E7EB', color: '#1C1B1F', fontSize: '12px' }}
-                        onMouseEnter={(e) => e.target.style.backgroundColor = 'rgba(0, 0, 0, 0.05)'}
-                        onMouseLeave={(e) => e.target.style.backgroundColor = 'transparent'}
+                        style={{ padding: '0.5rem 0.75rem', cursor: 'pointer', borderBottom: '1px solid var(--border)', color: 'var(--text-primary)', fontSize: '12px' }}
+                        onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--hover)'}
+                        onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
                       >
                         {t.title}
                       </div>
@@ -272,14 +300,14 @@ const Layout = ({ children }) => {
                 {/* Projects */}
                 {searchResults.projects.length > 0 && (
                   <div>
-                    <div style={{ padding: '0.25rem 0.75rem', backgroundColor: '#E5E7EB', color: '#1C1B1F', fontSize: '12px', textTransform: 'uppercase', fontWeight: 'bold' }}>Projects</div>
+                    <div style={{ padding: '0.25rem 0.75rem', backgroundColor: 'var(--surface-container-low)', color: 'var(--text-primary)', fontSize: '12px', textTransform: 'uppercase', fontWeight: 'bold', borderBottom: '1px solid var(--border)' }}>Projects</div>
                     {searchResults.projects.map(p => (
                       <div 
                         key={p.id} 
                         onClick={() => handleSearchResultClick('project', p.id)}
-                        style={{ padding: '0.5rem 0.75rem', cursor: 'pointer', borderBottom: '1px solid #E5E7EB', color: '#1C1B1F', fontSize: '12px' }}
-                        onMouseEnter={(e) => e.target.style.backgroundColor = 'rgba(0, 0, 0, 0.05)'}
-                        onMouseLeave={(e) => e.target.style.backgroundColor = 'transparent'}
+                        style={{ padding: '0.5rem 0.75rem', cursor: 'pointer', borderBottom: '1px solid var(--border)', color: 'var(--text-primary)', fontSize: '12px' }}
+                        onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--hover)'}
+                        onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
                       >
                         {p.name}
                       </div>
@@ -289,14 +317,14 @@ const Layout = ({ children }) => {
                 {/* Documents */}
                 {searchResults.documents.length > 0 && (
                   <div>
-                    <div style={{ padding: '0.25rem 0.75rem', backgroundColor: '#E5E7EB', color: '#1C1B1F', fontSize: '12px', textTransform: 'uppercase', fontWeight: 'bold' }}>Documents</div>
+                    <div style={{ padding: '0.25rem 0.75rem', backgroundColor: 'var(--surface-container-low)', color: 'var(--text-primary)', fontSize: '12px', textTransform: 'uppercase', fontWeight: 'bold', borderBottom: '1px solid var(--border)' }}>Documents</div>
                     {searchResults.documents.map(d => (
                       <div 
                         key={d.id} 
                         onClick={() => handleSearchResultClick('document', d.id)}
-                        style={{ padding: '0.5rem 0.75rem', cursor: 'pointer', borderBottom: '1px solid #E5E7EB', color: '#1C1B1F', fontSize: '12px' }}
-                        onMouseEnter={(e) => e.target.style.backgroundColor = 'rgba(0, 0, 0, 0.05)'}
-                        onMouseLeave={(e) => e.target.style.backgroundColor = 'transparent'}
+                        style={{ padding: '0.5rem 0.75rem', cursor: 'pointer', borderBottom: '1px solid var(--border)', color: 'var(--text-primary)', fontSize: '12px' }}
+                        onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--hover)'}
+                        onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
                       >
                         {d.title}
                       </div>
@@ -304,7 +332,7 @@ const Layout = ({ children }) => {
                   </div>
                 )}
                 {searchResults.tasks.length === 0 && searchResults.projects.length === 0 && searchResults.documents.length === 0 && (
-                  <div style={{ padding: '1rem', textAlign: 'center', color: '#666666', fontSize: '12px' }}>No matches found</div>
+                  <div style={{ padding: '1rem', textAlign: 'center', color: 'var(--text-muted)', fontSize: '12px' }}>No matches found</div>
                 )}
               </div>
             )}
