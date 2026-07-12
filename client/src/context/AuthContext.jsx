@@ -1,11 +1,12 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { useAuth as useClerkAuth, useUser as useClerkUser } from '@clerk/clerk-react';
+import defaultProfilePic from '../assets/profilepic.png';
 
 const AuthContext = createContext();
 
 export const useAuth = () => useContext(AuthContext);
 
-export const DEFAULT_AVATAR = `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><rect width="24" height="24" fill="%23E7E0EC"/><circle cx="12" cy="8" r="4" fill="%2379747E"/><path d="M12 14c-6.1 0-8 4-8 4h16s-1.9-4-8-4z" fill="%2379747E"/></svg>`;
+export const DEFAULT_AVATAR = defaultProfilePic;
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);

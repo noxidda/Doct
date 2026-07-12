@@ -130,6 +130,13 @@ export const AppProvider = ({ children }) => {
       });
     });
 
+    s.on('member_joined', (newMember) => {
+      setMembers(prev => {
+        if (prev.some(m => m.id === newMember.id || m.id === newMember._id)) return prev;
+        return [...prev, { ...newMember, id: newMember.id || newMember._id }];
+      });
+    });
+
     return () => {
       s.disconnect();
     };
@@ -165,6 +172,12 @@ export const AppProvider = ({ children }) => {
         const docsRes = await api.get(`/workspaces/${currentWorkspace.id}/documents`);
         if (docsRes.data) {
           setDocuments(docsRes.data.map(d => ({ ...d, id: d._id || d.id })));
+        }
+
+        // Fetch members
+        const membersRes = await api.get(`/workspaces/${currentWorkspace.id}/members`);
+        if (membersRes.data) {
+          setMembers(membersRes.data.map(m => ({ ...m, id: m.id || m._id })));
         }
       } catch (err) {
         console.warn('⚠️ Server offline or request failed. operating on Local Workspace mode.', err.message);
@@ -524,9 +537,9 @@ export const AppProvider = ({ children }) => {
   };
 
   // Member Management
-  const inviteMember = (email, role) => {
+  const inviteMember = async (email, role) => {
     const name = email.split('@')[0];
-    const newMember = {
+    const localMember = {
       id: `usr_${Date.now()}`,
       name: name.charAt(0).toUpperCase() + name.slice(1),
       email,
@@ -534,9 +547,19 @@ export const AppProvider = ({ children }) => {
       avatar: '',
       online: false
     };
-    setMembers(prev => [...prev, newMember]);
+    setMembers(prev => [...prev, localMember]);
     logActivity('Invited Member', email);
     sendNotification('Member Invited', `${email} has been invited as ${role}`, 'member_joined');
+
+    try {
+      const res = await api.post(`/workspaces/${currentWorkspace.id}/members`, { email, role });
+      if (res.data) {
+        const serverMember = { ...res.data, id: res.data.id || res.data._id };
+        setMembers(prev => prev.map(m => m.id === localMember.id ? serverMember : m));
+      }
+    } catch (e) {
+      console.warn('Invite member api failed');
+    }
   };
 
   const removeMember = (id) => {

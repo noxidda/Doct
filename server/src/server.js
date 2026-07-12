@@ -175,6 +175,90 @@ app.post('/api/workspaces', authMiddleware, async (req, res) => {
   res.json(newWs);
 });
 
+app.get('/api/workspaces/:workspaceId/members', authMiddleware, async (req, res) => {
+  const { workspaceId } = req.params;
+  if (isMongoConnected) {
+    try {
+      const workspace = await Workspace.findById(workspaceId).populate('members.user');
+      if (!workspace) {
+        return res.status(404).json({ message: 'Workspace not found' });
+      }
+      const formattedMembers = workspace.members
+        .filter(m => m.user)
+        .map(m => ({
+          id: m.user._id.toString(),
+          name: m.user.name,
+          email: m.user.email,
+          role: m.role,
+          avatar: m.user.avatar,
+          online: false
+        }));
+      return res.json(formattedMembers);
+    } catch (err) {
+      return res.status(500).json({ message: 'Error fetching members', error: err.message });
+    }
+  }
+  res.json(memoryDb.users);
+});
+
+app.post('/api/workspaces/:workspaceId/members', authMiddleware, async (req, res) => {
+  const { workspaceId } = req.params;
+  const { email, role } = req.body;
+
+  if (isMongoConnected) {
+    try {
+      let user = await User.findOne({ email });
+      if (!user) {
+        user = await User.create({
+          clerkId: `clerk_placeholder_${Date.now()}`,
+          name: email.split('@')[0],
+          email,
+          role: 'Member'
+        });
+      }
+
+      const workspace = await Workspace.findById(workspaceId);
+      if (!workspace) {
+        return res.status(404).json({ message: 'Workspace not found' });
+      }
+
+      const isAlreadyMember = workspace.members.some(m => m.user && m.user.toString() === user._id.toString());
+      if (!isAlreadyMember) {
+        workspace.members.push({ user: user._id, role });
+        await workspace.save();
+      }
+
+      await logBackendActivity(workspaceId, req.user.name, 'Invited Member', email);
+      
+      const newMember = {
+        id: user._id.toString(),
+        name: user.name,
+        email: user.email,
+        role,
+        online: false,
+        avatar: user.avatar
+      };
+
+      io.to(workspaceId).emit('member_joined', newMember);
+      return res.json(newMember);
+    } catch (err) {
+      return res.status(500).json({ message: 'Error inviting member', error: err.message });
+    }
+  }
+
+  const newMember = {
+    _id: `usr_${Date.now()}`,
+    name: email.split('@')[0],
+    email,
+    role,
+    avatar: '',
+    online: false
+  };
+  memoryDb.users.push(newMember);
+  io.to(workspaceId).emit('member_joined', newMember);
+  res.json(newMember);
+});
+
 // 3. Project APIs (Module 5)
 app.get('/api/workspaces/:workspaceId/projects', authMiddleware, async (req, res) => {
   const { workspaceId } = req.params;
@@ -280,7 +364,7 @@ app.delete('/api/tasks/:taskId', authMiddleware, async (req, res) => {
 app.get('/api/workspaces/:workspaceId/documents', authMiddleware, async (req, res) => {
   const { workspaceId } = req.params;
   if (isMongoConnected) {
-    const docs = await Document.find({ workspaceId });
+    const docs = await Document.find({ workspaceId }).populate('authorId');
     return res.json(docs);
   }
   res.json(memoryDb.documents.filter(d => d.workspaceId === workspaceId));

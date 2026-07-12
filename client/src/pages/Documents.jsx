@@ -8,7 +8,7 @@ import {
 
 const Documents = () => {
   const { user } = useAuth();
-  const { documents, createDocument, updateDocument, deleteDocument, currentWorkspace } = useApp();
+  const { documents, createDocument, updateDocument, deleteDocument, currentWorkspace, members } = useApp();
   const [activeDocId, setActiveDocId] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
 
@@ -249,7 +249,18 @@ const Documents = () => {
           ) : (
             <>
               <div style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>
-                Author: <strong>{activeDoc ? workspaceDocs.find(d => d.id === activeDoc.id)?.authorId || 'Arthur' : '-'}</strong> | Created: {activeDoc?.createdAt}
+                Author: <strong>{activeDoc ? (() => {
+                  const doc = workspaceDocs.find(d => d.id === activeDoc.id);
+                  if (!doc) return '-';
+                  if (doc.authorId && typeof doc.authorId === 'object') {
+                    return doc.authorId.name || 'Operator';
+                  }
+                  const member = members.find(m => m.id === doc.authorId);
+                  if (member) return member.name;
+                  if (doc.authorId === user?.id) return user?.name || 'Operator';
+                  if (doc.authorId && doc.authorId.startsWith('user_')) return user?.name || 'Operator';
+                  return doc.authorId || 'Operator';
+                })() : '-'}</strong> | Created: {activeDoc?.createdAt}
               </div>
               {activeDoc && (
                 <button 

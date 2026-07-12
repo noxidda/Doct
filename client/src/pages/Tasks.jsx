@@ -47,6 +47,27 @@ const Tasks = () => {
     setSelectedTask(task);
   };
 
+  // Drag and Drop handlers
+  const handleDragStart = (e, taskId) => {
+    e.dataTransfer.setData('text/plain', taskId);
+    e.dataTransfer.effectAllowed = 'move';
+  };
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+  };
+
+  const handleDrop = async (e, targetStatus) => {
+    e.preventDefault();
+    const taskId = e.dataTransfer.getData('text/plain');
+    if (taskId) {
+      const task = tasks.find(t => t.id === taskId);
+      if (task && task.status !== targetStatus) {
+        await updateTask(taskId, { status: targetStatus });
+      }
+    }
+  };
+
   // Get freshest data for active task drawer
   const activeTask = tasks.find(t => t.id === selectedTask?.id) || null;
 
@@ -272,7 +293,12 @@ const Tasks = () => {
               {statuses.map(status => {
                 const columnTasks = filteredTasks.filter(t => t.status === status);
                 return (
-                  <div key={status} style={{ display: 'flex', flexDirection: 'column', minWidth: '180px', backgroundColor: 'var(--surface-container)', borderRadius: 'var(--radius-lg)', overflow: 'hidden' }}>
+                  <div 
+                    key={status} 
+                    onDragOver={handleDragOver}
+                    onDrop={(e) => handleDrop(e, status)}
+                    style={{ display: 'flex', flexDirection: 'column', minWidth: '180px', backgroundColor: 'var(--surface-container)', borderRadius: 'var(--radius-lg)', overflow: 'hidden' }}
+                  >
                     <div style={{ 
                       padding: '1rem', 
                       display: 'flex', 
@@ -291,6 +317,8 @@ const Tasks = () => {
                           <div 
                             key={task.id} 
                             onClick={() => handleTaskClick(task)}
+                            draggable="true"
+                            onDragStart={(e) => handleDragStart(e, task.id)}
                             style={{
                               padding: '1rem',
                               borderRadius: 'var(--radius-md)',
