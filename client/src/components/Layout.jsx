@@ -115,7 +115,7 @@ const Layout = ({ children }) => {
             <span style={{ 
               fontSize: '1.6rem', 
               fontWeight: 900, 
-              color: 'var(--text-primary)', 
+              color: theme === 'dark' ? '#FFFFFF' : '#121212', 
               letterSpacing: '-0.02em',
               fontFamily: 'var(--font-heading)',
               textTransform: 'uppercase'

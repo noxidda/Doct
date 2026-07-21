@@ -1,34 +1,34 @@
 :root {
   /* Bauhaus Custom Color System - White, Black, Grey, Blue, Lavender, Light Violet */
-  --bg-primary: #F5DEB3;             /* Wheat canvas */
+  --bg-primary: #F5F5DC;             /* Beige canvas */
   --foreground: #121212;             /* Stark Black text */
   --text-primary: #121212;
-  --text-secondary: #4A4A5A;         /* Secondary dark grey text */
-  --text-muted: #7E7E8F;             /* Muted grey text */
+  --text-secondary: #5D4037;         /* Coffee/dark brown secondary text */
+  --text-muted: #8D6E63;             /* Muted brown text */
   
-  --primary-blue: #1040C0;           /* Bauhaus Blue */
-  --primary-lavender: #E6E6FA;       /* Lavender accent */
-  --primary-violet: #B39DDB;         /* Light Violet accent */
-  --primary-grey: #E0E0E0;           /* Grey accent */
-  --primary-white: #F5DEB3;
+  --primary-blue: #3E2723;           /* Coffee color */
+  --primary-lavender: #D2B48C;       /* Light brown / tan accent */
+  --primary-violet: #8B5A2B;         /* Brown accent */
+  --primary-grey: #5C4033;           /* Dark brown accent */
+  --primary-white: #F5F5DC;
   --primary-black: #121212;
   
   --primary: #121212;                /* Stark Black Primary */
-  --on-primary: #F5DEB3;
-  --secondary-container: #E6E6FA;    /* Lavender container */
+  --on-primary: #F5F5DC;
+  --secondary-container: #D2B48C;    /* Light brown container */
   --on-secondary-container: #121212;
-  --tertiary: #B39DDB;               /* Light Violet accent */
+  --tertiary: #8B5A2B;               /* Brown accent */
   
-  --surface-container: #EADCB9;      /* Adjusted wheat/beige container surface */
-  --surface-container-low: #E5D5AE;  /* Adjusted wheat/beige container low */
+  --surface-container: #E8E8CF;      /* Adjusted beige container surface */
+  --surface-container-low: #DFDFBF;  /* Adjusted beige container low */
   
   --border: #121212;                 /* Thick, distinct black borders */
   --outline: #121212;
-  --card: #F5DEB3;
-  --hover: rgba(16, 64, 192, 0.08);  /* Blue-tint hover layer */
+  --card: #F5F5DC;
+  --hover: rgba(62, 39, 35, 0.08);   /* Coffee-tint hover layer */
   
-  --success: #1040C0;                /* Blue for success/confirmations */
-  --warning: #B39DDB;                /* Light violet for warnings */
+  --success: #3E2723;                /* Coffee color for success */
+  --warning: #8B5A2B;                /* Brown for warnings */
   --error: #D02020;                  /* Accessibility Red for errors */
   
   --font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -553,40 +553,40 @@ header.appbar {
 .dark-theme {
   --bg-primary: #161618;             /* Dark grey that is almost black canvas */
   --bg-secondary: #1E1E24;
-  --foreground: #F5DEB3;             /* Wheat text */
-  --text-primary: #F5DEB3;
-  --text-secondary: #CCCCCC;
-  --text-muted: #888888;
+  --foreground: #F5F5DC;             /* Beige text */
+  --text-primary: #F5F5DC;
+  --text-secondary: #D7CCC8;         /* Latte / light coffee text */
+  --text-muted: #A1887F;             /* Muted coffee text */
   
-  --primary-blue: #4D7CFF;           /* Brighter blue for dark contrast */
-  --primary-lavender: #444454;       /* Slate lavender */
-  --primary-violet: #6A5ACD;         /* Slate violet */
-  --primary-grey: #333333;           /* Dark grey */
+  --primary-blue: #D7CCC8;           /* Latte / light coffee color */
+  --primary-lavender: #5D4037;       /* Slate brown accent */
+  --primary-violet: #8D6E63;         /* Medium slate brown accent */
+  --primary-grey: #4E3629;           /* Dark brown / coffee accent */
   --primary-white: #161618;
-  --primary-black: #F5DEB3;
+  --primary-black: #F5F5DC;
   
-  --primary: #F5DEB3;
+  --primary: #F5F5DC;
   --on-primary: #161618;
-  --secondary-container: #333344;
-  --on-secondary-container: #F5DEB3;
-  --tertiary: #6A5ACD;
-  --on-tertiary: #F5DEB3;
+  --secondary-container: #5D4037;
+  --on-secondary-container: #F5F5DC;
+  --tertiary: #8D6E63;
+  --on-tertiary: #F5F5DC;
   
-  --surface-container: #1E1E1E;
-  --surface-container-low: #161616;
+  --surface-container: #252528;
+  --surface-container-low: #1E1E20;
   
-  --border: #F5DEB3;                 /* Wheat borders for contrast */
-  --outline: #F5DEB3;
-  --card: #1E1E1E;
-  --hover: rgba(245, 222, 179, 0.12); /* Wheat-tint hover layer */
+  --border: #F5F5DC;                 /* Beige borders for contrast */
+  --outline: #F5F5DC;
+  --card: #252528;
+  --hover: rgba(245, 245, 220, 0.12); /* Beige-tint hover layer */
   
-  --success: #4D7CFF;
-  --warning: #6A5ACD;
+  --success: #D7CCC8;
+  --warning: #8D6E63;
   --error: #FF453A;
   
-  --shadow-sm: 3px 3px 0px 0px #F5DEB3;
-  --shadow-md: 6px 6px 0px 0px #F5DEB3;
-  --shadow-lg: 8px 8px 0px 0px #F5DEB3;
+  --shadow-sm: 3px 3px 0px 0px #F5F5DC;
+  --shadow-md: 6px 6px 0px 0px #F5F5DC;
+  --shadow-lg: 8px 8px 0px 0px #F5F5DC;
 }
 
 .dark-theme .sidebar {
