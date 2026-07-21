@@ -1,6 +1,6 @@
 :root {
   /* Bauhaus Custom Color System - White, Black, Grey, Blue, Lavender, Light Violet */
-  --bg-primary: #FFFFFF;             /* Pure white canvas */
+  --bg-primary: #F5DEB3;             /* Wheat canvas */
   --foreground: #121212;             /* Stark Black text */
   --text-primary: #121212;
   --text-secondary: #4A4A5A;         /* Secondary dark grey text */
@@ -10,21 +10,21 @@
   --primary-lavender: #E6E6FA;       /* Lavender accent */
   --primary-violet: #B39DDB;         /* Light Violet accent */
   --primary-grey: #E0E0E0;           /* Grey accent */
-  --primary-white: #FFFFFF;
+  --primary-white: #F5DEB3;
   --primary-black: #121212;
   
   --primary: #121212;                /* Stark Black Primary */
-  --on-primary: #FFFFFF;
+  --on-primary: #F5DEB3;
   --secondary-container: #E6E6FA;    /* Lavender container */
   --on-secondary-container: #121212;
   --tertiary: #B39DDB;               /* Light Violet accent */
   
-  --surface-container: #F0F0F5;      /* Light grey/lavender container surface */
-  --surface-container-low: #EAEAEF;  /* Input background */
+  --surface-container: #EADCB9;      /* Adjusted wheat/beige container surface */
+  --surface-container-low: #E5D5AE;  /* Adjusted wheat/beige container low */
   
   --border: #121212;                 /* Thick, distinct black borders */
   --outline: #121212;
-  --card: #FFFFFF;
+  --card: #F5DEB3;
   --hover: rgba(16, 64, 192, 0.08);  /* Blue-tint hover layer */
   
   --success: #1040C0;                /* Blue for success/confirmations */
@@ -551,10 +551,10 @@ header.appbar {
    DARK THEME PALETTE (Bauhaus Custom Palette Dark Override)
    ========================================================================== */
 .dark-theme {
-  --bg-primary: #121212;             /* Stark Black canvas */
+  --bg-primary: #161618;             /* Dark grey that is almost black canvas */
   --bg-secondary: #1E1E24;
-  --foreground: #FFFFFF;             /* White text */
-  --text-primary: #FFFFFF;
+  --foreground: #F5DEB3;             /* Wheat text */
+  --text-primary: #F5DEB3;
   --text-secondary: #CCCCCC;
   --text-muted: #888888;
   
@@ -562,31 +562,31 @@ header.appbar {
   --primary-lavender: #444454;       /* Slate lavender */
   --primary-violet: #6A5ACD;         /* Slate violet */
   --primary-grey: #333333;           /* Dark grey */
-  --primary-white: #121212;
-  --primary-black: #FFFFFF;
+  --primary-white: #161618;
+  --primary-black: #F5DEB3;
   
-  --primary: #FFFFFF;
-  --on-primary: #121212;
+  --primary: #F5DEB3;
+  --on-primary: #161618;
   --secondary-container: #333344;
-  --on-secondary-container: #FFFFFF;
+  --on-secondary-container: #F5DEB3;
   --tertiary: #6A5ACD;
-  --on-tertiary: #FFFFFF;
+  --on-tertiary: #F5DEB3;
   
   --surface-container: #1E1E1E;
   --surface-container-low: #161616;
   
-  --border: #FFFFFF;                 /* White borders for contrast */
-  --outline: #FFFFFF;
+  --border: #F5DEB3;                 /* Wheat borders for contrast */
+  --outline: #F5DEB3;
   --card: #1E1E1E;
-  --hover: rgba(255, 255, 255, 0.12);
+  --hover: rgba(245, 222, 179, 0.12); /* Wheat-tint hover layer */
   
   --success: #4D7CFF;
   --warning: #6A5ACD;
   --error: #FF453A;
   
-  --shadow-sm: 3px 3px 0px 0px #FFFFFF;
-  --shadow-md: 6px 6px 0px 0px #FFFFFF;
-  --shadow-lg: 8px 8px 0px 0px #FFFFFF;
+  --shadow-sm: 3px 3px 0px 0px #F5DEB3;
+  --shadow-md: 6px 6px 0px 0px #F5DEB3;
+  --shadow-lg: 8px 8px 0px 0px #F5DEB3;
 }
 
 .dark-theme .sidebar {
