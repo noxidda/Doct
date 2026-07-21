@@ -809,3 +809,14 @@ header.appbar {
 .dark-theme .login-split-container a {
   color: initial !important;
 }
+
+/* Landing Page Dashboard Button Override in Dark Mode */
+.dark-theme .landing-dashboard-btn {
+  background-color: #8D6E63 !important; /* Brown background */
+  color: #F5F5DC !important;            /* Beige text color */
+}
+
+.dark-theme .landing-dashboard-btn:hover {
+  background-color: #5D4037 !important; /* Darker brown background on hover */
+  color: #F5F5DC !important;            /* Beige text color on hover */
+}

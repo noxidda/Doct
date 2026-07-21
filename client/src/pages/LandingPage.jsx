@@ -65,7 +65,7 @@ const LandingPage = () => {
           {user ? (
             <Link 
               to="/dashboard" 
-              className="bauhaus-btn bauhaus-btn-primary" 
+              className="bauhaus-btn bauhaus-btn-primary landing-dashboard-btn" 
               style={{ fontSize: '12px', padding: '0.4rem 1.25rem' }}
             >
               Dashboard
