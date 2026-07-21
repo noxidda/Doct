@@ -63,15 +63,15 @@ const memoryDb = {
 const connectDb = async () => {
   const uri = process.env.MONGO_URI;
   if (!uri) {
-    console.log('⚠️ MONGO_URI missing from .env. Server running in Memory Database Fallback Mode.');
+    console.log('MONGO_URI missing from .env. Server running in Memory Database Fallback Mode.');
     return;
   }
   try {
     await mongoose.connect(uri, { serverSelectionTimeoutMS: 5000 });
     isMongoConnected = true;
-    console.log('🔌 Connected to MongoDB Atlas Database.');
+    console.log('Connected to MongoDB Atlas Database.');
   } catch (err) {
-    console.error('❌ Mongoose connection failed. Switching to Memory Database mode.', err.message);
+    console.error('Mongoose connection failed. Switching to Memory Database mode.', err.message);
   }
 };
 connectDb();
@@ -90,11 +90,11 @@ const logBackendActivity = async (workspaceId, user, action, target) => {
 
 // Socket.io Real-Time presence configuration
 io.on('connection', (socket) => {
-  console.log(`📡 Socket client connected: ${socket.id}`);
+  console.log(`Socket client connected: ${socket.id}`);
   
   socket.on('join_workspace', (workspaceId) => {
     socket.join(workspaceId);
-    console.log(`🚪 Socket joined workspace room: ${workspaceId}`);
+    console.log(`Socket joined workspace room: ${workspaceId}`);
   });
 
   socket.on('typing', ({ workspaceId, userName }) => {
@@ -102,7 +102,7 @@ io.on('connection', (socket) => {
   });
 
   socket.on('disconnect', () => {
-    console.log(`🔌 Socket client disconnected: ${socket.id}`);
+    console.log(`Socket client disconnected: ${socket.id}`);
   });
 });
 
@@ -535,12 +535,12 @@ app.get('/api/admin/stats', authMiddleware, checkRole(['Owner', 'Admin']), async
 
 // Error handling middleware fallback
 app.use((err, req, res, next) => {
-  console.error('🔥 Server runtime error:', err);
+  console.error('Server runtime error:', err);
   res.status(500).json({ message: 'Internal Server Error', error: err.message });
 });
 
 // Startup Server
 const PORT = process.env.PORT || 5000;
 server.listen(PORT, () => {
-  console.log(`🚀 Doct SaaS server runtime operating on port ${PORT}`);
+  console.log(`Doct SaaS server runtime operating on port ${PORT}`);
 });

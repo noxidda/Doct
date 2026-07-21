@@ -24,7 +24,6 @@ const ProjectDetails = () => {
 
   const completedCount = projectTasks.filter(t => t.status === 'Completed').length;
   const pendingCount = projectTasks.filter(t => t.status !== 'Completed').length;
-  const progress = projectTasks.length > 0 ? Math.round((completedCount / projectTasks.length) * 100) : 0;
 
   // Export Project Report as CSV
   const handleExportCSV = () => {
@@ -67,18 +66,7 @@ const ProjectDetails = () => {
       </div>
 
       {/* Metrics Row */}
-      <div className="bauhaus-grid-3" style={{ marginBottom: '2rem' }}>
-        <div className="bauhaus-card" style={{ margin: 0 }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <span style={{ fontSize: '12px', fontWeight: 'bold', color: 'var(--text-secondary)' }}>PROGRESS RATE</span>
-            <Layers size={16} style={{ color: 'var(--warning)' }} />
-          </div>
-          <div style={{ fontSize: '2rem', fontWeight: 'bold', margin: '0.5rem 0' }}>{progress}%</div>
-          <div style={{ height: '8px', backgroundColor: 'var(--bg-primary)', border: '2px solid var(--border)' }}>
-            <div style={{ height: '100%', width: `${progress}%`, backgroundColor: 'var(--text-primary)' }} />
-          </div>
-        </div>
-
+      <div className="bauhaus-grid-2" style={{ marginBottom: '2rem' }}>
         <div className="bauhaus-card" style={{ margin: 0 }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <span style={{ fontSize: '12px', fontWeight: 'bold', color: 'var(--text-secondary)' }}>COMPLETED TASKS</span>

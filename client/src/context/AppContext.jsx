@@ -98,7 +98,7 @@ export const AppProvider = ({ children }) => {
           }
         }
       } catch (err) {
-        console.warn('⚠️ Server offline or workspaces fetch failed. Operating in local mode.', err.message);
+        console.warn('Server offline or workspaces fetch failed. Operating in local mode.', err.message);
         // Fallback local workspace
         const localWS = {
           id: 'ws_default',
@@ -122,7 +122,7 @@ export const AppProvider = ({ children }) => {
     setSocket(s);
 
     s.on('connect', () => {
-      console.log('📡 Connected to Socket server.');
+      console.log('Connected to Socket server.');
       if (currentWorkspaceRef.current) {
         s.emit('join_workspace', currentWorkspaceRef.current.id);
       }
@@ -205,7 +205,7 @@ export const AppProvider = ({ children }) => {
           setMembers(membersRes.data.map(m => ({ ...m, id: m.id || m._id })));
         }
       } catch (err) {
-        console.warn('⚠️ Server offline or request failed. operating on Local Workspace mode.', err.message);
+        console.warn('Server offline or request failed. operating on Local Workspace mode.', err.message);
       }
     };
 

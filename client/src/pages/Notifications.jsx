@@ -1,6 +1,6 @@
 import React from 'react';
 import { useApp } from '../context/AppContext';
-import { Bell, Check, Trash2, Eye, Calendar, User } from 'lucide-react';
+import { Bell, Check, Trash2, Eye, Calendar, User, Mail } from 'lucide-react';
 
 const Notifications = () => {
   const { 
@@ -74,7 +74,7 @@ const Notifications = () => {
                   width: '32px',
                   height: '32px'
                 }}>
-                  {notif.type === 'invitation' ? '✉️' : <Bell size={18} />}
+                  {notif.type === 'invitation' ? <Mail size={18} /> : <Bell size={18} />}
                 </div>
                 <div style={{ flex: 1 }}>
                   <h4 style={{ margin: 0, fontSize: '14px', textTransform: 'none' }}>{notif.title}</h4>

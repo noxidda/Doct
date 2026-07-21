@@ -1,7 +1,7 @@
 import React from 'react';
 import { useApp } from '../context/AppContext';
 import { useNavigate } from 'react-router-dom';
-import { FolderKanban, CheckSquare, Users, AlertTriangle, Play } from 'lucide-react';
+import { FolderKanban, CheckSquare, Users, AlertTriangle, Play, Mail } from 'lucide-react';
 
 const Dashboard = () => {
   const { tasks, projects, members, activityLogs, currentWorkspace, pendingInvitations, acceptInvitation, declineInvitation } = useApp();
@@ -21,7 +21,7 @@ const Dashboard = () => {
   const todayStr = new Date().toISOString().split('T')[0];
   const overdueTasks = workspaceTasks.filter(t => t.dueDate && t.dueDate < todayStr && t.status !== 'Completed').length;
 
-  const completionRate = totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0;
+
 
   // Task Priority Distribution
   const criticalCount = workspaceTasks.filter(t => t.priority === 'Critical').length;
@@ -48,7 +48,7 @@ const Dashboard = () => {
           }}
         >
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-            <span style={{ fontSize: '1.5rem' }}>✉️</span>
+            <Mail size={24} style={{ color: 'var(--text-primary)' }} />
             <div>
               <h3 style={{ margin: 0, fontSize: '14px', fontWeight: 'bold' }}>PENDING WORKSPACE INVITATIONS</h3>
               <p style={{ color: 'var(--text-secondary)', fontSize: '12px', marginTop: '0.15rem' }}>
@@ -119,7 +119,7 @@ const Dashboard = () => {
       </div>
 
       {/* KPI Cards Grid */}
-      <div className="bauhaus-grid-4" style={{ marginBottom: '2rem' }}>
+      <div className="bauhaus-grid-3" style={{ marginBottom: '2rem' }}>
         
         {/* Metric 1 */}
         <div className="bauhaus-card" style={{ margin: 0, padding: '1.5rem' }}>
@@ -129,17 +129,11 @@ const Dashboard = () => {
 
         {/* Metric 2 */}
         <div className="bauhaus-card" style={{ margin: 0, padding: '1.5rem' }}>
-          <div style={{ fontSize: '12px', textTransform: 'uppercase', color: 'var(--text-secondary)', fontWeight: 'bold' }}>Completion Rate</div>
-          <div style={{ fontSize: '2.5rem', fontWeight: 'bold', lineHeight: 1.1, marginTop: '0.5rem' }}>{completionRate}%</div>
-        </div>
-
-        {/* Metric 3 */}
-        <div className="bauhaus-card" style={{ margin: 0, padding: '1.5rem' }}>
           <div style={{ fontSize: '12px', textTransform: 'uppercase', color: 'var(--text-secondary)', fontWeight: 'bold' }}>Workspace Members</div>
           <div style={{ fontSize: '2.5rem', fontWeight: 'bold', lineHeight: 1.1, marginTop: '0.5rem' }}>{totalMembers}</div>
         </div>
 
-        {/* Metric 4 */}
+        {/* Metric 3 */}
         <div className="bauhaus-card" style={{ margin: 0, padding: '1.5rem', border: overdueTasks > 0 ? '1px solid var(--error)' : 'none' }}>
           <div style={{ fontSize: '12px', textTransform: 'uppercase', color: overdueTasks > 0 ? 'var(--error)' : 'var(--text-secondary)', fontWeight: 'bold' }}>Overdue Tasks</div>
           <div style={{ fontSize: '2.5rem', fontWeight: 'bold', lineHeight: 1.1, marginTop: '0.5rem', color: overdueTasks > 0 ? 'var(--error)' : 'var(--text-primary)' }}>{overdueTasks}</div>
@@ -147,49 +141,9 @@ const Dashboard = () => {
 
       </div>
 
-      {/* Main Grid: Projects progress + Priority Chart */}
-      <div className="bauhaus-grid-2" style={{ marginBottom: '2rem' }}>
+      {/* Priority Distribution Widget */}
+      <div style={{ marginBottom: '2rem' }}>
         
-        {/* Project Progress Widget */}
-        <div className="bauhaus-card" style={{ margin: 0 }}>
-          <div className="bauhaus-card-header">
-            <h3>PROJECT RUNTIME</h3>
-            <span style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>PROGRESS %</span>
-          </div>
-          
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-            {activeProjects.map(proj => {
-              const projTasks = workspaceTasks.filter(t => t.projectId === proj.id);
-              const completedProjTasks = projTasks.filter(t => t.status === 'Completed').length;
-              const progress = projTasks.length > 0 ? Math.round((completedProjTasks / projTasks.length) * 100) : 0;
-              
-              return (
-                <div key={proj.id} onClick={() => navigate(`/projects/${proj.id}`)} style={{ cursor: 'pointer' }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem', fontSize: '13px' }}>
-                    <span style={{ fontWeight: 'bold' }}>{proj.name}</span>
-                    <span style={{ color: 'var(--warning)' }}>{progress}% ({completedProjTasks}/{projTasks.length})</span>
-                  </div>
-                  
-                  {/* Custom Neobrutalist progress bar */}
-                  <div style={{ height: '16px', backgroundColor: '#FFFFFF', border: '2px solid var(--border)', borderRadius: '9999px', overflow: 'hidden' }}>
-                    <div style={{
-                      height: '100%',
-                      width: `${progress}%`,
-                      backgroundColor: 'var(--secondary)'
-                    }} />
-                  </div>
-                </div>
-              );
-            })}
-            
-            {activeProjects.length === 0 && (
-              <div style={{ color: 'var(--text-secondary)', textAlign: 'center', padding: '2rem 0' }}>
-                No active projects in this workspace.
-              </div>
-            )}
-          </div>
-        </div>
-
         {/* Task Priority Distribution Widget */}
         <div className="bauhaus-card" style={{ margin: 0 }}>
           <div className="bauhaus-card-header">
@@ -197,27 +151,79 @@ const Dashboard = () => {
             <span style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>TASK count</span>
           </div>
 
-          {/* SVG Custom Column Chart */}
-          <div style={{ height: '180px', display: 'flex', alignItems: 'flex-end', justifyContent: 'space-around', padding: '1rem 0' }}>
+          {/* Custom Column Chart */}
+          <div style={{ 
+            height: '240px', 
+            display: 'flex', 
+            alignItems: 'flex-end', 
+            justifyContent: 'center', 
+            gap: '3rem', 
+            padding: '2rem 1rem 1rem 1rem',
+            backgroundColor: 'var(--surface-container-low)',
+            borderRadius: 'var(--radius-md)',
+            border: '1px solid var(--border)'
+          }}>
             {[
-              { label: 'CRITICAL', count: criticalCount, color: 'var(--accent)' },
-              { label: 'HIGH', count: highCount, color: 'var(--secondary)' },
-              { label: 'MEDIUM', count: mediumCount, color: 'var(--tertiary)' },
-              { label: 'LOW', count: lowCount, color: 'var(--quaternary)' }
+              { label: 'CRITICAL', count: criticalCount, color: '#FF6B6B' },
+              { label: 'HIGH', count: highCount, color: '#FFAD5A' },
+              { label: 'MEDIUM', count: mediumCount, color: '#4DABF7' },
+              { label: 'LOW', count: lowCount, color: '#51CF66' }
             ].map(col => {
-              const barHeight = Math.max(10, Math.round((col.count / maxPriorityCount) * 120));
+              const fillPercentage = maxPriorityCount > 0 ? Math.round((col.count / maxPriorityCount) * 100) : 0;
               return (
-                <div key={col.label} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', flex: 1 }}>
-                  <span style={{ fontSize: '12px', fontWeight: '800', marginBottom: '0.5rem', color: 'var(--foreground)' }}>{col.count}</span>
+                <div key={col.label} style={{ 
+                  display: 'flex', 
+                  flexDirection: 'column', 
+                  alignItems: 'center', 
+                  gap: '0.75rem',
+                  position: 'relative'
+                }}>
+                  {/* Task Count Indicator */}
+                  <span style={{ 
+                    fontSize: '13px', 
+                    fontWeight: '800', 
+                    color: 'var(--text-primary)',
+                    backgroundColor: 'var(--bg-primary)',
+                    border: '1px solid var(--border)',
+                    padding: '0.2rem 0.5rem',
+                    borderRadius: '4px',
+                    boxShadow: '2px 2px 0px var(--border)'
+                  }}>
+                    {col.count}
+                  </span>
+
+                  {/* Vertical Track / Bar Container */}
                   <div style={{
-                    width: '32px',
-                    height: `${barHeight}px`,
-                    backgroundColor: col.color,
+                    width: '44px',
+                    height: '130px',
+                    backgroundColor: 'var(--bg-primary)',
                     border: '2px solid var(--border)',
-                    boxShadow: 'none',
-                    borderRadius: '6px'
-                  }} />
-                  <span style={{ fontSize: '12px', fontWeight: '800', marginTop: '0.75rem', letterSpacing: '0.05em', color: 'var(--text-muted)' }}>{col.label}</span>
+                    borderRadius: '9999px',
+                    overflow: 'hidden',
+                    display: 'flex',
+                    alignItems: 'flex-end',
+                    boxShadow: 'inset 2px 2px 5px rgba(0,0,0,0.05)'
+                  }}>
+                    {/* Filling Bar */}
+                    <div style={{
+                      width: '100%',
+                      height: `${fillPercentage}%`,
+                      backgroundColor: col.color,
+                      borderRadius: '9999px',
+                      transition: 'height 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
+                      borderTop: fillPercentage > 0 ? '2px solid var(--border)' : 'none'
+                    }} />
+                  </div>
+
+                  {/* Priority Label */}
+                  <span style={{ 
+                    fontSize: '11px', 
+                    fontWeight: '800', 
+                    letterSpacing: '0.05em', 
+                    color: 'var(--text-secondary)' 
+                  }}>
+                    {col.label}
+                  </span>
                 </div>
               );
             })}

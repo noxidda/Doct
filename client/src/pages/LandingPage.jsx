@@ -14,8 +14,13 @@ const LandingPage = () => {
   });
 
   React.useEffect(() => {
-    setIsDark(document.documentElement.classList.contains('dark-theme') || localStorage.getItem('doct_theme') === 'dark');
-  }, []);
+    const root = document.documentElement;
+    if (isDark) {
+      root.classList.add('dark-theme');
+    } else {
+      root.classList.remove('dark-theme');
+    }
+  }, [isDark]);
 
   return (
     <div style={{ backgroundColor: 'var(--bg-primary)', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
@@ -124,16 +129,21 @@ const LandingPage = () => {
           }
           .feature-card {
             background-color: var(--surface-container) !important;
+            border: 1px solid var(--border) !important;
             border-radius: var(--radius-lg) !important;
             padding: 2.25rem 2rem !important;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.03), 0px 1px 3px rgba(0, 0, 0, 0.05) !important;
+            box-shadow: none !important;
             cursor: pointer;
             overflow: hidden;
             position: relative;
             min-height: 420px;
+            transition: background-color 0.3s ease;
+          }
+          .feature-card:hover {
+            background-color: var(--surface-container-low) !important;
           }
           .feature-icon-wrapper {
             width: 48px;
@@ -144,7 +154,8 @@ const LandingPage = () => {
             align-items: center;
             justify-content: center;
             margin-bottom: 1.5rem;
-            box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border);
+            box-shadow: none;
             color: #1C1B1F;
           }
           
@@ -173,7 +184,7 @@ const LandingPage = () => {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            box-shadow: 0px 1px 3px rgba(0,0,0,0.02);
+            box-shadow: none;
           }
           
           .mini-tag {
@@ -196,24 +207,21 @@ const LandingPage = () => {
           .pulse-dot {
             width: 8px;
             height: 8px;
-            background-color: #4CAF50;
+            background-color: var(--primary);
             border-radius: 50%;
             display: inline-block;
-            box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.7);
+            box-shadow: none;
             animation: pulse 1.6s infinite;
           }
           @keyframes pulse {
             0% {
-              transform: scale(0.9);
-              box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.7);
+              transform: scale(0.8);
             }
-            70% {
-              transform: scale(1);
-              box-shadow: 0 0 0 6px rgba(76, 175, 80, 0);
+            50% {
+              transform: scale(1.2);
             }
             100% {
-              transform: scale(0.9);
-              box-shadow: 0 0 0 0 rgba(76, 175, 80, 0);
+              transform: scale(0.8);
             }
           }
           
