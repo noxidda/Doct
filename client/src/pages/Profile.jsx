@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { useAuth, DEFAULT_AVATAR } from '../context/AuthContext';
+import api from '../services/api';
 
 const Profile = () => {
   const { user, updateProfile } = useAuth();
@@ -98,9 +99,21 @@ const Profile = () => {
     if (fileInputRef.current) fileInputRef.current.value = '';
   };
 
-  const handleUpdate = (e) => {
+  const handleUpdate = async (e) => {
     e.preventDefault();
-    updateProfile({ name, email, bio, timezone, avatar });
+    let currentAvatarUrl = avatar;
+    if (avatar && avatar.startsWith('data:image/')) {
+      try {
+        const response = await api.post('/upload', { fileStr: avatar });
+        currentAvatarUrl = response.data.url;
+        setAvatar(currentAvatarUrl);
+      } catch (err) {
+        console.error('Failed to upload profile picture to Cloudinary:', err);
+        alert('Profile image upload failed: ' + (err.response?.data?.message || err.message));
+        return;
+      }
+    }
+    updateProfile({ name, email, bio, timezone, avatar: currentAvatarUrl });
     alert('Profile parameters updated!');
   };
 

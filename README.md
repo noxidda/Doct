@@ -1,6 +1,6 @@
 # Doct – Modern Collaborative SaaS Workspace
 
-Syncora is a professional-grade team collaboration platform combining project dashboards, Kanban grids, Notion-like documentation, calendars, and systems administration interfaces. It is styled strictly following **Bauhaus design principles** (sharp corners, no animations, grid-based layouts, and a dedicated wheat-on-brown color palette).
+Doct is a professional-grade team collaboration platform combining project dashboards, Kanban grids, Notion-like documentation, calendars, and systems administration interfaces. It is styled strictly following **Bauhaus design principles** (sharp corners, no animations, grid-based layouts, and a dedicated wheat-on-brown color palette).
 
 ---
 

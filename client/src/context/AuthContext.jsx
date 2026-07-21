@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { useAuth as useClerkAuth, useUser as useClerkUser } from '@clerk/clerk-react';
 import defaultProfilePic from '../assets/profilepic.png';
+import api from '../services/api';
 
 const AuthContext = createContext();
 
@@ -78,7 +79,12 @@ export const AuthProvider = ({ children }) => {
     return { success: true };
   };
 
-  const updateProfile = (updatedData) => {
+  const updateProfile = async (updatedData) => {
+    try {
+      await api.put('/users/profile', updatedData);
+    } catch (e) {
+      console.warn('Backend profile update failed, updating local state only:', e);
+    }
     const newUser = { ...user, ...updatedData };
     setUser(newUser);
     localStorage.setItem('doct_user', JSON.stringify(newUser));

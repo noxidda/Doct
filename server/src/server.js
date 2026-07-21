@@ -6,6 +6,7 @@ import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
+import { v2 as cloudinary } from 'cloudinary';
 
 // Middleware
 import { authMiddleware, checkRole } from './middleware/auth.js';
@@ -21,6 +22,14 @@ import ActivityLog from './models/ActivityLog.js';
 
 dotenv.config();
 
+// Configure Cloudinary
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+  secure: true
+});
+
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
@@ -35,7 +44,8 @@ app.use(helmet({
   contentSecurityPolicy: false // Allow loading third party avatars and files
 }));
 app.use(cors());
-app.use(express.json());
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ limit: '10mb', extended: true }));
 
 // Rate limiting (Security)
 const limiter = rateLimit({
@@ -145,6 +155,24 @@ app.put('/api/users/profile', authMiddleware, async (req, res) => {
     return res.json(memoryDb.users[memIdx]);
   }
   res.status(404).json({ message: 'User not found' });
+});
+
+// File Upload endpoint using Cloudinary
+app.post('/api/upload', authMiddleware, async (req, res) => {
+  const { fileStr } = req.body;
+  if (!fileStr) {
+    return res.status(400).json({ message: 'No file data provided' });
+  }
+  try {
+    const uploadRes = await cloudinary.uploader.upload(fileStr, {
+      resource_type: 'auto',
+      folder: 'doct_files'
+    });
+    res.json({ url: uploadRes.secure_url });
+  } catch (err) {
+    console.error('Cloudinary upload error:', err);
+    res.status(500).json({ message: 'Cloudinary upload failed', error: err.message });
+  }
 });
 
 // 2. Workspace APIs (Module 3)

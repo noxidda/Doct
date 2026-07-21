@@ -114,10 +114,11 @@ const Layout = ({ children }) => {
             <img src={theme === 'dark' ? logoWhite : logoBlack} alt="Doct Logo" style={{ height: '32px', width: 'auto', display: 'block' }} />
             <span style={{ 
               fontSize: '1.6rem', 
-              fontWeight: 800, 
+              fontWeight: 900, 
               color: 'var(--text-primary)', 
-              letterSpacing: '0.02em',
-              fontFamily: 'var(--font-heading)'
+              letterSpacing: '-0.02em',
+              fontFamily: 'var(--font-heading)',
+              textTransform: 'uppercase'
             }}>
               Doct.
             </span>

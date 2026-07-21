@@ -1,42 +1,55 @@
 :root {
-  /* Grayscale Color System - Black, White, and Shades of Grey */
-  --bg-primary: #FFFFFF;             /* Pure white surface */
-  --foreground: #1C1B1F;             /* Near-black text */
-  --text-primary: #1C1B1F;
-  --text-secondary: #49454F;         /* On Surface Variant for secondary text */
-  --text-muted: #79747E;             /* Muted text / borders */
+  /* Bauhaus Custom Color System - White, Black, Grey, Blue, Lavender, Light Violet */
+  --bg-primary: #FFFFFF;             /* Pure white canvas */
+  --foreground: #121212;             /* Stark Black text */
+  --text-primary: #121212;
+  --text-secondary: #4A4A5A;         /* Secondary dark grey text */
+  --text-muted: #7E7E8F;             /* Muted grey text */
   
-  --primary: #1C1B1F;                 /* Near-Black Primary */
+  --primary-blue: #1040C0;           /* Bauhaus Blue */
+  --primary-lavender: #E6E6FA;       /* Lavender accent */
+  --primary-violet: #B39DDB;         /* Light Violet accent */
+  --primary-grey: #E0E0E0;           /* Grey accent */
+  --primary-white: #FFFFFF;
+  --primary-black: #121212;
+  
+  --primary: #121212;                /* Stark Black Primary */
   --on-primary: #FFFFFF;
-  --secondary-container: #E0E0E0;    /* Light grey container tint */
-  --on-secondary-container: #1C1B1F;
-  --tertiary: #49454F;               /* Dark grey / black accent */
+  --secondary-container: #E6E6FA;    /* Lavender container */
+  --on-secondary-container: #121212;
+  --tertiary: #B39DDB;               /* Light Violet accent */
   
-  --surface-container: #F5F5F5;      /* Subtle grey surface container */
-  --surface-container-low: #EAEAEA;  /* Recessed input background */
+  --surface-container: #F0F0F5;      /* Light grey/lavender container surface */
+  --surface-container-low: #EAEAEF;  /* Input background */
   
-  --border: rgba(28, 27, 31, 0.15);  /* Clean near-black borders */
-  --outline: #79747E;                /* Outline border color */
-  --card: var(--surface-container);
-  --hover: rgba(28, 27, 31, 0.08);   /* 8% Black hover state layer */
+  --border: #121212;                 /* Thick, distinct black borders */
+  --outline: #121212;
+  --card: #FFFFFF;
+  --hover: rgba(16, 64, 192, 0.08);  /* Blue-tint hover layer */
   
-  --success: #1C1B1F;                /* Black for success */
-  --warning: #49454F;                /* Dark grey for warning */
-  --error: #000000;                  /* Pure black for error */
+  --success: #1040C0;                /* Blue for success/confirmations */
+  --warning: #B39DDB;                /* Light violet for warnings */
+  --error: #D02020;                  /* Accessibility Red for errors */
   
-  --font-family: 'Roboto', -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-heading: 'Roboto', sans-serif;
+  --font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-heading: 'Outfit', sans-serif;
   
-  --radius-xs: 8px;
-  --radius-sm: 12px;
-  --radius-md: 16px;
-  --radius-lg: 24px;
-  --radius-xl: 28px;
-  --radius-xxl: 48px;
+  /* Bauhaus binary radii: purely square (0px) or circle (9999px) */
+  --radius-xs: 0px;
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-xl: 0px;
+  --radius-xxl: 0px;
   --radius-full: 9999px;
+  
+  /* Hard shadows */
+  --shadow-sm: 3px 3px 0px 0px #121212;
+  --shadow-md: 6px 6px 0px 0px #121212;
+  --shadow-lg: 8px 8px 0px 0px #121212;
 }
 
-/* Custom CSS Resets */
+/* Custom Resets & Core Elements */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -51,71 +64,68 @@ body {
   color: var(--foreground);
   font-size: 16px;
   line-height: 1.5;
-  font-weight: 400;
+  font-weight: 500;
   overflow-x: hidden;
   height: 100vh;
 }
 
+/* Constructivist Typography */
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading);
-  font-weight: 500; /* MD3 uses Medium weight headers */
+  font-weight: 900;
   color: var(--foreground);
-  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  letter-spacing: -0.03em;
+  line-height: 0.95;
 }
 
 h1 {
-  font-size: 3.5rem;
-  line-height: 1.15;
+  font-size: 4.5rem;
   margin-bottom: 2rem;
+  letter-spacing: -0.04em;
 }
 @media (max-width: 1024px) {
   h1 {
-    font-size: 2.75rem;
-    margin-bottom: 1.5rem;
+    font-size: 3.25rem;
+  }
+}
+@media (max-width: 640px) {
+  h1 {
+    font-size: 2.25rem;
   }
 }
 
 h2 {
-  font-size: 2rem;
-  line-height: 1.2;
+  font-size: 2.25rem;
   margin-bottom: 1.5rem;
 }
 @media (max-width: 1024px) {
   h2 {
-    font-size: 1.6rem;
+    font-size: 1.75rem;
   }
 }
 
 h3 {
   font-size: 1.5rem;
-  line-height: 1.3;
   margin-bottom: 1.25rem;
 }
 
 p {
   max-width: 65ch;
   color: var(--text-secondary);
+  font-weight: 500;
+  line-height: 1.6;
 }
 
 a {
-  color: var(--primary);
-  font-weight: 500;
+  color: var(--primary-blue);
+  font-weight: 700;
   text-decoration: none;
-  transition: color 200ms ease;
+  transition: color 150ms ease;
 }
 
 a:hover {
-  color: var(--tertiary);
-}
-
-/* Material You Easing & Timing */
-.transition-md3 {
-  transition: all 300ms cubic-bezier(0.2, 0, 0, 1);
-}
-
-/* Atmospheric Blur Decoration - Disabled for 2D design */
-.ambient-glow {
-  display: none !important;
+  color: var(--foreground);
 }
 
 /* App Container Layout */
@@ -133,9 +143,10 @@ a:hover {
   flex-direction: column;
   height: 100%;
   overflow-y: auto;
+  background-color: var(--bg-primary);
 }
 
-/* Standardized Appbar Headers (Bug Fix: padding collapse & height shifts resolved) */
+/* Appbar Header with thick horizontal divider */
 header.appbar {
   height: 72px !important;
   min-height: 72px !important;
@@ -144,9 +155,8 @@ header.appbar {
   align-items: center;
   justify-content: space-between;
   padding: 0 2rem !important;
-  background-color: rgba(255, 255, 255, 0.9) !important;
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid #1C1B1F !important;
+  background-color: var(--bg-primary) !important;
+  border-bottom: 4px solid var(--border) !important;
   position: sticky;
   top: 0;
   z-index: 50;
@@ -154,14 +164,14 @@ header.appbar {
   box-sizing: border-box !important;
 }
 
-/* Sidebar Navigation (styled as Material You Navigation Drawer) */
+/* Sidebar Navigation */
 .sidebar {
   width: 260px;
-  background-color: #FFFFFF !important;
+  background-color: var(--bg-primary) !important;
   display: flex;
   flex-direction: column;
   height: 100%;
-  border-right: 1px solid #1C1B1F !important;
+  border-right: 4px solid var(--border) !important;
   z-index: 10;
 }
 
@@ -170,155 +180,153 @@ header.appbar {
   align-items: center;
   gap: 0.75rem;
   padding: 0.75rem 1.5rem;
-  margin: 0.25rem 0.75rem !important;
-  border-radius: var(--radius-full) !important;
-  color: #49454F !important;
-  font-weight: 500;
-  text-transform: none; /* No Neobrutalist uppercase */
-  font-size: 14px;
-  letter-spacing: 0.01em;
+  margin: 0.4rem 0.8rem !important;
+  border-radius: 0px !important;
+  border: 2px solid transparent !important;
+  color: var(--text-secondary) !important;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 13px;
+  letter-spacing: 0.05em;
   background-color: transparent;
-  border: none !important;
-  box-shadow: none !important;
-  transition: all 250ms cubic-bezier(0.2, 0, 0, 1) !important;
+  transition: all 150ms ease-out !important;
 }
 
 .sidebar nav a:hover {
-  background-color: rgba(28, 27, 31, 0.08) !important; /* State layer */
-  color: #1C1B1F !important;
-  transform: none !important; /* No rotations */
+  background-color: var(--primary-lavender) !important;
+  color: var(--foreground) !important;
+  border: 2px solid var(--border) !important;
 }
 
 .sidebar nav a.active {
-  background-color: #1C1B1F !important;
+  background-color: var(--primary-blue) !important;
   color: #FFFFFF !important;
-  font-weight: 700;
-  box-shadow: none !important;
-  transform: none !important;
+  border: 2px solid var(--border) !important;
 }
 
-/* Buttons: Pill-shaped, state layer system */
+/* Buttons: Geometric, thick borders, hard shadows, active press down */
 .bauhaus-btn {
-  background-color: transparent;
-  color: var(--primary);
-  border: 1px solid var(--outline);
-  border-radius: var(--radius-full) !important;
+  background-color: var(--bg-primary);
+  color: var(--foreground);
+  border: 2px solid var(--border) !important;
+  border-radius: 0px !important;
   padding: 0.6rem 1.5rem;
-  font-weight: 500;
-  text-transform: none;
-  font-size: 14px;
-  letter-spacing: 0.01em;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 13px;
+  letter-spacing: 0.05em;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  box-shadow: none;
-  transition: all 250ms cubic-bezier(0.2, 0, 0, 1);
+  box-shadow: var(--shadow-sm);
+  transition: all 150ms ease-out;
+  position: relative;
 }
 
-
 .bauhaus-btn:hover {
-  background-color: rgba(28, 27, 31, 0.08); /* Hover state layer */
-  border-color: var(--primary);
-  transform: none;
-  box-shadow: none;
+  background-color: var(--hover);
+  transform: translate(1.5px, 1.5px);
+  box-shadow: 1.5px 1.5px 0px 0px var(--border) !important;
+}
+
+.bauhaus-btn:active {
+  transform: translate(3px, 3px);
+  box-shadow: none !important;
 }
 
 .bauhaus-btn:disabled {
-  opacity: 0.38;
+  opacity: 0.4;
   cursor: not-allowed;
   transform: none !important;
-  background-color: transparent !important;
+  box-shadow: none !important;
+  background-color: var(--surface-container-low) !important;
   color: var(--text-muted) !important;
+}
+
+/* Pill Shape override (Use explicitly where needed) */
+.bauhaus-btn.rounded-pill {
+  border-radius: var(--radius-full) !important;
 }
 
 /* Primary Filled button variant */
 .bauhaus-btn-primary {
-  background-color: var(--primary);
-  color: var(--on-primary);
-  border: none;
+  background-color: var(--primary-blue);
+  color: #FFFFFF;
 }
 
 .bauhaus-btn-primary:hover {
-  background-color: #333333; /* Dark grey hover */
-  color: var(--on-primary);
+  background-color: #0b329c;
+  color: #FFFFFF;
 }
 
 .bauhaus-btn-secondary {
-  background-color: var(--secondary-container);
-  color: var(--on-secondary-container);
-  border: none;
+  background-color: var(--primary-lavender);
+  color: var(--foreground);
 }
 
 .bauhaus-btn-secondary:hover {
-  background-color: #CCCCCC;
-  color: var(--on-secondary-container);
+  background-color: #d8d8fa;
 }
 
 .bauhaus-btn-success {
-  background-color: var(--success);
+  background-color: var(--primary-blue);
   color: #FFFFFF;
-  border: none;
 }
 .bauhaus-btn-success:hover {
-  background-color: #333333;
+  background-color: #0b329c;
 }
 
 .bauhaus-btn-danger {
-  background-color: var(--error);
-  color: #FFFFFF;
-  border: none;
+  background-color: var(--foreground);
+  color: var(--bg-primary);
 }
 .bauhaus-btn-danger:hover {
-  background-color: #333333;
+  background-color: var(--text-secondary);
 }
 
 .bauhaus-btn-warning {
-  background-color: var(--warning);
-  color: #FFFFFF;
-  border: none;
+  background-color: var(--primary-violet);
+  color: var(--foreground);
 }
 .bauhaus-btn-warning:hover {
-  background-color: #333333;
+  background-color: #a288cd;
 }
 
-/* Inputs & Forms: Material 3 Filled Text Field (Rounded Top, bottom border) */
+/* Inputs & Forms: Geometric, flat, solid borders */
 .bauhaus-input {
-  background-color: var(--surface-container-low);
+  background-color: var(--bg-primary);
   color: var(--foreground);
-  border: none;
-  border-bottom: 2px solid var(--text-muted);
-  border-radius: var(--radius-sm) var(--radius-sm) 0 0 !important; /* Rounded top, square bottom */
+  border: 2px solid var(--border) !important;
+  border-radius: 0px !important;
   padding: 0.85rem 1rem;
   font-size: 15px;
   width: 100%;
   outline: none;
-  transition: border-color 200ms ease, background-color 200ms ease;
+  transition: all 150ms ease-out;
 }
 
 .bauhaus-input:focus {
-  border-bottom-color: var(--primary);
-  background-color: #E2D9EA; /* Slightly darker recessed color on focus */
-  box-shadow: none;
+  background-color: var(--surface-container-low);
+  border-color: var(--primary-blue) !important;
 }
 
 .bauhaus-label {
   display: block;
-  font-weight: 500;
-  text-transform: none;
-  font-size: 13px;
-  letter-spacing: 0.02em;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 0.05em;
   margin-bottom: 0.4rem;
-  color: var(--text-secondary);
+  color: var(--foreground);
 }
 
 .bauhaus-select {
-  background-color: var(--surface-container-low);
+  background-color: var(--bg-primary);
   color: var(--foreground);
-  border: none;
-  border-bottom: 2px solid var(--text-muted);
-  border-radius: var(--radius-sm) var(--radius-sm) 0 0 !important;
+  border: 2px solid var(--border) !important;
+  border-radius: 0px !important;
   padding: 0.85rem 1rem;
   font-size: 15px;
   width: 100%;
@@ -326,38 +334,40 @@ header.appbar {
   cursor: pointer;
   appearance: none;
   -webkit-appearance: none;
-  background-image: url("data:image/svg+xml;utf8,<svg fill='%2349454F' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+  background-image: url("data:image/svg+xml;utf8,<svg fill='%23121212' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
   background-repeat: no-repeat;
   background-position: right 12px center;
-  transition: border-color 200ms ease;
+  transition: all 150ms ease-out;
 }
 
 .bauhaus-select:focus {
-  border-bottom-color: var(--primary);
-  box-shadow: none;
+  background-color: var(--surface-container-low);
+  border-color: var(--primary-blue) !important;
 }
 
-/* Cards: Flat 2D Tonal Cards (with borders, no shadows) */
+/* Cards: White background, 4px border, 8px hard shadow, top-right geometric detail */
 .bauhaus-card {
-  background-color: var(--surface-container);
-  border: 1px solid var(--border) !important;
-  border-radius: var(--radius-lg) !important;
+  background-color: var(--bg-primary);
+  border-width: 4px !important;
+  border-style: solid !important;
+  border-color: var(--border);
+  border-radius: 0px !important;
   padding: 1.75rem;
   margin-bottom: 1.5rem;
   box-shadow: none !important;
-  transition: background-color 300ms ease;
+  transition: background-color 200ms ease-out;
+  position: relative;
+  overflow: hidden;
 }
 
-/* Interactive card lifts - flat hover style */
 .bauhaus-card:hover {
-  box-shadow: none !important;
   background-color: var(--surface-container-low) !important;
 }
 
 .bauhaus-card-header {
-  border-bottom: 1px solid var(--border);
-  padding-bottom: 0.5rem;
-  margin-bottom: 1rem;
+  border-bottom: 2px solid var(--border);
+  padding-bottom: 0.75rem;
+  margin-bottom: 1.25rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -399,20 +409,21 @@ header.appbar {
     width: 100%;
     height: auto;
     border-right: none;
-    border-bottom: 1px solid var(--border);
+    border-bottom: 4px solid var(--border);
   }
   .sidebar nav a {
     margin: 0.25rem !important;
   }
 }
 
-/* Tables: Flat 2D Tonal design (no shadows) */
+/* Tables: Bauhaus flat-bordered tables */
 .bauhaus-table-container {
   overflow-x: auto;
-  border: 1px solid var(--border) !important;
-  border-radius: var(--radius-lg) !important;
+  border: 4px solid var(--border) !important;
+  border-radius: 0px !important;
   box-shadow: none !important;
-  background-color: var(--surface-container);
+  background-color: var(--bg-primary);
+  margin-bottom: 1.5rem;
 }
 
 .bauhaus-table {
@@ -422,22 +433,22 @@ header.appbar {
 }
 
 .bauhaus-table th {
-  background-color: rgba(0, 0, 0, 0.05); /* neutral container overlay */
-  color: var(--primary);
-  font-weight: 500;
-  text-transform: none;
-  font-size: 13px;
-  letter-spacing: 0.02em;
+  background-color: var(--primary-lavender);
+  color: var(--foreground);
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 0.05em;
   padding: 1.25rem 1rem;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 4px solid var(--border);
 }
 
 .bauhaus-table td {
   padding: 1.25rem 1rem;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 2px solid var(--border);
   color: var(--text-secondary);
-  font-weight: 400;
-  transition: background-color 200ms ease;
+  font-weight: 500;
+  transition: all 150ms ease;
 }
 
 .bauhaus-table tr:last-child td {
@@ -445,14 +456,14 @@ header.appbar {
 }
 
 .bauhaus-table tr:hover td {
-  background-color: rgba(0, 0, 0, 0.02);
+  background-color: var(--hover);
   color: var(--foreground);
 }
 
-/* Tabs: Material Design 3 Pill Tabs */
+/* Tabs: Bauhaus blocky selector tabs */
 .bauhaus-tabs {
   display: flex;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 4px solid var(--border);
   margin-bottom: 1.5rem;
   gap: 0.5rem;
   padding-bottom: 4px;
@@ -460,63 +471,68 @@ header.appbar {
 
 .bauhaus-tab {
   padding: 0.6rem 1.5rem;
-  border-radius: var(--radius-full) !important;
+  border: 2px solid transparent;
+  border-radius: 0px !important;
   cursor: pointer;
-  text-transform: none;
-  font-weight: 500;
+  text-transform: uppercase;
+  font-weight: 700;
   font-size: 13px;
+  letter-spacing: 0.05em;
   color: var(--text-secondary);
   background: transparent;
-  border: none;
-  transition: all 250ms cubic-bezier(0.2, 0, 0, 1);
+  transition: all 150ms ease-out;
 }
 
 .bauhaus-tab.active {
-  color: var(--on-secondary-container);
-  background-color: var(--secondary-container);
+  color: var(--foreground);
+  background-color: var(--primary-violet);
+  border: 2px solid var(--border);
+  box-shadow: none !important;
 }
 
 .bauhaus-tab:hover:not(.active) {
-  background-color: rgba(0, 0, 0, 0.05);
+  background-color: var(--primary-lavender);
+  border-color: var(--border);
 }
 
-/* Badges & Pills */
+/* Badges: Bold round geometric tags */
 .bauhaus-badge {
   display: inline-block;
-  padding: 0.2rem 0.75rem;
-  font-size: 12px;
-  font-weight: 500;
-  text-transform: none;
-  border: none !important;
+  padding: 0.25rem 0.85rem;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border: 2px solid var(--border) !important;
   border-radius: var(--radius-full) !important;
-  background-color: var(--secondary-container);
-  color: var(--on-secondary-container);
-  box-shadow: none;
+  background-color: var(--primary-grey);
+  color: var(--foreground);
+  box-shadow: none !important;
 }
 
-.badge-low, .badge-backlog { background-color: var(--surface-container-low); color: var(--text-secondary); }
-.badge-medium, .badge-todo { background-color: #F3F4F6; color: #1F2937; } /* Soft grey warning tone */
-.badge-high, .badge-in_progress { background-color: #E5E7EB; color: #111827; } /* Medium grey high tone */
-.badge-critical, .badge-completed { background-color: #111827; color: #FFFFFF; } /* Near-black success tone */
-.badge-review { background-color: var(--secondary-container); color: var(--on-secondary-container); }
+.badge-low, .badge-backlog { background-color: var(--primary-grey); color: var(--foreground); }
+.badge-medium, .badge-todo { background-color: var(--primary-lavender); color: var(--foreground); }
+.badge-high, .badge-in_progress { background-color: var(--primary-violet); color: var(--foreground); }
+.badge-critical, .badge-completed { background-color: var(--primary-blue); color: #FFFFFF; }
+.badge-review { background-color: var(--primary-lavender); color: var(--foreground); }
 
 /* Scrollbars */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 10px;
+  height: 10px;
 }
 ::-webkit-scrollbar-track {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(121, 116, 126, 0.3);
-  border-radius: var(--radius-full);
+  background: var(--border);
+  border: 2px solid var(--bg-primary);
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--text-muted);
+  background: var(--primary-blue);
 }
 
-/* Responsive login/signup split screen adjustments */
+/* Split Login/Signup Adjustments */
 @media (max-width: 900px) {
   .login-split-container {
     grid-template-columns: 1fr !important;
@@ -526,43 +542,56 @@ header.appbar {
     padding: 2rem !important;
   }
 }
-/* Hide Clerk powered-by branding if it leaks */
+
 .cl-poweredByClerk {
   display: none !important;
 }
 
 /* ==========================================================================
-   DARK THEME PALETTE (Material Design 3 & Neobrutalist Hybrid)
+   DARK THEME PALETTE (Bauhaus Custom Palette Dark Override)
    ========================================================================== */
 .dark-theme {
-  --bg-primary: #121212;
-  --foreground: #E6E1E5;
-  --text-primary: #E6E1E5;
-  --text-secondary: #CAC4D0;
-  --text-muted: #938F99;
+  --bg-primary: #121212;             /* Stark Black canvas */
+  --bg-secondary: #1E1E24;
+  --foreground: #FFFFFF;             /* White text */
+  --text-primary: #FFFFFF;
+  --text-secondary: #CCCCCC;
+  --text-muted: #888888;
   
-  --primary: #E6E1E5;
+  --primary-blue: #4D7CFF;           /* Brighter blue for dark contrast */
+  --primary-lavender: #444454;       /* Slate lavender */
+  --primary-violet: #6A5ACD;         /* Slate violet */
+  --primary-grey: #333333;           /* Dark grey */
+  --primary-white: #121212;
+  --primary-black: #FFFFFF;
+  
+  --primary: #FFFFFF;
   --on-primary: #121212;
-  --secondary-container: #333333;
+  --secondary-container: #333344;
   --on-secondary-container: #FFFFFF;
-  --tertiary: #CAC4D0;
+  --tertiary: #6A5ACD;
+  --on-tertiary: #FFFFFF;
   
   --surface-container: #1E1E1E;
   --surface-container-low: #161616;
   
-  --border: rgba(230, 225, 229, 0.15);
-  --outline: #938F99;
-  --card: var(--surface-container);
-  --hover: rgba(230, 225, 229, 0.12);
+  --border: #FFFFFF;                 /* White borders for contrast */
+  --outline: #FFFFFF;
+  --card: #1E1E1E;
+  --hover: rgba(255, 255, 255, 0.12);
   
-  --success: #CAC4D0;
-  --warning: #938F99;
-  --error: #E6E1E5;
+  --success: #4D7CFF;
+  --warning: #6A5ACD;
+  --error: #FF453A;
+  
+  --shadow-sm: 3px 3px 0px 0px #FFFFFF;
+  --shadow-md: 6px 6px 0px 0px #FFFFFF;
+  --shadow-lg: 8px 8px 0px 0px #FFFFFF;
 }
 
 .dark-theme .sidebar {
-  background-color: var(--surface-container-low) !important;
-  border-right: 1px solid var(--border) !important;
+  background-color: var(--bg-primary) !important;
+  border-right: 4px solid var(--border) !important;
 }
 
 .dark-theme .sidebar nav a {
@@ -570,13 +599,15 @@ header.appbar {
 }
 
 .dark-theme .sidebar nav a:hover {
-  background-color: var(--hover) !important;
-  color: var(--text-primary) !important;
+  background-color: var(--primary-lavender) !important;
+  color: var(--foreground) !important;
+  border: 2px solid var(--border) !important;
 }
 
 .dark-theme .sidebar nav a.active {
-  background-color: var(--text-primary) !important;
-  color: var(--on-primary) !important;
+  background-color: var(--primary-blue) !important;
+  color: #FFFFFF !important;
+  border: 2px solid var(--border) !important;
 }
 
 .dark-theme body {
@@ -585,8 +616,8 @@ header.appbar {
 }
 
 .dark-theme .appbar {
-  background-color: var(--surface-container-low) !important;
-  border-bottom: 1px solid var(--border) !important;
+  background-color: var(--bg-primary) !important;
+  border-bottom: 4px solid var(--border) !important;
 }
 
 .dark-theme .app-container {
@@ -598,29 +629,35 @@ header.appbar {
 }
 
 .dark-theme .bauhaus-card {
-  background-color: var(--surface-container) !important;
-  border-color: var(--border) !important;
+  background-color: var(--card) !important;
+  border-color: var(--border);
   color: var(--text-primary) !important;
+  box-shadow: none !important;
+}
+
+.dark-theme .bauhaus-card:hover {
+  background-color: var(--surface-container-low) !important;
 }
 
 .dark-theme .bauhaus-table-container {
   border-color: var(--border) !important;
+  box-shadow: none !important;
 }
 
 .dark-theme .bauhaus-table th {
-  background-color: rgba(255, 255, 255, 0.04) !important;
-  color: var(--text-primary) !important;
-  border-bottom: 2px solid var(--border) !important;
+  background-color: var(--primary-lavender) !important;
+  color: var(--foreground) !important;
+  border-bottom: 4px solid var(--border) !important;
 }
 
 .dark-theme .bauhaus-table td {
-  border-bottom: 1px solid var(--border) !important;
+  border-bottom: 2px solid var(--border) !important;
   color: var(--text-secondary) !important;
 }
 
 .dark-theme .bauhaus-input, 
 .dark-theme .bauhaus-select {
-  background-color: var(--surface-container-low) !important;
+  background-color: var(--bg-primary) !important;
   color: var(--text-primary) !important;
   border-color: var(--border) !important;
 }
@@ -630,36 +667,41 @@ header.appbar {
 }
 
 .dark-theme .badge-medium, .dark-theme .badge-todo { 
-  background-color: var(--surface-container-low) !important; 
-  color: var(--text-primary) !important; 
+  background-color: var(--primary-lavender) !important; 
+  color: var(--foreground) !important; 
 }
 .dark-theme .badge-high, .dark-theme .badge-in_progress { 
-  background-color: var(--secondary-container) !important; 
-  color: var(--on-secondary-container) !important; 
+  background-color: var(--primary-violet) !important; 
+  color: var(--foreground) !important; 
 }
 .dark-theme .badge-critical, .dark-theme .badge-completed { 
-  background-color: var(--text-primary) !important; 
-  color: var(--on-primary) !important; 
+  background-color: var(--primary-blue) !important; 
+  color: #FFFFFF !important; 
 }
 
 .dark-theme .bauhaus-btn-success:hover,
 .dark-theme .bauhaus-btn-danger:hover,
 .dark-theme .bauhaus-btn-warning:hover {
-  background-color: #FFFFFF !important;
-  color: #121212 !important;
+  background-color: var(--foreground) !important;
+  color: var(--bg-primary) !important;
 }
 
-/* Fix inline styles on divs that contain white backgrounds */
+/* Select background adjustments */
+.dark-theme .bauhaus-select {
+  background-image: url("data:image/svg+xml;utf8,<svg fill='%23FFFFFF' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>") !important;
+}
+
+/* Override inline styling on background containers in dark mode */
 .dark-theme div[style*="background-color: #FFFFFF"],
 .dark-theme div[style*="background-color: rgb(255, 255, 255)"],
 .dark-theme div[style*="background: #FFFFFF"],
 .dark-theme div[style*="background: rgb(255, 255, 255)"] {
-  background-color: var(--surface-container) !important;
+  background-color: var(--bg-primary) !important;
   color: var(--text-primary) !important;
 }
 
 .dark-theme div[style*="background-color: var(--surface-container)"] {
-  background-color: var(--surface-container) !important;
+  background-color: var(--bg-primary) !important;
 }
 
 .dark-theme div[style*="border-top: 1px solid #1C1B1F"],
@@ -677,43 +719,48 @@ header.appbar {
   background-color: transparent !important;
 }
 
-/* Force Light Mode styling inside Login, Signup, and Auth screens */
+/* Auth Pages Forced Clean Colors */
 .dark-theme .login-split-container {
   --bg-primary: #FFFFFF !important;
-  --foreground: #1C1B1F !important;
-  --text-primary: #1C1B1F !important;
-  --text-secondary: #49454F !important;
-  --text-muted: #79747E !important;
-  --border: rgba(28, 27, 31, 0.15) !important;
-  --outline: #79747E !important;
-  --hover: rgba(28, 27, 31, 0.08) !important;
-  --surface-container: #F5F5F5 !important;
-  --surface-container-low: #EAEAEA !important;
+  --foreground: #121212 !important;
+  --text-primary: #121212 !important;
+  --text-secondary: #4A4A5A !important;
+  --text-muted: #7E7E8F !important;
+  --border: #121212 !important;
+  --outline: #121212 !important;
+  --hover: rgba(16, 64, 192, 0.08) !important;
+  --surface-container: #F0F0F5 !important;
+  --surface-container-low: #EAEAEF !important;
+  --primary-blue: #1040C0 !important;
+  --primary-lavender: #E6E6FA !important;
+  --primary-violet: #B39DDB !important;
+  --primary-grey: #E0E0E0 !important;
 }
 
 .dark-theme .login-split-container .bauhaus-input {
   background-color: #FFFFFF !important;
-  color: #1C1B1F !important;
-  border: 1px solid rgba(28, 27, 31, 0.15) !important;
+  color: #121212 !important;
+  border: 2px solid #121212 !important;
 }
 
 .dark-theme .login-split-container .bauhaus-btn {
   background-color: transparent !important;
-  color: #1C1B1F !important;
-  border: 1px solid #79747E !important;
+  color: #121212 !important;
+  border: 2px solid #121212 !important;
 }
 
 .dark-theme .login-split-container .bauhaus-btn-primary {
-  background-color: #1C1B1F !important;
+  background-color: #1040C0 !important;
   color: #FFFFFF !important;
-  border: 1px solid #1C1B1F !important;
+  border: 2px solid #121212 !important;
 }
 
 .dark-theme .login-split-container .login-split-card-side div[style*="background-color: #FFFFFF"],
 .dark-theme .login-split-container .login-split-card-side div[style*="background-color: rgb(255, 255, 255)"] {
   background-color: #FFFFFF !important;
-  color: #1C1B1F !important;
-  border: 1px solid #000000 !important;
+  color: #121212 !important;
+  border: 4px solid #121212 !important;
+  box-shadow: none !important;
 }
 
 .dark-theme .login-split-container h2,

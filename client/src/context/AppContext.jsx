@@ -497,21 +497,35 @@ export const AppProvider = ({ children }) => {
 
   // Task Attachments
   const addAttachment = (taskId, file) => {
-    const newAtt = {
-      id: `att_${Date.now()}`,
-      name: file.name,
-      size: `${(file.size / (1024 * 1024)).toFixed(2)} MB`,
-      url: '#'
-    };
-    setTasks(prev => prev.map(t => {
-      if (t.id === taskId) {
-        const updatedAttachments = [...t.attachments, newAtt];
-        updateTask(taskId, { attachments: updatedAttachments });
-        return { ...t, attachments: updatedAttachments };
+    const reader = new FileReader();
+    reader.onload = async () => {
+      try {
+        const fileStr = reader.result;
+        const response = await api.post('/upload', { fileStr });
+        const cloudinaryUrl = response.data.url;
+
+        const newAtt = {
+          id: `att_${Date.now()}`,
+          name: file.name,
+          size: `${(file.size / (1024 * 1024)).toFixed(2)} MB`,
+          url: cloudinaryUrl
+        };
+
+        setTasks(prev => prev.map(t => {
+          if (t.id === taskId) {
+            const updatedAttachments = [...t.attachments, newAtt];
+            updateTask(taskId, { attachments: updatedAttachments });
+            return { ...t, attachments: updatedAttachments };
+          }
+          return t;
+        }));
+        logActivity('Uploaded Attachment', file.name);
+      } catch (err) {
+        console.error('Failed to upload attachment to Cloudinary:', err);
+        alert('File upload failed: ' + (err.response?.data?.message || err.message));
       }
-      return t;
-    }));
-    logActivity('Uploaded Attachment', file.name);
+    };
+    reader.readAsDataURL(file);
   };
 
   const deleteAttachment = (taskId, attId) => {

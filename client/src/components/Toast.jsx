@@ -16,12 +16,12 @@ const Toast = ({ message, onClose, duration = 15000 }) => {
       left: '50%',
       transform: 'translateX(-50%)',
       zIndex: 9999,
-      backgroundColor: '#1C1B1F',
+      backgroundColor: 'var(--primary-blue)',
       color: '#FFFFFF',
-      border: '2px solid #FFFFFF',
-      boxShadow: '0px 8px 24px rgba(0, 0, 0, 0.25)',
+      border: '3px solid var(--border)',
+      boxShadow: 'none',
       padding: '1rem 1.5rem',
-      borderRadius: '4px',
+      borderRadius: 'var(--radius-xs)',
       display: 'flex',
       alignItems: 'center',
       gap: '1rem',
@@ -29,11 +29,11 @@ const Toast = ({ message, onClose, duration = 15000 }) => {
       width: '450px',
       animation: 'slideDown 300ms ease-out'
     }}>
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#E8DEF8' }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifycontent: 'center', color: '#FFFFFF' }}>
         <Mail size={20} />
       </div>
-      <div style={{ flex: 1, fontSize: '13px', lineHeight: '1.4', fontWeight: 500, textAlign: 'left' }}>
-        <div style={{ textTransform: 'uppercase', fontSize: '10px', letterSpacing: '0.1em', color: '#888888', marginBottom: '2px', fontWeight: 'bold' }}>
+      <div style={{ flex: 1, fontSize: '13px', lineHeight: '1.4', fontWeight: 700, textAlign: 'left', fontFamily: 'var(--font-heading)' }}>
+        <div style={{ textTransform: 'uppercase', fontSize: '10px', letterSpacing: '0.1em', color: 'rgba(255, 255, 255, 0.8)', marginBottom: '2px', fontWeight: 'bold' }}>
           Simulated Mail Server
         </div>
         {message}
@@ -43,7 +43,7 @@ const Toast = ({ message, onClose, duration = 15000 }) => {
         style={{
           background: 'none',
           border: 'none',
-          color: '#888888',
+          color: 'rgba(255, 255, 255, 0.8)',
           cursor: 'pointer',
           padding: '2px',
           display: 'flex',
@@ -52,7 +52,7 @@ const Toast = ({ message, onClose, duration = 15000 }) => {
           outline: 'none'
         }}
         onMouseEnter={(e) => e.currentTarget.style.color = '#FFFFFF'}
-        onMouseLeave={(e) => e.currentTarget.style.color = '#888888'}
+        onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(255, 255, 255, 0.8)'}
       >
         <X size={16} />
       </button>
