@@ -252,46 +252,50 @@ header.appbar {
 
 /* Primary Filled button variant */
 .bauhaus-btn-primary {
-  background-color: var(--primary-blue);
-  color: #FFFFFF;
+  background-color: var(--primary-blue) !important;
+  color: var(--on-primary) !important;
 }
 
 .bauhaus-btn-primary:hover {
-  background-color: #0b329c;
-  color: #FFFFFF;
+  background-color: #5C4033 !important;
+  color: var(--on-primary) !important;
 }
 
 .bauhaus-btn-secondary {
-  background-color: var(--primary-lavender);
-  color: var(--foreground);
+  background-color: var(--primary-lavender) !important;
+  color: var(--foreground) !important;
 }
 
 .bauhaus-btn-secondary:hover {
-  background-color: #d8d8fa;
+  background-color: #C5A882 !important;
+  color: var(--foreground) !important;
 }
 
 .bauhaus-btn-success {
-  background-color: var(--primary-blue);
-  color: #FFFFFF;
+  background-color: var(--primary-blue) !important;
+  color: var(--on-primary) !important;
 }
 .bauhaus-btn-success:hover {
-  background-color: #0b329c;
+  background-color: #5C4033 !important;
+  color: var(--on-primary) !important;
 }
 
 .bauhaus-btn-danger {
-  background-color: var(--foreground);
-  color: var(--bg-primary);
+  background-color: var(--foreground) !important;
+  color: var(--bg-primary) !important;
 }
 .bauhaus-btn-danger:hover {
-  background-color: var(--text-secondary);
+  background-color: var(--text-secondary) !important;
+  color: var(--bg-primary) !important;
 }
 
 .bauhaus-btn-warning {
-  background-color: var(--primary-violet);
-  color: var(--foreground);
+  background-color: var(--primary-violet) !important;
+  color: var(--on-primary) !important;
 }
 .bauhaus-btn-warning:hover {
-  background-color: #a288cd;
+  background-color: #6E473B !important;
+  color: var(--on-primary) !important;
 }
 
 /* Inputs & Forms: Geometric, flat, solid borders */
@@ -676,7 +680,43 @@ header.appbar {
 }
 .dark-theme .badge-critical, .dark-theme .badge-completed { 
   background-color: var(--primary-blue) !important; 
-  color: #FFFFFF !important; 
+  color: var(--bg-primary) !important; 
+}
+
+.dark-theme .bauhaus-btn-primary {
+  background-color: var(--primary-blue) !important;
+  color: var(--bg-primary) !important;
+}
+.dark-theme .bauhaus-btn-primary:hover {
+  background-color: #C7BCA2 !important;
+  color: var(--bg-primary) !important;
+}
+
+.dark-theme .bauhaus-btn-secondary {
+  background-color: var(--primary-lavender) !important;
+  color: var(--foreground) !important;
+}
+.dark-theme .bauhaus-btn-secondary:hover {
+  background-color: #4E3629 !important;
+  color: var(--foreground) !important;
+}
+
+.dark-theme .bauhaus-btn-success {
+  background-color: var(--primary-blue) !important;
+  color: var(--bg-primary) !important;
+}
+.dark-theme .bauhaus-btn-success:hover {
+  background-color: #C7BCA2 !important;
+  color: var(--bg-primary) !important;
+}
+
+.dark-theme .bauhaus-btn-warning {
+  background-color: var(--primary-violet) !important;
+  color: var(--foreground) !important;
+}
+.dark-theme .bauhaus-btn-warning:hover {
+  background-color: #5D4037 !important;
+  color: var(--foreground) !important;
 }
 
 .dark-theme .bauhaus-btn-success:hover,
