@@ -232,7 +232,6 @@ const LandingPage = () => {
                 Plan and track sprints with zero friction. Drag-and-drop cards, set priorities, manage checklists, and comment on tasks instantly.
               </p>
             </div>
-            <div style={{ fontSize: '11px', fontWeight: 700, color: 'var(--primary-blue)', letterSpacing: '0.05em', marginTop: '1.5rem' }}>TASK BOARD &rarr;</div>
           </div>
 
           {/* Card 2: Rich Canvas Docs */}
@@ -245,7 +244,6 @@ const LandingPage = () => {
                 Create structured document outlines. Format content inline with Markdown, write clean code blocks, build tables, and organize thoughts.
               </p>
             </div>
-            <div style={{ fontSize: '11px', fontWeight: 700, color: 'var(--primary-blue)', letterSpacing: '0.05em', marginTop: '1.5rem' }}>DOCUMENTS &rarr;</div>
           </div>
 
           {/* Card 3: Real-Time Sync */}
@@ -258,7 +256,6 @@ const LandingPage = () => {
                 Collaborate together instantly. View active user presence markers, real-time board updates, and live document state synchronization.
               </p>
             </div>
-            <div style={{ fontSize: '11px', fontWeight: 700, color: 'var(--primary-blue)', letterSpacing: '0.05em', marginTop: '1.5rem' }}>PRESENCE SYNC &rarr;</div>
           </div>
         </div>
       </section>

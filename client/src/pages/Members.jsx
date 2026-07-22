@@ -104,22 +104,12 @@ const Members = () => {
           return (
             <div key={member.id} className="bauhaus-card" style={{ margin: 0, display: 'flex', flexDirection: 'column', gap: '1rem' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                <div style={{ position: 'relative' }}>
+                <div>
                   <img 
                     src={member.avatar || DEFAULT_AVATAR} 
                     alt={member.name}
                     style={{ width: '48px', height: '48px', objectFit: 'cover', border: '2px solid var(--border)' }}
                   />
-                  {/* Online/Offline status indicator */}
-                  <span style={{
-                    position: 'absolute',
-                    bottom: 0,
-                    right: 0,
-                    width: '12px',
-                    height: '12px',
-                    backgroundColor: member.online ? 'var(--success)' : 'var(--text-secondary)',
-                    border: '2px solid var(--card)'
-                  }} />
                 </div>
 
                 <div style={{ flex: 1, minWidth: 0 }}>
