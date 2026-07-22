@@ -24,25 +24,9 @@ import {
 } from 'lucide-react';
 
 const Layout = ({ children }) => {
-  const [theme, setTheme] = useState(() => {
-    const saved = localStorage.getItem('doct_theme');
-    if (saved) return saved;
-    return 'dark';
-  });
-
   useEffect(() => {
-    localStorage.setItem('doct_theme', theme);
-    const root = document.documentElement;
-    if (theme === 'dark') {
-      root.classList.add('dark-theme');
-    } else {
-      root.classList.remove('dark-theme');
-    }
-  }, [theme]);
-
-  const toggleTheme = () => {
-    setTheme(prev => prev === 'light' ? 'dark' : 'light');
-  };
+    document.documentElement.classList.remove('dark-theme');
+  }, []);
   const { user, logout } = useAuth();
   const { workspaces, currentWorkspace, setCurrentWorkspace, notifications, tasks, projects, members, documents } = useApp();
   const navigate = useNavigate();
@@ -111,11 +95,11 @@ const Layout = ({ children }) => {
             gap: '0.5rem',
             cursor: 'pointer'
           }}>
-            <img src={theme === 'dark' ? logoWhite : logoBlack} alt="Doct Logo" style={{ height: '32px', width: 'auto', display: 'block' }} />
+            <img src={logoBlack} alt="Doct Logo" style={{ height: '32px', width: 'auto', display: 'block' }} />
             <span style={{ 
               fontSize: '1.6rem', 
               fontWeight: 900, 
-              color: theme === 'dark' ? '#FFFFFF' : '#121212', 
+              color: 'var(--foreground)', 
               letterSpacing: '-0.02em',
               fontFamily: 'var(--font-heading)',
               textTransform: 'uppercase'
@@ -160,10 +144,7 @@ const Layout = ({ children }) => {
                       padding: '0.75rem 1rem',
                       cursor: 'pointer',
                       borderBottom: '1px solid var(--border)',
-                      backgroundColor: currentWorkspace?.id === ws.id ? 'var(--hover)' : 'transparent'
                     }}
-                    onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--hover)'}
-                    onMouseLeave={(e) => e.currentTarget.style.backgroundColor = currentWorkspace?.id === ws.id ? 'var(--hover)' : 'transparent'}
                   >
                     <div style={{ fontWeight: 'bold', fontSize: '12px', color: 'var(--text-primary)' }}>{ws.name}</div>
                     <div style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>{ws.description}</div>
@@ -231,13 +212,7 @@ const Layout = ({ children }) => {
               <div style={{ fontWeight: 'bold', fontSize: '13px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', fontFamily: 'var(--font-heading)', color: 'var(--text-primary)' }}>{user?.name}</div>
               <div style={{ display: 'inline-block', fontSize: '12px', padding: '2px 10px', backgroundColor: 'var(--text-primary)', color: 'var(--bg-primary)', borderRadius: '9999px', fontWeight: 500 }}>{user?.role}</div>
             </div>
-            <button 
-              onClick={toggleTheme}
-              style={{ background: 'none', border: 'none', color: 'var(--text-primary)', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', marginRight: '0.25rem' }}
-              title={theme === 'dark' ? "Switch to Light Mode" : "Switch to Dark Mode"}
-            >
-              {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
-            </button>
+
             <button 
               onClick={logout}
               style={{ background: 'none', border: 'none', color: 'var(--text-primary)', cursor: 'pointer' }}
@@ -290,8 +265,6 @@ const Layout = ({ children }) => {
                         key={t.id} 
                         onClick={() => handleSearchResultClick('task', t.id)}
                         style={{ padding: '0.5rem 0.75rem', cursor: 'pointer', borderBottom: '1px solid var(--border)', color: 'var(--text-primary)', fontSize: '12px' }}
-                        onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--hover)'}
-                        onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
                       >
                         {t.title}
                       </div>
@@ -307,8 +280,6 @@ const Layout = ({ children }) => {
                         key={p.id} 
                         onClick={() => handleSearchResultClick('project', p.id)}
                         style={{ padding: '0.5rem 0.75rem', cursor: 'pointer', borderBottom: '1px solid var(--border)', color: 'var(--text-primary)', fontSize: '12px' }}
-                        onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--hover)'}
-                        onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
                       >
                         {p.name}
                       </div>
@@ -324,8 +295,6 @@ const Layout = ({ children }) => {
                         key={d.id} 
                         onClick={() => handleSearchResultClick('document', d.id)}
                         style={{ padding: '0.5rem 0.75rem', cursor: 'pointer', borderBottom: '1px solid var(--border)', color: 'var(--text-primary)', fontSize: '12px' }}
-                        onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--hover)'}
-                        onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
                       >
                         {d.title}
                       </div>

@@ -36,7 +36,7 @@ const Analytics = () => {
     <div>
       <div style={{ marginBottom: '2rem' }}>
         <h2 style={{ margin: 0, fontSize: '2rem' }}>SYSTEM ANALYTICS</h2>
-        <p style={{ color: 'var(--text-secondary)', fontSize: '14px' }}>Data processing grid displaying workspace performance metrics.</p>
+
       </div>
 
       {/* Workspace Load Metrics Section */}

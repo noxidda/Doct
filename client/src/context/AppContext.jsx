@@ -227,16 +227,26 @@ export const AppProvider = ({ children }) => {
 
   // Push notifications helper
   const sendNotification = (title, content, type = 'system') => {
-    const newNotif = {
-      id: `not_${Date.now()}`,
-      userId: user?.id || 'usr_member',
-      title,
-      content,
-      isRead: false,
-      type,
-      timestamp: new Date().toISOString()
-    };
-    setNotifications(prev => [newNotif, ...prev]);
+    setNotifications(prev => {
+      // Prevent duplicate notification within 2 seconds window
+      const isDuplicate = prev.some(n => 
+        n.title === title && 
+        n.content === content && 
+        (Date.now() - new Date(n.timestamp).getTime()) < 2000
+      );
+      if (isDuplicate) return prev;
+
+      const newNotif = {
+        id: `not_${Date.now()}_${Math.random().toString(36).substr(2, 5)}`,
+        userId: user?.id || 'usr_member',
+        title,
+        content,
+        isRead: false,
+        type,
+        timestamp: new Date().toISOString()
+      };
+      return [newNotif, ...prev];
+    });
   };
 
   // Workspace CRUD
@@ -367,17 +377,20 @@ export const AppProvider = ({ children }) => {
   };
 
   const updateTask = async (id, updatedData) => {
+    const existingTask = tasks.find(t => t.id === id);
+    if (existingTask) {
+      if (updatedData.status && updatedData.status !== existingTask.status) {
+        logActivity('Updated Task Status', `${existingTask.title} -> ${updatedData.status}`);
+        sendNotification('Task Updated', `Task "${existingTask.title}" status changed to ${updatedData.status}`, 'task_updated');
+      } else {
+        logActivity('Updated Task Details', existingTask.title);
+      }
+    }
+
     // Optimistic Update
     setTasks(prev => prev.map(t => {
       if (t.id === id) {
-        const merged = { ...t, ...updatedData };
-        if (updatedData.status && updatedData.status !== t.status) {
-          logActivity('Updated Task Status', `${t.title} -> ${updatedData.status}`);
-          sendNotification('Task Updated', `Task "${t.title}" status changed to ${updatedData.status}`, 'task_updated');
-        } else {
-          logActivity('Updated Task Details', t.title);
-        }
-        return merged;
+        return { ...t, ...updatedData };
       }
       return t;
     }));
@@ -418,65 +431,62 @@ export const AppProvider = ({ children }) => {
 
   // Subtasks CRUD
   const addSubtask = (taskId, title) => {
-    const subtask = { id: `sub_${Date.now()}`, title, completed: false };
-    setTasks(prev => prev.map(t => {
-      if (t.id === taskId) {
-        const updatedSubtasks = [...t.subtasks, subtask];
-        updateTask(taskId, { subtasks: updatedSubtasks });
-        return { ...t, subtasks: updatedSubtasks };
-      }
-      return t;
-    }));
+    const targetTask = tasks.find(t => t.id === taskId);
+    if (!targetTask) return;
+
+    const subtask = { id: `sub_${Date.now()}_${Math.random().toString(36).substr(2, 4)}`, title, completed: false };
+    const currentSubtasks = targetTask.subtasks || [];
+    const updatedSubtasks = [...currentSubtasks, subtask];
+    
+    updateTask(taskId, { subtasks: updatedSubtasks });
     logActivity('Added Subtask', title);
   };
 
   const toggleSubtask = (taskId, subtaskId) => {
-    setTasks(prev => prev.map(t => {
-      if (t.id === taskId) {
-        const updatedSubtasks = t.subtasks.map(s => s.id === subtaskId ? { ...s, completed: !s.completed } : s);
-        updateTask(taskId, { subtasks: updatedSubtasks });
-        return { ...t, subtasks: updatedSubtasks };
-      }
-      return t;
-    }));
+    if (!subtaskId) return;
+    const targetTask = tasks.find(t => (t.id === taskId || t._id === taskId));
+    if (!targetTask) return;
+
+    const updatedSubtasks = (targetTask.subtasks || []).map(s => {
+      const sId = (s._id || s.id || '').toString();
+      return sId === subtaskId.toString() ? { ...s, completed: !s.completed } : s;
+    });
+    updateTask(taskId, { subtasks: updatedSubtasks });
   };
 
   const deleteSubtask = (taskId, subtaskId) => {
-    setTasks(prev => prev.map(t => {
-      if (t.id === taskId) {
-        const updatedSubtasks = t.subtasks.filter(s => s.id !== subtaskId);
-        updateTask(taskId, { subtasks: updatedSubtasks });
-        return { ...t, subtasks: updatedSubtasks };
-      }
-      return t;
-    }));
+    if (!subtaskId) return;
+    const targetTask = tasks.find(t => (t.id === taskId || t._id === taskId));
+    if (!targetTask) return;
+
+    const updatedSubtasks = (targetTask.subtasks || []).filter(s => {
+      const sId = (s._id || s.id || '').toString();
+      return sId !== subtaskId.toString();
+    });
+    updateTask(taskId, { subtasks: updatedSubtasks });
   };
 
   // Task Comments CRUD
   const addComment = (taskId, content) => {
+    const targetTask = tasks.find(t => t.id === taskId);
+    if (!targetTask) return;
+
     const newComment = {
-      id: `comm_${Date.now()}`,
+      id: `comm_${Date.now()}_${Math.random().toString(36).substr(2, 4)}`,
       userId: user?.id || 'usr_member',
       content,
       timestamp: new Date().toISOString(),
       replies: []
     };
     
-    setTasks(prev => prev.map(t => {
-      if (t.id === taskId) {
-        const updatedComments = [...t.comments, newComment];
-        updateTask(taskId, { comments: updatedComments });
-        return { ...t, comments: updatedComments };
-      }
-      return t;
-    }));
+    const updatedComments = [...(targetTask.comments || []), newComment];
+    updateTask(taskId, { comments: updatedComments });
 
     logActivity('Comment Added', `Added comment on task ${taskId}`);
     
     if (content.includes('@')) {
       const parts = content.split('@');
       if (parts.length > 1) {
-        const username = parts[1].split(' ')[0];
         sendNotification('You were mentioned', `${user?.name} mentioned you in a comment: "${content.substring(0, 30)}..."`, 'mention');
       }
     } else {
@@ -485,14 +495,11 @@ export const AppProvider = ({ children }) => {
   };
 
   const deleteComment = (taskId, commentId) => {
-    setTasks(prev => prev.map(t => {
-      if (t.id === taskId) {
-        const updatedComments = t.comments.filter(c => c.id !== commentId);
-        updateTask(taskId, { comments: updatedComments });
-        return { ...t, comments: updatedComments };
-      }
-      return t;
-    }));
+    const targetTask = tasks.find(t => t.id === taskId);
+    if (!targetTask) return;
+
+    const updatedComments = (targetTask.comments || []).filter(c => c.id !== commentId);
+    updateTask(taskId, { comments: updatedComments });
   };
 
   // Task Attachments

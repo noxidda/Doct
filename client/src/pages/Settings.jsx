@@ -55,7 +55,7 @@ const Settings = () => {
         {/* Left Side Tab Navigation */}
         <div style={{ width: '220px', display: 'flex', flexDirection: 'column', gap: '0.5rem', flexShrink: 0 }}>
           <button 
-            className="bauhaus-btn" 
+            className="bauhaus-btn btn-press" 
             style={{ 
               justifyContent: 'flex-start',
               border: activeTab === 'general' ? '2px solid var(--text-primary)' : '2px solid transparent',
@@ -68,7 +68,7 @@ const Settings = () => {
           </button>
           
           <button 
-            className="bauhaus-btn" 
+            className="bauhaus-btn btn-press" 
             style={{ 
               justifyContent: 'flex-start',
               border: activeTab === 'notifications' ? '2px solid var(--text-primary)' : '2px solid transparent',
@@ -81,7 +81,7 @@ const Settings = () => {
           </button>
 
           <button 
-            className="bauhaus-btn" 
+            className="bauhaus-btn btn-press" 
             style={{ 
               justifyContent: 'flex-start',
               border: activeTab === 'security' ? '2px solid var(--text-primary)' : '2px solid transparent',
@@ -94,7 +94,7 @@ const Settings = () => {
           </button>
 
           <button 
-            className="bauhaus-btn" 
+            className="bauhaus-btn btn-press" 
             style={{ 
               justifyContent: 'flex-start',
               border: activeTab === 'storage' ? '2px solid var(--text-primary)' : '2px solid transparent',
@@ -136,7 +136,7 @@ const Settings = () => {
                     style={{ resize: 'none' }}
                   />
                 </div>
-                <button type="submit" className="bauhaus-btn bauhaus-btn-primary" style={{ alignSelf: 'flex-start' }}>
+                <button type="submit" className="bauhaus-btn bauhaus-btn-primary btn-press" style={{ alignSelf: 'flex-start' }}>
                   <Save size={14} />
                   <span>Save General Settings</span>
                 </button>
@@ -168,7 +168,7 @@ const Settings = () => {
                       style={{ resize: 'none' }}
                     />
                   </div>
-                  <button type="submit" className="bauhaus-btn" style={{ alignSelf: 'flex-start' }}>
+                  <button type="submit" className="bauhaus-btn btn-press" style={{ alignSelf: 'flex-start' }}>
                     Create Workspace
                   </button>
                 </form>
@@ -223,7 +223,7 @@ const Settings = () => {
                       setMfaEnabled(!mfaEnabled);
                       alert(`MFA is now ${!mfaEnabled ? 'Enabled' : 'Disabled'}`);
                     }}
-                    className="bauhaus-btn" 
+                    className="bauhaus-btn btn-press" 
                     style={{ borderColor: mfaEnabled ? 'var(--success)' : 'var(--border)', color: mfaEnabled ? 'var(--success)' : 'var(--text-primary)' }}
                   >
                     {mfaEnabled ? 'Enabled' : 'Disabled'}
@@ -235,7 +235,7 @@ const Settings = () => {
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                     <input type="password" placeholder="Current Password" className="bauhaus-input" />
                     <input type="password" placeholder="New Password" className="bauhaus-input" />
-                    <button type="button" className="bauhaus-btn bauhaus-btn-primary" style={{ alignSelf: 'flex-start' }} onClick={() => alert('Credentials updated!')}>
+                    <button type="button" className="bauhaus-btn bauhaus-btn-primary btn-press" style={{ alignSelf: 'flex-start' }} onClick={() => alert('Credentials updated!')}>
                       Update Password
                     </button>
                   </div>

@@ -36,11 +36,11 @@ const Projects = () => {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
         <div>
           <h2 style={{ margin: 0, fontSize: '2rem' }}>PROJECT ARCHIVE</h2>
-          <p style={{ color: 'var(--text-secondary)', fontSize: '14px' }}>Organize structural modules and deadline milestones.</p>
+
         </div>
         <button 
           onClick={() => setShowCreateForm(!showCreateForm)} 
-          className="bauhaus-btn bauhaus-btn-primary"
+          className="bauhaus-btn bauhaus-btn-primary btn-press"
         >
           <Plus size={16} />
           <span>New Project</span>
@@ -86,8 +86,8 @@ const Projects = () => {
             />
           </div>
           <div style={{ display: 'flex', gap: '1rem' }}>
-            <button type="submit" className="bauhaus-btn bauhaus-btn-primary">Initialize Project</button>
-            <button type="button" onClick={() => setShowCreateForm(false)} className="bauhaus-btn">Cancel</button>
+            <button type="submit" className="bauhaus-btn bauhaus-btn-primary btn-press">Initialize Project</button>
+            <button type="button" onClick={() => setShowCreateForm(false)} className="bauhaus-btn btn-press">Cancel</button>
           </div>
         </form>
       )}
@@ -134,7 +134,7 @@ const Projects = () => {
                     e.stopPropagation();
                     toggleArchive(proj.id, proj.status);
                   }}
-                  className="bauhaus-btn"
+                  className="bauhaus-btn btn-press"
                   style={{ padding: '0.3rem 0.6rem', fontSize: '12px' }}
                 >
                   {proj.status === 'Active' ? 'Archive' : 'Restore'}

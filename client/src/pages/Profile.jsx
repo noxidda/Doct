@@ -156,12 +156,10 @@ const Profile = () => {
                   transition: 'background-color 200ms ease, color 200ms ease'
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor = '#FFFFFF';
-                  e.currentTarget.style.color = '#000000';
+                  e.currentTarget.style.backgroundColor = '#333333';
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.backgroundColor = '#000000';
-                  e.currentTarget.style.color = '#FFFFFF';
                 }}
               >
                 Upload Photo
@@ -245,7 +243,7 @@ const Profile = () => {
           />
         </div>
 
-        <button type="submit" className="bauhaus-btn bauhaus-btn-primary">
+        <button type="submit" className="bauhaus-btn bauhaus-btn-primary btn-press">
           Save Profile Parameters
         </button>
 

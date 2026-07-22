@@ -1,30 +1,30 @@
 :root {
-  /* Bauhaus Custom Color System - White, Black, Grey, Blue, Lavender, Light Violet */
-  --bg-primary: #F5F5DC;             /* Beige canvas */
+  /* Bauhaus Custom Color System - Wheat Canvas Palette */
+  --bg-primary: #F5DEB3;             /* Wheat canvas */
   --foreground: #121212;             /* Stark Black text */
   --text-primary: #121212;
   --text-secondary: #5D4037;         /* Coffee/dark brown secondary text */
   --text-muted: #8D6E63;             /* Muted brown text */
   
   --primary-blue: #3E2723;           /* Coffee color */
-  --primary-lavender: #D2B48C;       /* Light brown / tan accent */
+  --primary-lavender: #D2B48C;       /* Tan / Dark Wheat accent */
   --primary-violet: #8B5A2B;         /* Brown accent */
   --primary-grey: #5C4033;           /* Dark brown accent */
-  --primary-white: #F5F5DC;
+  --primary-white: #F5DEB3;          /* Wheat canvas fill */
   --primary-black: #121212;
   
   --primary: #121212;                /* Stark Black Primary */
-  --on-primary: #F5F5DC;
-  --secondary-container: #D2B48C;    /* Light brown container */
+  --on-primary: #F5DEB3;             /* Wheat text on primary */
+  --secondary-container: #E6C280;    /* Warm wheat container */
   --on-secondary-container: #121212;
   --tertiary: #8B5A2B;               /* Brown accent */
   
-  --surface-container: #E8E8CF;      /* Adjusted beige container surface */
-  --surface-container-low: #DFDFBF;  /* Adjusted beige container low */
+  --surface-container: #EEDC82;      /* Wheat container surface */
+  --surface-container-low: #E6C280;  /* Wheat container low */
   
   --border: #121212;                 /* Thick, distinct black borders */
   --outline: #121212;
-  --card: #F5F5DC;
+  --card: #F5DEB3;                   /* Wheat card background */
   --hover: rgba(62, 39, 35, 0.08);   /* Coffee-tint hover layer */
   
   --success: #3E2723;                /* Coffee color for success */
@@ -220,27 +220,47 @@ header.appbar {
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  box-shadow: var(--shadow-sm);
+  box-shadow: none !important;
   transition: all 150ms ease-out;
   position: relative;
 }
 
-.bauhaus-btn:hover {
-  background-color: var(--hover);
-  transform: translate(1.5px, 1.5px);
-  box-shadow: 1.5px 1.5px 0px 0px var(--border) !important;
+.bauhaus-btn.btn-press {
+  box-shadow: var(--shadow-sm) !important;
 }
 
-.bauhaus-btn:active {
-  transform: translate(3px, 3px);
+.bauhaus-btn:hover,
+button:hover {
+  background-color: rgba(62, 39, 35, 0.15) !important;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.bauhaus-btn:active,
+button:active {
+  background-color: rgba(62, 39, 35, 0.25) !important;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* Going-down pressing animation specifically for authorized action buttons */
+.btn-press:hover,
+button.btn-press:hover,
+a.btn-press:hover {
+  transform: translate(2px, 2px) !important;
+  box-shadow: 1px 1px 0px 0px var(--border) !important;
+}
+
+.btn-press:active,
+button.btn-press:active,
+a.btn-press:active {
+  transform: translate(3px, 3px) scale(0.98) !important;
   box-shadow: none !important;
 }
 
 .bauhaus-btn:disabled {
   opacity: 0.4;
   cursor: not-allowed;
-  transform: none !important;
-  box-shadow: none !important;
   background-color: var(--surface-container-low) !important;
   color: var(--text-muted) !important;
 }
@@ -258,7 +278,6 @@ header.appbar {
 
 .bauhaus-btn-primary:hover {
   background-color: #5C4033 !important;
-  color: var(--on-primary) !important;
 }
 
 .bauhaus-btn-secondary {
@@ -268,7 +287,6 @@ header.appbar {
 
 .bauhaus-btn-secondary:hover {
   background-color: #C5A882 !important;
-  color: var(--foreground) !important;
 }
 
 .bauhaus-btn-success {
@@ -277,7 +295,6 @@ header.appbar {
 }
 .bauhaus-btn-success:hover {
   background-color: #5C4033 !important;
-  color: var(--on-primary) !important;
 }
 
 .bauhaus-btn-danger {
@@ -285,8 +302,7 @@ header.appbar {
   color: var(--bg-primary) !important;
 }
 .bauhaus-btn-danger:hover {
-  background-color: var(--text-secondary) !important;
-  color: var(--bg-primary) !important;
+  background-color: #A31414 !important;
 }
 
 .bauhaus-btn-warning {
@@ -295,7 +311,6 @@ header.appbar {
 }
 .bauhaus-btn-warning:hover {
   background-color: #6E473B !important;
-  color: var(--on-primary) !important;
 }
 
 /* Inputs & Forms: Geometric, flat, solid borders */
@@ -364,9 +379,7 @@ header.appbar {
   overflow: hidden;
 }
 
-.bauhaus-card:hover {
-  background-color: var(--surface-container-low) !important;
-}
+
 
 .bauhaus-card-header {
   border-bottom: 2px solid var(--border);
@@ -459,10 +472,7 @@ header.appbar {
   border-bottom: none;
 }
 
-.bauhaus-table tr:hover td {
-  background-color: var(--hover);
-  color: var(--foreground);
-}
+
 
 /* Tabs: Bauhaus blocky selector tabs */
 .bauhaus-tabs {
@@ -551,272 +561,3 @@ header.appbar {
   display: none !important;
 }
 
-/* ==========================================================================
-   DARK THEME PALETTE (Bauhaus Custom Palette Dark Override)
-   ========================================================================== */
-.dark-theme {
-  --bg-primary: #161618;             /* Dark grey that is almost black canvas */
-  --bg-secondary: #1E1E24;
-  --foreground: #F5F5DC;             /* Beige text */
-  --text-primary: #F5F5DC;
-  --text-secondary: #D7CCC8;         /* Latte / light coffee text */
-  --text-muted: #A1887F;             /* Muted coffee text */
-  
-  --primary-blue: #D7CCC8;           /* Latte / light coffee color */
-  --primary-lavender: #5D4037;       /* Slate brown accent */
-  --primary-violet: #8D6E63;         /* Medium slate brown accent */
-  --primary-grey: #4E3629;           /* Dark brown / coffee accent */
-  --primary-white: #161618;
-  --primary-black: #F5F5DC;
-  
-  --primary: #F5F5DC;
-  --on-primary: #161618;
-  --secondary-container: #5D4037;
-  --on-secondary-container: #F5F5DC;
-  --tertiary: #8D6E63;
-  --on-tertiary: #F5F5DC;
-  
-  --surface-container: #252528;
-  --surface-container-low: #1E1E20;
-  
-  --border: #F5F5DC;                 /* Beige borders for contrast */
-  --outline: #F5F5DC;
-  --card: #252528;
-  --hover: rgba(245, 245, 220, 0.12); /* Beige-tint hover layer */
-  
-  --success: #D7CCC8;
-  --warning: #8D6E63;
-  --error: #FF453A;
-  
-  --shadow-sm: 3px 3px 0px 0px #F5F5DC;
-  --shadow-md: 6px 6px 0px 0px #F5F5DC;
-  --shadow-lg: 8px 8px 0px 0px #F5F5DC;
-}
-
-.dark-theme .sidebar {
-  background-color: var(--bg-primary) !important;
-  border-right: 4px solid var(--border) !important;
-}
-
-.dark-theme .sidebar nav a {
-  color: var(--text-secondary) !important;
-}
-
-.dark-theme .sidebar nav a:hover {
-  background-color: var(--primary-lavender) !important;
-  color: var(--foreground) !important;
-  border: 2px solid var(--border) !important;
-}
-
-.dark-theme .sidebar nav a.active {
-  background-color: var(--primary-blue) !important;
-  color: #FFFFFF !important;
-  border: 2px solid var(--border) !important;
-}
-
-.dark-theme body {
-  background-color: var(--bg-primary);
-  color: var(--foreground);
-}
-
-.dark-theme .appbar {
-  background-color: var(--bg-primary) !important;
-  border-bottom: 4px solid var(--border) !important;
-}
-
-.dark-theme .app-container {
-  background-color: var(--bg-primary) !important;
-}
-
-.dark-theme .main-content {
-  background-color: var(--bg-primary) !important;
-}
-
-.dark-theme .bauhaus-card {
-  background-color: var(--card) !important;
-  border-color: var(--border);
-  color: var(--text-primary) !important;
-  box-shadow: none !important;
-}
-
-.dark-theme .bauhaus-card:hover {
-  background-color: var(--surface-container-low) !important;
-}
-
-.dark-theme .bauhaus-table-container {
-  border-color: var(--border) !important;
-  box-shadow: none !important;
-}
-
-.dark-theme .bauhaus-table th {
-  background-color: var(--primary-lavender) !important;
-  color: var(--foreground) !important;
-  border-bottom: 4px solid var(--border) !important;
-}
-
-.dark-theme .bauhaus-table td {
-  border-bottom: 2px solid var(--border) !important;
-  color: var(--text-secondary) !important;
-}
-
-.dark-theme .bauhaus-input, 
-.dark-theme .bauhaus-select {
-  background-color: var(--bg-primary) !important;
-  color: var(--text-primary) !important;
-  border-color: var(--border) !important;
-}
-
-.dark-theme .bauhaus-input::placeholder {
-  color: var(--text-muted) !important;
-}
-
-.dark-theme .badge-medium, .dark-theme .badge-todo { 
-  background-color: var(--primary-lavender) !important; 
-  color: var(--foreground) !important; 
-}
-.dark-theme .badge-high, .dark-theme .badge-in_progress { 
-  background-color: var(--primary-violet) !important; 
-  color: var(--foreground) !important; 
-}
-.dark-theme .badge-critical, .dark-theme .badge-completed { 
-  background-color: var(--primary-blue) !important; 
-  color: var(--bg-primary) !important; 
-}
-
-.dark-theme .bauhaus-btn-primary {
-  background-color: var(--primary-blue) !important;
-  color: var(--bg-primary) !important;
-}
-.dark-theme .bauhaus-btn-primary:hover {
-  background-color: #C7BCA2 !important;
-  color: var(--bg-primary) !important;
-}
-
-.dark-theme .bauhaus-btn-secondary {
-  background-color: var(--primary-lavender) !important;
-  color: var(--foreground) !important;
-}
-.dark-theme .bauhaus-btn-secondary:hover {
-  background-color: #4E3629 !important;
-  color: var(--foreground) !important;
-}
-
-.dark-theme .bauhaus-btn-success {
-  background-color: var(--primary-blue) !important;
-  color: var(--bg-primary) !important;
-}
-.dark-theme .bauhaus-btn-success:hover {
-  background-color: #C7BCA2 !important;
-  color: var(--bg-primary) !important;
-}
-
-.dark-theme .bauhaus-btn-warning {
-  background-color: var(--primary-violet) !important;
-  color: var(--foreground) !important;
-}
-.dark-theme .bauhaus-btn-warning:hover {
-  background-color: #5D4037 !important;
-  color: var(--foreground) !important;
-}
-
-.dark-theme .bauhaus-btn-success:hover,
-.dark-theme .bauhaus-btn-danger:hover,
-.dark-theme .bauhaus-btn-warning:hover {
-  background-color: var(--foreground) !important;
-  color: var(--bg-primary) !important;
-}
-
-/* Select background adjustments */
-.dark-theme .bauhaus-select {
-  background-image: url("data:image/svg+xml;utf8,<svg fill='%23FFFFFF' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>") !important;
-}
-
-/* Override inline styling on background containers in dark mode */
-.dark-theme div[style*="background-color: #FFFFFF"],
-.dark-theme div[style*="background-color: rgb(255, 255, 255)"],
-.dark-theme div[style*="background: #FFFFFF"],
-.dark-theme div[style*="background: rgb(255, 255, 255)"] {
-  background-color: var(--bg-primary) !important;
-  color: var(--text-primary) !important;
-}
-
-.dark-theme div[style*="background-color: var(--surface-container)"] {
-  background-color: var(--bg-primary) !important;
-}
-
-.dark-theme div[style*="border-top: 1px solid #1C1B1F"],
-.dark-theme div[style*="border-bottom: 1px solid #1C1B1F"],
-.dark-theme div[style*="border-top: 1px solid rgb(28, 27, 31)"],
-.dark-theme div[style*="border-bottom: 1px solid rgb(28, 27, 31)"] {
-  border-color: var(--border) !important;
-}
-
-.dark-theme div[style*="border: 2px solid var(--border)"] {
-  border-color: var(--border) !important;
-}
-
-.dark-theme .login-split-card-side {
-  background-color: transparent !important;
-}
-
-/* Auth Pages Forced Clean Colors */
-.dark-theme .login-split-container {
-  --bg-primary: #FFFFFF !important;
-  --foreground: #121212 !important;
-  --text-primary: #121212 !important;
-  --text-secondary: #4A4A5A !important;
-  --text-muted: #7E7E8F !important;
-  --border: #121212 !important;
-  --outline: #121212 !important;
-  --hover: rgba(16, 64, 192, 0.08) !important;
-  --surface-container: #F0F0F5 !important;
-  --surface-container-low: #EAEAEF !important;
-  --primary-blue: #1040C0 !important;
-  --primary-lavender: #E6E6FA !important;
-  --primary-violet: #B39DDB !important;
-  --primary-grey: #E0E0E0 !important;
-}
-
-.dark-theme .login-split-container .bauhaus-input {
-  background-color: #FFFFFF !important;
-  color: #121212 !important;
-  border: 2px solid #121212 !important;
-}
-
-.dark-theme .login-split-container .bauhaus-btn {
-  background-color: transparent !important;
-  color: #121212 !important;
-  border: 2px solid #121212 !important;
-}
-
-.dark-theme .login-split-container .bauhaus-btn-primary {
-  background-color: #1040C0 !important;
-  color: #FFFFFF !important;
-  border: 2px solid #121212 !important;
-}
-
-.dark-theme .login-split-container .login-split-card-side div[style*="background-color: #FFFFFF"],
-.dark-theme .login-split-container .login-split-card-side div[style*="background-color: rgb(255, 255, 255)"] {
-  background-color: #FFFFFF !important;
-  color: #121212 !important;
-  border: 4px solid #121212 !important;
-  box-shadow: none !important;
-}
-
-.dark-theme .login-split-container h2,
-.dark-theme .login-split-container p,
-.dark-theme .login-split-container label,
-.dark-theme .login-split-container a {
-  color: initial !important;
-}
-
-/* Landing Page Dashboard Button Override in Dark Mode */
-.dark-theme .landing-dashboard-btn {
-  background-color: #8D6E63 !important; /* Brown background */
-  color: #F5F5DC !important;            /* Beige text color */
-}
-
-.dark-theme .landing-dashboard-btn:hover {
-  background-color: #5D4037 !important; /* Darker brown background on hover */
-  color: #F5F5DC !important;            /* Beige text color on hover */
-}

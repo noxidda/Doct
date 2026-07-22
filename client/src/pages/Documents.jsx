@@ -35,7 +35,7 @@ const Documents = () => {
       setEditContent(activeDoc.content);
     } else if (activeDocId === null) {
       setEditTitle('Untitled Document');
-      setEditContent('# Untitled Document\n\nWrite content in markdown here...');
+      setEditContent('# Untitled Document\n\nwrite content here');
     }
   }, [activeDocId]);
 
@@ -56,7 +56,7 @@ const Documents = () => {
     setNewDocParentId(parentId);
     setActiveDocId(null);
     setEditTitle('Untitled Document');
-    setEditContent('# Untitled Document\n\nWrite content in markdown here...');
+    setEditContent('# Untitled Document\n\nwrite content here');
     setIsEditing(true);
   };
 
@@ -165,8 +165,6 @@ const Documents = () => {
             backgroundColor: isActive ? 'var(--hover)' : 'transparent',
             borderLeft: isActive ? '3px solid var(--text-primary)' : '3px solid transparent'
           }}
-          onMouseEnter={(e) => { if (!isActive) e.target.style.backgroundColor = 'var(--hover)'; }}
-          onMouseLeave={(e) => { if (!isActive) e.target.style.backgroundColor = 'transparent'; }}
         >
           <FileText size={14} style={{ color: 'var(--text-secondary)' }} />
           <span style={{ fontSize: '13px', fontWeight: isActive ? 'bold' : 'normal', flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
@@ -209,7 +207,7 @@ const Documents = () => {
       }}>
         <div style={{ padding: '1rem', borderBottom: '2px solid var(--border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <span style={{ fontSize: '12px', fontWeight: 'bold', letterSpacing: '0.05em' }}>DOC OUTLINES</span>
-          <button onClick={() => handleCreateNew(null)} className="bauhaus-btn" style={{ padding: '0.25rem 0.5rem', fontSize: '12px' }}>
+          <button onClick={() => handleCreateNew(null)} className="bauhaus-btn btn-press" style={{ padding: '0.25rem 0.5rem', fontSize: '12px' }}>
             <Plus size={12} />
             <span>Root</span>
           </button>
@@ -232,7 +230,7 @@ const Documents = () => {
         <div style={{ padding: '1rem', borderBottom: '2px solid var(--border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', backgroundColor: 'var(--bg-primary)' }}>
           {isEditing ? (
             <div style={{ display: 'flex', gap: '0.75rem', marginLeft: 'auto' }}>
-              <button onClick={handleSave} className="bauhaus-btn bauhaus-btn-success" style={{ padding: '0.4rem 1rem', fontSize: '12px' }}>
+              <button onClick={handleSave} className="bauhaus-btn bauhaus-btn-success btn-press" style={{ padding: '0.4rem 1rem', fontSize: '12px' }}>
                 <CheckCircle size={14} />
                 <span>Save Page</span>
               </button>
@@ -247,7 +245,7 @@ const Documents = () => {
                     setIsEditing(false);
                   }
                 }} 
-                className="bauhaus-btn" 
+                className="bauhaus-btn btn-press" 
                 style={{ padding: '0.4rem 1rem', fontSize: '12px' }}
               >
                 Cancel
@@ -272,7 +270,7 @@ const Documents = () => {
               {activeDoc && (
                 <button 
                   onClick={() => setIsEditing(true)} 
-                  className="bauhaus-btn" 
+                  className="bauhaus-btn btn-press" 
                   style={{ display: 'inline-flex', gap: '0.5rem', padding: '0.4rem 1rem', fontSize: '12px' }}
                 >
                   <Edit2 size={14} />
@@ -293,7 +291,7 @@ const Documents = () => {
                 value={editTitle}
                 onChange={(e) => setEditTitle(e.target.value)}
                 placeholder="Page Title"
-                style={{ fontSize: '2.2rem', fontWeight: 700, border: 'none', borderBottom: '2px solid var(--border)', backgroundColor: 'transparent', padding: '0.5rem 0' }}
+                style={{ fontSize: '2.2rem', fontWeight: 700, border: 'none', borderBottom: '2px solid var(--border)', backgroundColor: 'transparent', padding: '0.5rem 1rem' }}
               />
               
               <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
@@ -302,7 +300,7 @@ const Documents = () => {
                   className="bauhaus-input"
                   value={editContent}
                   onChange={(e) => setEditContent(e.target.value)}
-                  placeholder="# Write Markdown here..."
+                  placeholder="write content here"
                   style={{ flex: 1, resize: 'none', fontFamily: 'monospace', padding: '1rem', height: '100%', fontSize: '14px', lineHeight: 1.6 }}
                 />
               </div>

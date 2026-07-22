@@ -32,7 +32,7 @@ const AdminPanel = () => {
     <div>
       <div style={{ marginBottom: '2rem' }}>
         <h2 style={{ margin: 0, fontSize: '2rem' }}>ADMINISTRATOR PANEL</h2>
-        <p style={{ color: 'var(--text-secondary)', fontSize: '14px' }}>System level supervision, user management, and hardware monitor gauges.</p>
+
       </div>
 
       {/* Tabs */}
@@ -103,7 +103,7 @@ const AdminPanel = () => {
                               removeMember(member.id);
                             }
                           }}
-                          className="bauhaus-btn bauhaus-btn-danger" 
+                          className="bauhaus-btn bauhaus-btn-danger btn-press" 
                           style={{ padding: '0.2rem 0.5rem', fontSize: '12px' }}
                         >
                           Revoke
@@ -153,7 +153,7 @@ const AdminPanel = () => {
                             deleteWorkspace(ws.id);
                           }
                         }}
-                        className="bauhaus-btn bauhaus-btn-danger" 
+                        className="bauhaus-btn bauhaus-btn-danger btn-press" 
                         style={{ padding: '0.2rem 0.5rem', fontSize: '12px' }}
                       >
                         Delete Purge

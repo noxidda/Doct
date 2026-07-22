@@ -111,7 +111,7 @@ const Dashboard = () => {
         </div>
         <button 
           onClick={() => navigate('/tasks')} 
-          className="bauhaus-btn bauhaus-btn-primary"
+          className="bauhaus-btn bauhaus-btn-primary btn-press"
         >
           <Play size={14} />
           <span>Launch Tasks Board</span>
@@ -236,7 +236,7 @@ const Dashboard = () => {
       <div className="bauhaus-card" style={{ margin: 0 }}>
         <div className="bauhaus-card-header">
           <h3>RECENT RUNTIME ACTIONS</h3>
-          <button onClick={() => navigate('/notifications')} className="bauhaus-btn" style={{ padding: '0.25rem 0.75rem', fontSize: '12px' }}>
+          <button onClick={() => navigate('/notifications')} className="bauhaus-btn btn-press" style={{ padding: '0.25rem 0.75rem', fontSize: '12px' }}>
             Open Audits
           </button>
         </div>

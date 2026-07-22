@@ -32,13 +32,13 @@ const Members = () => {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
         <div>
           <h2 style={{ margin: 0, fontSize: '2rem' }}>WORKSPACE MEMBERS</h2>
-          <p style={{ color: 'var(--text-secondary)', fontSize: '14px' }}>Control user privileges and access parameters.</p>
+
         </div>
         
         {canManageRoles && (
           <button 
             onClick={() => setShowInviteForm(!showInviteForm)} 
-            className="bauhaus-btn bauhaus-btn-primary"
+            className="bauhaus-btn bauhaus-btn-primary btn-press"
           >
             <UserPlus size={16} />
             <span>Invite Member</span>
@@ -76,8 +76,8 @@ const Members = () => {
             </div>
           </div>
           <div style={{ display: 'flex', gap: '1rem' }}>
-            <button type="submit" className="bauhaus-btn bauhaus-btn-primary">Send Invite</button>
-            <button type="button" onClick={() => setShowInviteForm(false)} className="bauhaus-btn">Cancel</button>
+            <button type="submit" className="bauhaus-btn bauhaus-btn-primary btn-press">Send Invite</button>
+            <button type="button" onClick={() => setShowInviteForm(false)} className="bauhaus-btn btn-press">Cancel</button>
           </div>
         </form>
       )}
@@ -147,7 +147,16 @@ const Members = () => {
                       <option value="Member">Member</option>
                     </select>
                   ) : (
-                    <span className="bauhaus-badge" style={{ fontSize: '12px' }}>{member.role}</span>
+                    <span 
+                      className="bauhaus-badge" 
+                      style={{ 
+                        fontSize: '12px', 
+                        color: member.role === 'Owner' ? '#F5DEB3' : 'inherit',
+                        borderColor: member.role === 'Owner' ? '#F5DEB3' : 'var(--border)'
+                      }}
+                    >
+                      {member.role}
+                    </span>
                   )}
                 </div>
 

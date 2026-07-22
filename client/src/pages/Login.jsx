@@ -189,12 +189,10 @@ const Login = () => {
                 transition: 'background-color 200ms ease, color 200ms ease'
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = '#FFFFFF';
-                e.currentTarget.style.color = '#000000';
+                e.currentTarget.style.backgroundColor = '#333333';
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.backgroundColor = '#000000';
-                e.currentTarget.style.color = '#FFFFFF';
               }}
             >
               {loading ? 'Logging In...' : 'Log In'}

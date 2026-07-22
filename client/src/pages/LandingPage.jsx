@@ -6,20 +6,9 @@ import logoWhite from '../assets/logo-white.png';
 
 const LandingPage = () => {
   const { user } = useAuth();
-  const [isDark, setIsDark] = React.useState(() => {
-    const saved = localStorage.getItem('doct_theme');
-    if (saved) return saved === 'dark';
-    return true;
-  });
-
   React.useEffect(() => {
-    const root = document.documentElement;
-    if (isDark) {
-      root.classList.add('dark-theme');
-    } else {
-      root.classList.remove('dark-theme');
-    }
-  }, [isDark]);
+    document.documentElement.classList.remove('dark-theme');
+  }, []);
 
   return (
     <div style={{ backgroundColor: 'var(--bg-primary)', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
@@ -34,11 +23,11 @@ const LandingPage = () => {
           gap: '0.5rem',
           cursor: 'pointer'
         }}>
-          <img src={isDark ? logoWhite : logoBlack} alt="Doct Logo" style={{ height: '32px', width: 'auto', display: 'block' }} />
+          <img src={logoBlack} alt="Doct Logo" style={{ height: '32px', width: 'auto', display: 'block' }} />
           <span style={{ 
             fontSize: '1.6rem', 
             fontWeight: 900, 
-            color: isDark ? '#FFFFFF' : '#121212', 
+            color: 'var(--foreground)', 
             letterSpacing: '-0.02em',
             fontFamily: 'var(--font-heading)',
             textTransform: 'uppercase'
@@ -48,24 +37,12 @@ const LandingPage = () => {
         </Link>
         
         <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-          <button 
-            onClick={() => setIsDark(!isDark)}
-            className="bauhaus-btn"
-            style={{ 
-              fontSize: '12px', 
-              padding: '0.4rem 1rem', 
-              backgroundColor: 'var(--bg-primary)', 
-              color: 'var(--text-primary)',
-              textTransform: 'uppercase'
-            }}
-          >
-            {isDark ? 'Light Vibe' : 'Dark Vibe'}
-          </button>
+
 
           {user ? (
             <Link 
               to="/dashboard" 
-              className="bauhaus-btn bauhaus-btn-primary landing-dashboard-btn" 
+              className="bauhaus-btn bauhaus-btn-primary btn-press landing-dashboard-btn" 
               style={{ fontSize: '12px', padding: '0.4rem 1.25rem' }}
             >
               Dashboard
@@ -178,7 +155,7 @@ const LandingPage = () => {
           <div style={{ display: 'flex', gap: '1.5rem', flexWrap: 'wrap' }}>
             <Link 
               to="/login" 
-              className="bauhaus-btn bauhaus-btn-primary" 
+              className="bauhaus-btn bauhaus-btn-primary btn-press" 
               style={{ padding: '0.8rem 2.5rem', fontSize: '15px', border: '3px solid var(--border)' }}
             >
               Launch Workspace
@@ -189,7 +166,7 @@ const LandingPage = () => {
         {/* Right Column: Large Logo and Branding */}
         <div className="hero-right" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '1.5rem', zIndex: 1 }}>
           <img 
-            src={isDark ? logoWhite : logoBlack} 
+            src={logoBlack} 
             alt="Doct Logo" 
             style={{ 
               height: '140px', 
@@ -200,7 +177,7 @@ const LandingPage = () => {
           <span style={{ 
             fontSize: '5rem', 
             fontWeight: 900, 
-            color: isDark ? '#FFFFFF' : '#121212', 
+            color: 'var(--foreground)', 
             letterSpacing: '-0.04em', 
             fontFamily: 'var(--font-heading)',
             lineHeight: 1,

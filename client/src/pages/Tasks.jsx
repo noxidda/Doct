@@ -12,7 +12,7 @@ const Tasks = () => {
   const { 
     tasks, projects, members, createTask, updateTask, deleteTask, duplicateTask,
     addSubtask, toggleSubtask, deleteSubtask, addComment, deleteComment,
-    addAttachment, deleteAttachment, currentWorkspace
+    currentWorkspace
   } = useApp();
 
   const [activeView, setActiveView] = useState('kanban'); // 'kanban', 'list', 'table'
@@ -113,12 +113,7 @@ const Tasks = () => {
     setShowCreateForm(false);
   };
 
-  // Attachment upload simulation
-  const handleFileUploadSim = (e) => {
-    if (!e.target.files || e.target.files.length === 0) return;
-    const file = e.target.files[0];
-    addAttachment(activeTask.id, file);
-  };
+
 
   return (
     <div style={{ display: 'flex', height: 'calc(100vh - 120px)', gap: '1.5rem', position: 'relative' }}>
@@ -132,9 +127,8 @@ const Tasks = () => {
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <div>
               <h2 style={{ margin: 0, fontSize: '2rem' }}>RUNNING TASKS</h2>
-              <p style={{ color: 'var(--text-secondary)', fontSize: '13px' }}>Grid workflows, lists, and task prioritizations.</p>
             </div>
-            <button onClick={() => setShowCreateForm(!showCreateForm)} className="bauhaus-btn bauhaus-btn-primary">
+            <button onClick={() => setShowCreateForm(!showCreateForm)} className="bauhaus-btn bauhaus-btn-primary btn-press">
               <Plus size={16} />
               <span>Create Task</span>
             </button>
@@ -278,8 +272,8 @@ const Tasks = () => {
             </div>
 
             <div style={{ display: 'flex', gap: '0.75rem' }}>
-              <button type="submit" className="bauhaus-btn bauhaus-btn-primary">Add Task</button>
-              <button type="button" onClick={() => setShowCreateForm(false)} className="bauhaus-btn">Cancel</button>
+              <button type="submit" className="bauhaus-btn bauhaus-btn-primary btn-press">Add Task</button>
+              <button type="button" onClick={() => setShowCreateForm(false)} className="bauhaus-btn btn-press">Cancel</button>
             </div>
           </form>
         )}
@@ -297,22 +291,45 @@ const Tasks = () => {
                     key={status} 
                     onDragOver={handleDragOver}
                     onDrop={(e) => handleDrop(e, status)}
-                    style={{ display: 'flex', flexDirection: 'column', minWidth: '180px', backgroundColor: 'var(--surface-container)', borderRadius: 'var(--radius-lg)', overflow: 'hidden' }}
+                    style={{ display: 'flex', flexDirection: 'column', minWidth: '180px', backgroundColor: '#5D4037', borderRadius: 'var(--radius-lg)', overflow: 'hidden', border: '2px solid var(--border)' }}
                   >
                     <div style={{ 
-                      padding: '1rem', 
+                      padding: '0.5rem 0.75rem', 
                       display: 'flex', 
                       justifyContent: 'space-between', 
                       alignItems: 'center',
-                      backgroundColor: 'rgba(0, 0, 0, 0.04)'
+                      backgroundColor: 'rgba(0, 0, 0, 0.2)'
                     }}>
-                      <span style={{ fontSize: '13px', fontWeight: '700', letterSpacing: '0.01em', fontFamily: 'var(--font-heading)', color: 'var(--primary)' }}>{status}</span>
-                      <span className="bauhaus-badge" style={{ fontSize: '12px', padding: '2px 8px' }}>{columnTasks.length}</span>
+                      <span style={{ fontSize: '12px', fontWeight: '800', letterSpacing: '0.02em', fontFamily: 'var(--font-heading)', color: '#F5DEB3', textTransform: 'uppercase' }}>{status}</span>
+                      <span style={{ 
+                        fontSize: '11px', 
+                        fontWeight: 'bold', 
+                        width: '20px', 
+                        height: '20px', 
+                        borderRadius: '50%', 
+                        backgroundColor: '#2A1B14', 
+                        color: '#F5DEB3', 
+                        display: 'inline-flex', 
+                        alignItems: 'center', 
+                        justifyContent: 'center', 
+                        border: '1px solid #F5DEB3' 
+                      }}>
+                        {columnTasks.length}
+                      </span>
                     </div>
                     
-                    <div style={{ flex: 1, padding: '0.5rem', display: 'flex', flexDirection: 'column', gap: '0.5rem', overflowY: 'auto', backgroundColor: 'transparent' }}>
+                    <div style={{ flex: 1, padding: '0.4rem', display: 'flex', flexDirection: 'column', gap: '0.4rem', overflowY: 'auto', backgroundColor: 'transparent' }}>
                       {columnTasks.map(task => {
                         const proj = projects.find(p => p.id === task.projectId);
+                        const getPriorityColor = (p) => {
+                          const pLower = (p || '').toLowerCase();
+                          if (pLower === 'critical') return '#E53E3E'; // Red
+                          if (pLower === 'high') return '#E65100';     // Orange
+                          if (pLower === 'medium') return '#D69E2E';   // Yellow
+                          if (pLower === 'low') return '#2E7D32';      // Green
+                          return 'var(--text-primary)';
+                        };
+
                         return (
                           <div 
                             key={task.id} 
@@ -320,35 +337,38 @@ const Tasks = () => {
                             draggable="true"
                             onDragStart={(e) => handleDragStart(e, task.id)}
                             style={{
-                              padding: '1rem',
+                              padding: '0.65rem 0.75rem',
                               borderRadius: 'var(--radius-md)',
-                              backgroundColor: '#FFFFFF',
+                              backgroundColor: '#F5DEB3',
+                              color: '#121212',
                               cursor: 'pointer',
-                              transition: 'all 300ms cubic-bezier(0.2, 0, 0, 1)',
-                              boxShadow: activeTask?.id === task.id ? 'none' : '0px 1px 3px rgba(0, 0, 0, 0.05), 0px 1px 2px rgba(0, 0, 0, 0.1)',
-                              border: activeTask?.id === task.id ? '2px solid var(--primary)' : '1px solid var(--border)'
-                            }}
-                            onMouseEnter={(e) => {
-                              if (activeTask?.id !== task.id) {
-                                e.currentTarget.style.boxShadow = '0px 4px 8px rgba(0, 0, 0, 0.08), 0px 2px 4px rgba(0, 0, 0, 0.05)';
-                              }
-                            }}
-                            onMouseLeave={(e) => {
-                              if (activeTask?.id !== task.id) {
-                                e.currentTarget.style.boxShadow = '0px 1px 3px rgba(0, 0, 0, 0.05), 0px 1px 2px rgba(0, 0, 0, 0.1)';
-                              }
+                              transition: 'all 200ms ease',
+                              boxShadow: activeTask?.id === task.id ? 'none' : '0px 2px 4px rgba(0, 0, 0, 0.1)',
+                              border: activeTask?.id === task.id ? '2px solid #121212' : '1.5px solid #121212'
                             }}
                           >
-                            <div style={{ fontSize: '12px', fontWeight: 'bold', color: 'var(--warning)', textTransform: 'uppercase', marginBottom: '0.25rem' }}>
+                            {/* Task Title in BIG ABOVE Project */}
+                            <div style={{ fontWeight: '800', fontSize: '13.5px', color: '#121212', marginBottom: '0.15rem', lineHeight: 1.25 }}>
+                              {task.title}
+                            </div>
+
+                            {/* Project Name underneath */}
+                            <div style={{ fontSize: '10px', fontWeight: '700', color: '#5D4037', textTransform: 'uppercase', marginBottom: '0.35rem' }}>
                               {proj ? proj.name : 'Unassigned Project'}
                             </div>
-                            <div style={{ fontWeight: 'bold', fontSize: '13px', marginBottom: '0.5rem', lineHeight: 1.3 }}>{task.title}</div>
                             
-                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '0.5rem' }}>
-                              <span className={`bauhaus-badge badge-${task.priority.toLowerCase()}`} style={{ fontSize: '12px' }}>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '0.35rem' }}>
+                              {/* Priority with NO bg and NO border, pure text color */}
+                              <span style={{ 
+                                fontSize: '11px', 
+                                fontWeight: '900', 
+                                color: getPriorityColor(task.priority), 
+                                textTransform: 'uppercase',
+                                letterSpacing: '0.05em'
+                              }}>
                                 {task.priority}
                               </span>
-                              <span style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>{task.dueDate}</span>
+                              <span style={{ fontSize: '10.5px', color: '#5D4037', fontWeight: '600' }}>{task.dueDate}</span>
                             </div>
                           </div>
                         );
@@ -504,34 +524,37 @@ const Tasks = () => {
               <label className="bauhaus-label">Subtasks Track</label>
               
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', marginBottom: '0.75rem' }}>
-                {activeTask.subtasks.map(sub => (
-                  <div key={sub.id} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '13px' }}>
-                    <button 
-                      onClick={() => toggleSubtask(activeTask.id, sub.id)}
-                      style={{
-                        width: '16px',
-                        height: '16px',
-                        border: '1px solid var(--text-primary)',
-                        backgroundColor: sub.completed ? 'var(--text-primary)' : 'transparent',
-                        cursor: 'pointer',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center'
-                      }}
-                    >
-                      {sub.completed && <Check size={10} style={{ color: 'var(--bg-primary)' }} />}
-                    </button>
-                    <span style={{ textDecoration: sub.completed ? 'line-through' : 'none', color: sub.completed ? 'var(--text-secondary)' : 'var(--text-primary)' }}>
-                      {sub.title}
-                    </span>
-                    <button 
-                      onClick={() => deleteSubtask(activeTask.id, sub.id)}
-                      style={{ background: 'none', border: 'none', color: 'var(--error)', cursor: 'pointer', marginLeft: 'auto' }}
-                    >
-                      <Trash2 size={12} />
-                    </button>
-                  </div>
-                ))}
+                {activeTask.subtasks.map((sub, idx) => {
+                  const subId = sub._id || sub.id;
+                  return (
+                    <div key={subId || idx} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '13px' }}>
+                      <button 
+                        onClick={() => toggleSubtask(activeTask.id, subId)}
+                        style={{
+                          width: '16px',
+                          height: '16px',
+                          border: '1px solid var(--text-primary)',
+                          backgroundColor: sub.completed ? 'var(--text-primary)' : 'transparent',
+                          cursor: 'pointer',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center'
+                        }}
+                      >
+                        {sub.completed && <Check size={10} style={{ color: 'var(--bg-primary)' }} />}
+                      </button>
+                      <span style={{ textDecoration: sub.completed ? 'line-through' : 'none', color: sub.completed ? 'var(--text-secondary)' : 'var(--text-primary)' }}>
+                        {sub.title}
+                      </span>
+                      <button 
+                        onClick={() => deleteSubtask(activeTask.id, subId)}
+                        style={{ background: 'none', border: 'none', color: 'var(--error)', cursor: 'pointer', marginLeft: 'auto' }}
+                      >
+                        <Trash2 size={12} />
+                      </button>
+                    </div>
+                  );
+                })}
               </div>
 
               <div style={{ display: 'flex', gap: '0.5rem' }}>
@@ -557,48 +580,7 @@ const Tasks = () => {
               </div>
             </div>
 
-            {/* Attachments Section (Module 9) */}
-            <div style={{ borderTop: '1px solid var(--border)', paddingTop: '1rem' }}>
-              <label className="bauhaus-label">File Attachments</label>
-              
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', marginBottom: '0.75rem' }}>
-                {activeTask.attachments.map(att => (
-                  <div key={att.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0.4rem 0.5rem', border: '1px solid var(--border)', fontSize: '12px' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                      <Paperclip size={12} />
-                      <span style={{ fontWeight: 'bold' }}>{att.name}</span>
-                      <span style={{ color: 'var(--text-secondary)', fontSize: '12px' }}>({att.size})</span>
-                    </div>
-                    <button 
-                      onClick={() => deleteAttachment(activeTask.id, att.id)}
-                      style={{ background: 'none', border: 'none', color: 'var(--error)', cursor: 'pointer' }}
-                    >
-                      <X size={12} />
-                    </button>
-                  </div>
-                ))}
-              </div>
 
-              <div style={{ position: 'relative' }}>
-                <input 
-                  type="file" 
-                  onChange={handleFileUploadSim}
-                  style={{
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    opacity: 0,
-                    cursor: 'pointer'
-                  }}
-                />
-                <button className="bauhaus-btn" style={{ width: '100%', padding: '0.4rem', fontSize: '12px', display: 'flex', gap: '0.25rem' }}>
-                  <PlusSquare size={12} />
-                  <span>Upload Document / Image</span>
-                </button>
-              </div>
-            </div>
 
             {/* Comments Thread (Module 8) */}
             <div style={{ borderTop: '1px solid var(--border)', paddingTop: '1rem' }}>

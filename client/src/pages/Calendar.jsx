@@ -134,13 +134,14 @@ const Calendar = () => {
                 style={{
                   padding: '0.4rem 0.75rem',
                   border: 'none',
-                  backgroundColor: viewMode === mode ? 'var(--border)' : 'transparent',
-                  color: 'var(--text-primary)',
+                  backgroundColor: viewMode === mode ? '#3E2723' : '#8D6E63',
+                  color: '#F5DEB3',
                   cursor: 'pointer',
                   fontWeight: 'bold',
                   fontSize: '12px',
                   textTransform: 'uppercase',
-                  borderLeft: mode !== 'month' ? '1px solid var(--border)' : 'none'
+                  borderLeft: mode !== 'month' ? '1px solid var(--border)' : 'none',
+                  transition: 'background-color 150ms ease'
                 }}
               >
                 {mode}
@@ -161,7 +162,7 @@ const Calendar = () => {
             {/* Week headers */}
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', borderBottom: '2px solid var(--border)', backgroundColor: 'var(--bg-primary)' }}>
               {['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'].map(d => (
-                <div key={d} style={{ padding: '0.75rem', fontSize: '12px', fontWeight: 'bold', textAlign: 'center', letterSpacing: '0.05em' }}>
+                <div key={d} style={{ padding: '0.75rem', fontSize: '12px', fontWeight: 'bold', textAlign: 'center', letterSpacing: '0.05em', color: '#F5DEB3' }}>
                   {d}
                 </div>
               ))}
@@ -237,7 +238,7 @@ const Calendar = () => {
                 const weekDays = getWeekDays();
                 const cellDate = weekDays[index];
                 return (
-                  <div key={d} style={{ padding: '0.75rem', textAlign: 'center' }}>
+                  <div key={d} style={{ padding: '0.75rem', textAlign: 'center', color: '#F5DEB3' }}>
                     <div style={{ fontSize: '12px', fontWeight: 'bold' }}>{d}</div>
                     <div style={{ fontSize: '14px', fontWeight: 'bold', marginTop: '0.25rem' }}>{cellDate ? cellDate.getDate() : ''}</div>
                   </div>
@@ -279,7 +280,7 @@ const Calendar = () => {
         {viewMode === 'day' && (
           <div style={{ padding: '2rem', overflowY: 'auto', flex: 1 }}>
             <div style={{ borderBottom: '2px solid var(--border)', paddingBottom: '1rem', marginBottom: '1.5rem' }}>
-              <h3>Agenda for {currentDate.toDateString()}</h3>
+              <h3 style={{ color: '#F5DEB3' }}>Agenda for {currentDate.toDateString()}</h3>
             </div>
             
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>

@@ -31,8 +31,8 @@ const ProjectDetails = () => {
     csvContent += 'Task ID,Title,Status,Priority,Due Date,Subtasks (Total),Subtasks (Completed)\n';
     
     projectTasks.forEach(t => {
-      const subTotal = t.subtasks.length;
-      const subComp = t.subtasks.filter(s => s.completed).length;
+      const subTotal = (t.subtasks || []).length;
+      const subComp = (t.subtasks || []).filter(s => s.completed).length;
       csvContent += `"${t.id}","${t.title}","${t.status}","${t.priority}","${t.dueDate}",${subTotal},${subComp}\n`;
     });
 
@@ -59,40 +59,32 @@ const ProjectDetails = () => {
           <p style={{ color: 'var(--text-secondary)', fontSize: '14px', marginTop: '0.5rem', maxWidth: '650px' }}>{project.description}</p>
         </div>
 
-        <button onClick={handleExportCSV} className="bauhaus-btn bauhaus-btn-success" style={{ display: 'inline-flex', gap: '0.5rem' }}>
+        <button onClick={handleExportCSV} className="bauhaus-btn" style={{ padding: '0.5rem 1rem' }}>
           <FileSpreadsheet size={16} />
           <span>Export CSV Report</span>
         </button>
       </div>
 
-      {/* Metrics Row */}
-      <div className="bauhaus-grid-2" style={{ marginBottom: '2rem' }}>
+      {/* Stats Summary Widgets */}
+      <div className="bauhaus-grid-3" style={{ marginBottom: '2rem' }}>
         <div className="bauhaus-card" style={{ margin: 0 }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <span style={{ fontSize: '12px', fontWeight: 'bold', color: 'var(--text-secondary)' }}>COMPLETED TASKS</span>
-            <CheckSquare size={16} style={{ color: 'var(--success)' }} />
-          </div>
-          <div style={{ fontSize: '2rem', fontWeight: 'bold', margin: '0.5rem 0' }}>{completedCount}</div>
-          <div style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>Total assigned items: {projectTasks.length}</div>
+          <div style={{ fontSize: '12px', color: 'var(--text-secondary)', fontWeight: 'bold' }}>TOTAL REGISTERED TASKS</div>
+          <div style={{ fontSize: '2rem', fontWeight: 'bold', marginTop: '0.5rem' }}>{projectTasks.length}</div>
         </div>
-
         <div className="bauhaus-card" style={{ margin: 0 }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <span style={{ fontSize: '12px', fontWeight: 'bold', color: 'var(--text-secondary)' }}>TARGET MILESTONE</span>
-            <Calendar size={16} style={{ color: 'var(--warning)' }} />
-          </div>
-          <div style={{ fontSize: '1.5rem', fontWeight: 'bold', margin: '0.75rem 0 0.5rem 0' }}>{project.deadline}</div>
-          <div style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>Status: {project.status}</div>
+          <div style={{ fontSize: '12px', color: 'var(--success)', fontWeight: 'bold' }}>COMPLETED TASKS</div>
+          <div style={{ fontSize: '2rem', fontWeight: 'bold', marginTop: '0.5rem', color: 'var(--success)' }}>{completedCount}</div>
+        </div>
+        <div className="bauhaus-card" style={{ margin: 0 }}>
+          <div style={{ fontSize: '12px', color: 'var(--warning)', fontWeight: 'bold' }}>PENDING TASKS</div>
+          <div style={{ fontSize: '2rem', fontWeight: 'bold', marginTop: '0.5rem', color: 'var(--warning)' }}>{pendingCount}</div>
         </div>
       </div>
 
-      {/* Task List table within Project */}
+      {/* Task List Table */}
       <div className="bauhaus-card">
         <div className="bauhaus-card-header">
-          <h3>PROJECT RUNTIME TASKS ({projectTasks.length})</h3>
-          <Link to="/tasks" className="bauhaus-btn" style={{ padding: '0.25rem 0.75rem', fontSize: '12px' }}>
-            Open Task Board
-          </Link>
+          <h3>PROJECT TASK SCOPE</h3>
         </div>
 
         <div className="bauhaus-table-container">
@@ -108,8 +100,8 @@ const ProjectDetails = () => {
             </thead>
             <tbody>
               {projectTasks.map(task => {
-                const subTotal = task.subtasks.length;
-                const subComp = task.subtasks.filter(s => s.completed).length;
+                const subTotal = (task.subtasks || []).length;
+                const subComp = (task.subtasks || []).filter(s => s.completed).length;
 
                 return (
                   <tr key={task.id} style={{ cursor: 'pointer' }} onClick={() => navigate('/tasks')}>
