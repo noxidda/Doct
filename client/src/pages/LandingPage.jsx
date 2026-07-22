@@ -277,11 +277,10 @@ const LandingPage = () => {
         zIndex: 5,
         fontWeight: 700
       }}>
-        <div style={{ textTransform: 'uppercase', letterSpacing: '0.05em' }}>DOCT. CO. ALL RIGHTS RESERVED.</div>
+        <div style={{ textTransform: 'uppercase', letterSpacing: '0.05em' }}>made by Aditya Pandit</div>
         <div style={{ display: 'flex', gap: '2rem' }}>
-          <a href="#" style={{ color: 'var(--bg-primary)', textDecoration: 'none', letterSpacing: '0.05em' }}>MANIFESTO</a>
-          <a href="#" style={{ color: 'var(--bg-primary)', textDecoration: 'none', letterSpacing: '0.05em' }}>SECURITY</a>
-          <a href="#" style={{ color: 'var(--bg-primary)', textDecoration: 'none', letterSpacing: '0.05em' }}>API DOCS</a>
+          <a href="https://github.com/noxidda" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--bg-primary)', textDecoration: 'none', letterSpacing: '0.05em' }}>Github</a>
+          <a href="https://linkedin.com/in/adityapandit098" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--bg-primary)', textDecoration: 'none', letterSpacing: '0.05em' }}>Linkedin</a>
         </div>
       </footer>
     </div>
