@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { Download } from 'lucide-react';
 import logoBlack from '../assets/logo-black.png';
 import logoWhite from '../assets/logo-white.png';
 
@@ -9,6 +10,8 @@ const LandingPage = () => {
   React.useEffect(() => {
     document.documentElement.classList.remove('dark-theme');
   }, []);
+
+  const DOWNLOAD_URL = "https://github.com/noxidda/Doct-NWA/releases/download/Application/Doct_0.1.0_x64-setup.exe";
 
   return (
     <div style={{ backgroundColor: 'var(--bg-primary)', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
@@ -37,7 +40,15 @@ const LandingPage = () => {
         </Link>
         
         <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-
+          <a 
+            href={DOWNLOAD_URL}
+            download
+            className="bauhaus-btn btn-press" 
+            style={{ fontSize: '12px', padding: '0.4rem 1.25rem', backgroundColor: '#5D4037', color: '#F5DEB3', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '0.4rem' }}
+          >
+            <Download size={14} />
+            <span>Download App</span>
+          </a>
 
           {user ? (
             <Link 
@@ -152,7 +163,7 @@ const LandingPage = () => {
             Doct. is a collaborative constructivist workspace for modern teams. Create project dashboards, coordinate Kanban tasks, and edit documents in real time.
           </p>
           
-          <div style={{ display: 'flex', gap: '1.5rem', flexWrap: 'wrap' }}>
+          <div style={{ display: 'flex', gap: '1.5rem', flexWrap: 'wrap', alignItems: 'center' }}>
             <Link 
               to="/login" 
               className="bauhaus-btn bauhaus-btn-primary btn-press" 
@@ -160,6 +171,25 @@ const LandingPage = () => {
             >
               Launch Workspace
             </Link>
+            <a 
+              href={DOWNLOAD_URL}
+              download
+              className="bauhaus-btn btn-press" 
+              style={{ 
+                padding: '0.8rem 2rem', 
+                fontSize: '15px', 
+                border: '3px solid var(--border)',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.5rem',
+                backgroundColor: '#5D4037',
+                color: '#F5DEB3',
+                textDecoration: 'none'
+              }}
+            >
+              <Download size={18} />
+              <span>Download Windows App</span>
+            </a>
           </div>
         </div>
 
