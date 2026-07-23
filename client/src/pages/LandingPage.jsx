@@ -43,8 +43,8 @@ const LandingPage = () => {
           <a 
             href={DOWNLOAD_URL}
             download
-            className="bauhaus-btn btn-press" 
-            style={{ fontSize: '12px', padding: '0.4rem 1.25rem', backgroundColor: '#5D4037', color: '#F5DEB3', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '0.4rem' }}
+            className="bauhaus-btn btn-press btn-download" 
+            style={{ fontSize: '12px', padding: '0.4rem 1.25rem', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '0.4rem' }}
           >
             <Download size={14} />
             <span>Download App</span>
@@ -174,7 +174,7 @@ const LandingPage = () => {
             <a 
               href={DOWNLOAD_URL}
               download
-              className="bauhaus-btn btn-press" 
+              className="bauhaus-btn btn-press btn-download" 
               style={{ 
                 padding: '0.8rem 2rem', 
                 fontSize: '15px', 
@@ -182,8 +182,6 @@ const LandingPage = () => {
                 display: 'inline-flex',
                 alignItems: 'center',
                 gap: '0.5rem',
-                backgroundColor: '#5D4037',
-                color: '#F5DEB3',
                 textDecoration: 'none'
               }}
             >

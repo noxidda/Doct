@@ -270,6 +270,30 @@ a.btn-press:active {
   border-radius: var(--radius-full) !important;
 }
 
+/* Custom Download Button variant with brown text & icon on hover */
+.btn-download {
+  background-color: #5D4037 !important;
+  color: #F5DEB3 !important;
+  border: 2px solid var(--border) !important;
+  transition: all 150ms ease-out !important;
+}
+
+.btn-download svg,
+.btn-download span {
+  color: #F5DEB3 !important;
+  transition: color 150ms ease-out !important;
+}
+
+.btn-download:hover {
+  background-color: #F5DEB3 !important;
+  color: #5D4037 !important;
+}
+
+.btn-download:hover svg,
+.btn-download:hover span {
+  color: #5D4037 !important;
+}
+
 /* Primary Filled button variant */
 .bauhaus-btn-primary {
   background-color: var(--primary-blue) !important;
