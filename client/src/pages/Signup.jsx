@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useSignUp } from '@clerk/clerk-react';
-import { Eye, EyeOff } from 'lucide-react';
+import { Eye, EyeOff, ShieldCheck, ArrowLeft } from 'lucide-react';
 import doctBg from '../assets/doct.jpg';
+import logoBlack from '../assets/logo-black.png';
 
 const Signup = () => {
   const { isLoaded, signUp, setActive } = useSignUp();
@@ -98,17 +99,33 @@ const Signup = () => {
         backgroundColor: 'transparent',
         padding: '2rem'
       }}>
+        {/* Black & White Card */}
         <div style={{ 
           width: '100%', 
           maxWidth: '380px',
-          backgroundColor: '#FFFFFF', // Solid white background
-          border: '1px solid #000000', // Black border
+          backgroundColor: '#FFFFFF',
+          border: '3px solid #000000',
+          boxShadow: '8px 8px 0px 0px #000000',
           padding: '2.5rem',
-          borderRadius: '4px',
-          boxShadow: '0 8px 24px rgba(0, 0, 0, 0.15)'
+          borderRadius: '0px'
         }}>
-          <h2 style={{ fontSize: '2.00rem', marginBottom: '0.5rem', letterSpacing: '-0.02em', color: '#000000', fontWeight: 'bold' }}>SIGN UP FOR DOCT</h2>
-          <p style={{ color: '#666666', fontSize: '13px', marginBottom: '2rem', lineHeight: '1.5' }}>
+          {/* Logo Header */}
+          <div style={{ 
+            display: 'flex', 
+            alignItems: 'center', 
+            gap: '0.75rem', 
+            marginBottom: '1.5rem',
+            paddingBottom: '1rem',
+            borderBottom: '2px solid #000000'
+          }}>
+            <img src={logoBlack} alt="Doct Logo" style={{ height: '32px', width: 'auto', display: 'block' }} />
+            <span style={{ fontSize: '1.4rem', fontWeight: '900', letterSpacing: '-0.02em', color: '#000000' }}>DOCT</span>
+          </div>
+
+          <h2 style={{ fontSize: '1.65rem', marginBottom: '0.5rem', letterSpacing: '-0.02em', color: '#000000', fontWeight: '900', textTransform: 'uppercase' }}>
+            SIGN UP FOR DOCT
+          </h2>
+          <p style={{ color: '#444444', fontSize: '13px', marginBottom: '1.75rem', lineHeight: '1.5', fontWeight: '500' }}>
             {step === 1 ? 'Start your collaborative modern workspace account.' : 'Verify your email code to finalize setup.'}
           </p>
 
@@ -117,7 +134,7 @@ const Signup = () => {
               border: '2px solid #000000',
               color: '#000000',
               backgroundColor: '#FFFFFF',
-              padding: '0.75rem',
+              padding: '0.75rem 1rem',
               marginBottom: '1.5rem',
               fontSize: '12px',
               textTransform: 'uppercase',
@@ -130,56 +147,58 @@ const Signup = () => {
 
           {step === 1 ? (
             <>
-              <form onSubmit={handleRegister} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+              <form onSubmit={handleRegister} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
                 <div>
-                  <label className="bauhaus-label" style={{ color: '#000000', fontWeight: 'bold', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Email Address</label>
+                  <label style={{ display: 'block', color: '#000000', fontWeight: 'bold', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.5rem' }}>
+                    Email Address
+                  </label>
                   <input 
                     type="email" 
-                    className="bauhaus-input" 
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="name@domain.com"
                     style={{
-                      backgroundColor: 'transparent',
+                      backgroundColor: '#FFFFFF',
                       color: '#000000',
-                      border: 'none',
-                      borderBottom: '2px solid #E5E5E5',
-                      padding: '0.75rem 0',
+                      border: '2px solid #000000',
+                      padding: '0.85rem 1rem',
                       fontSize: '14px',
                       width: '100%',
                       outline: 'none',
                       borderRadius: 0,
-                      transition: 'border-color 200ms ease'
+                      boxSizing: 'border-box',
+                      transition: 'box-shadow 150ms ease'
                     }}
-                    onFocus={(e) => e.target.style.borderBottomColor = '#000000'}
-                    onBlur={(e) => e.target.style.borderBottomColor = '#E5E5E5'}
+                    onFocus={(e) => e.target.style.boxShadow = '3px 3px 0px 0px #000000'}
+                    onBlur={(e) => e.target.style.boxShadow = 'none'}
                     required
                   />
                 </div>
 
                 <div>
-                  <label className="bauhaus-label" style={{ color: '#000000', fontWeight: 'bold', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Password</label>
+                  <label style={{ display: 'block', color: '#000000', fontWeight: 'bold', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.5rem' }}>
+                    Password
+                  </label>
                   <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
                     <input 
                       type={showPassword ? "text" : "password"} 
-                      className="bauhaus-input" 
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       placeholder="••••••••"
                       style={{
-                        backgroundColor: 'transparent',
+                        backgroundColor: '#FFFFFF',
                         color: '#000000',
-                        border: 'none',
-                        borderBottom: '2px solid #E5E5E5',
-                        padding: '0.75rem 2rem 0.75rem 0',
+                        border: '2px solid #000000',
+                        padding: '0.85rem 2.75rem 0.85rem 1rem',
                         fontSize: '14px',
                         width: '100%',
                         outline: 'none',
                         borderRadius: 0,
-                        transition: 'border-color 200ms ease'
+                        boxSizing: 'border-box',
+                        transition: 'box-shadow 150ms ease'
                       }}
-                      onFocus={(e) => e.target.style.borderBottomColor = '#000000'}
-                      onBlur={(e) => e.target.style.borderBottomColor = '#E5E5E5'}
+                      onFocus={(e) => e.target.style.boxShadow = '3px 3px 0px 0px #000000'}
+                      onBlur={(e) => e.target.style.boxShadow = 'none'}
                       required
                     />
                     <button
@@ -187,17 +206,17 @@ const Signup = () => {
                       onClick={() => setShowPassword(!showPassword)}
                       style={{
                         position: 'absolute',
-                        right: 0,
+                        right: '8px',
                         background: 'none',
                         border: 'none',
-                        color: '#666666',
+                        color: '#000000',
                         cursor: 'pointer',
                         padding: '0.5rem',
                         display: 'flex',
                         alignItems: 'center'
                       }}
                     >
-                      {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                      {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                     </button>
                   </div>
                 </div>
@@ -207,41 +226,47 @@ const Signup = () => {
                   disabled={loading}
                   style={{ 
                     width: '100%', 
-                    marginTop: '1rem',
+                    marginTop: '0.75rem',
                     backgroundColor: '#000000',
                     color: '#FFFFFF',
-                    border: '1px solid #000000',
-                    borderRadius: '4px',
-                    padding: '0.75rem 1.5rem',
+                    border: '2px solid #000000',
+                    boxShadow: '4px 4px 0px 0px #000000',
+                    padding: '0.85rem 1.5rem',
                     fontWeight: 'bold',
                     fontSize: '13px',
                     textTransform: 'uppercase',
                     letterSpacing: '0.05em',
                     cursor: 'pointer',
-                    transition: 'background-color 200ms ease, color 200ms ease'
+                    transition: 'all 150ms ease-out'
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.backgroundColor = '#333333';
+                    e.currentTarget.style.backgroundColor = '#222222';
+                    e.currentTarget.style.transform = 'translate(2px, 2px)';
+                    e.currentTarget.style.boxShadow = '2px 2px 0px 0px #000000';
                   }}
                   onMouseLeave={(e) => {
                     e.currentTarget.style.backgroundColor = '#000000';
+                    e.currentTarget.style.transform = 'none';
+                    e.currentTarget.style.boxShadow = '4px 4px 0px 0px #000000';
                   }}
                 >
                   {loading ? 'Creating...' : 'Sign Up'}
                 </button>
               </form>
-              <div style={{ textAlign: 'center', marginTop: '2rem', fontSize: '13px', color: '#666666' }}>
+              <div style={{ textAlign: 'center', marginTop: '2rem', fontSize: '13px', color: '#444444', fontWeight: '500' }}>
                 Already registered? <Link to="/login" style={{ fontWeight: 'bold', color: '#000000', textDecoration: 'underline' }}>Sign In</Link>
               </div>
             </>
           ) : (
             <>
-              <form onSubmit={handleVerifyOtp} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+              <form onSubmit={handleVerifyOtp} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
                 <div>
-                  <label className="bauhaus-label" style={{ color: '#000000', fontWeight: 'bold', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.05em', display: 'block', marginBottom: '0.5rem' }}>Verification Code</label>
+                  <label style={{ color: '#000000', fontWeight: 'bold', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.05em', display: 'flex', alignItems: 'center', gap: '0.4rem', marginBottom: '0.5rem' }}>
+                    <ShieldCheck size={16} />
+                    Verification Code
+                  </label>
                   <input 
                     type="text" 
-                    className="bauhaus-input" 
                     value={otp}
                     onChange={(e) => setOtp(e.target.value)}
                     placeholder="123456"
@@ -249,18 +274,18 @@ const Signup = () => {
                       letterSpacing: '0.5em',
                       textAlign: 'center',
                       fontSize: '20px',
-                      backgroundColor: 'transparent',
+                      backgroundColor: '#FFFFFF',
                       color: '#000000',
-                      border: 'none',
-                      borderBottom: '2px solid #E5E5E5',
-                      padding: '0.75rem 0',
+                      border: '2px solid #000000',
+                      padding: '0.85rem 1rem',
                       width: '100%',
                       outline: 'none',
                       borderRadius: 0,
-                      transition: 'border-color 200ms ease'
+                      boxSizing: 'border-box',
+                      transition: 'box-shadow 150ms ease'
                     }}
-                    onFocus={(e) => e.target.style.borderBottomColor = '#000000'}
-                    onBlur={(e) => e.target.style.borderBottomColor = '#E5E5E5'}
+                    onFocus={(e) => e.target.style.boxShadow = '3px 3px 0px 0px #000000'}
+                    onBlur={(e) => e.target.style.boxShadow = 'none'}
                     required
                   />
                 </div>
@@ -270,24 +295,28 @@ const Signup = () => {
                   disabled={loading}
                   style={{ 
                     width: '100%', 
-                    marginTop: '1rem',
+                    marginTop: '0.5rem',
                     backgroundColor: '#000000',
                     color: '#FFFFFF',
-                    border: '1px solid #000000',
-                    borderRadius: '4px',
-                    padding: '0.75rem 1.5rem',
+                    border: '2px solid #000000',
+                    boxShadow: '4px 4px 0px 0px #000000',
+                    padding: '0.85rem 1.5rem',
                     fontWeight: 'bold',
                     fontSize: '13px',
                     textTransform: 'uppercase',
                     letterSpacing: '0.05em',
                     cursor: 'pointer',
-                    transition: 'background-color 200ms ease, color 200ms ease'
+                    transition: 'all 150ms ease-out'
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.backgroundColor = '#333333';
+                    e.currentTarget.style.backgroundColor = '#222222';
+                    e.currentTarget.style.transform = 'translate(2px, 2px)';
+                    e.currentTarget.style.boxShadow = '2px 2px 0px 0px #000000';
                   }}
                   onMouseLeave={(e) => {
                     e.currentTarget.style.backgroundColor = '#000000';
+                    e.currentTarget.style.transform = 'none';
+                    e.currentTarget.style.boxShadow = '4px 4px 0px 0px #000000';
                   }}
                 >
                   {loading ? 'Verifying...' : 'Verify & Sign Up'}
@@ -300,23 +329,27 @@ const Signup = () => {
                     width: '100%',
                     backgroundColor: '#FFFFFF',
                     color: '#000000',
-                    border: '1px solid #E5E5E5',
-                    borderRadius: '4px',
-                    padding: '0.75rem 1.5rem',
+                    border: '2px solid #000000',
+                    padding: '0.75rem 1rem',
                     fontWeight: 'bold',
-                    fontSize: '13px',
+                    fontSize: '11px',
                     textTransform: 'uppercase',
                     letterSpacing: '0.05em',
                     cursor: 'pointer',
-                    transition: 'border-color 200ms ease'
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '0.3rem',
+                    transition: 'background-color 150ms ease'
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.borderColor = '#000000';
+                    e.currentTarget.style.backgroundColor = '#F0F0F0';
                   }}
                   onMouseLeave={(e) => {
-                    e.currentTarget.style.borderColor = '#E5E5E5';
+                    e.currentTarget.style.backgroundColor = '#FFFFFF';
                   }}
                 >
+                  <ArrowLeft size={14} />
                   Back to Registration
                 </button>
               </form>
